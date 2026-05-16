@@ -10,13 +10,20 @@ const INITIAL_PROGRESS: UserProgress = {
   cards: {},
   completedLessonIds: [],
   lessonStars: {},
+  learnedCardIds: [],
+  learnSessionIds: [],
 };
 
 export function loadProgress(): UserProgress {
   if (typeof window === "undefined") return INITIAL_PROGRESS;
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as UserProgress) : { ...INITIAL_PROGRESS };
+    if (!raw) return { ...INITIAL_PROGRESS };
+    const parsed = JSON.parse(raw) as UserProgress;
+    // Forward-migration: back-fill fields added after initial release
+    if (!parsed.learnedCardIds) parsed.learnedCardIds = [];
+    if (!parsed.learnSessionIds) parsed.learnSessionIds = [];
+    return parsed;
   } catch {
     return { ...INITIAL_PROGRESS };
   }

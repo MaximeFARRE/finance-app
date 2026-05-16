@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { loadProgress } from "@/lib/storage";
 import { getLevelInfo } from "@/lib/level-engine";
+import { getLessonById } from "@/content";
 import { XPBar } from "@/components/XPBar";
 
 function StarDisplay({ stars }: { stars: 0 | 1 | 2 | 3 }) {
@@ -28,54 +29,94 @@ function ResultsContent() {
   const count = Number(params.get("count") ?? 0);
   const stars = Math.min(3, Math.max(0, Number(params.get("stars") ?? 0))) as 0 | 1 | 2 | 3;
   const trackId = params.get("trackId") ?? "";
+  const lessonId = params.get("lessonId") ?? "";
+  const failedParam = params.get("failed") ?? "";
 
   const progress = loadProgress();
   const levelInfo = getLevelInfo(progress.xp);
+
+  // Resolve failed card IDs to card objects for the "Concepts à revoir" section
+  const failedIds = failedParam ? failedParam.split(",").filter(Boolean) : [];
+  const lesson = failedIds.length > 0 && trackId && lessonId ? getLessonById(trackId, lessonId) : null;
+  const failedCards = lesson ? lesson.cards.filter((c) => failedIds.includes(c.id)) : [];
 
   const starLabel =
     stars === 3 ? "Parfait ! 🎉" : stars === 2 ? "Très bien ! 👍" : stars === 1 ? "Bien joué ! 💪" : "";
 
   return (
-    <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-      <div className="mb-4 text-center">
-        <div className="mb-3 text-5xl">{stars === 3 ? "🏆" : "🎯"}</div>
-        <h1 className="text-2xl font-bold text-gray-900">Session terminée !</h1>
-        {starLabel && <p className="mt-1 text-base font-medium text-gray-600">{starLabel}</p>}
-      </div>
+    <div className="w-full max-w-md space-y-4">
+      {/* Main results card */}
+      <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+        <div className="mb-4 text-center">
+          <div className="mb-3 text-5xl">{stars === 3 ? "🏆" : "🎯"}</div>
+          <h1 className="text-2xl font-bold text-gray-900">Session terminée !</h1>
+          {starLabel && <p className="mt-1 text-base font-medium text-gray-600">{starLabel}</p>}
+        </div>
 
-      <StarDisplay stars={stars} />
+        <StarDisplay stars={stars} />
 
-      <p className="mb-6 text-center text-sm text-gray-500">
-        {count} cartes · +{xp} XP gagnés
-      </p>
+        <p className="mb-6 text-center text-sm text-gray-500">
+          {count} cartes · +{xp} XP gagnés
+        </p>
 
-      <div className="mb-6 rounded-xl bg-yellow-50 p-4">
-        <XPBar levelInfo={levelInfo} xp={progress.xp} />
-      </div>
+        <div className="mb-6 rounded-xl bg-yellow-50 p-4">
+          <XPBar levelInfo={levelInfo} xp={progress.xp} />
+        </div>
 
-      <div className="flex flex-col gap-3">
-        {trackId && (
+        <div className="flex flex-col gap-3">
+          {trackId && (
+            <button
+              onClick={() => router.push(`/tracks/${trackId}`)}
+              className="w-full rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+            >
+              Continuer le parcours →
+            </button>
+          )}
           <button
-            onClick={() => router.push(`/tracks/${trackId}`)}
-            className="w-full rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+            onClick={() => router.push("/tracks")}
+            className="w-full rounded-xl border border-gray-200 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
           >
-            Continuer le parcours →
+            Tous les parcours
           </button>
-        )}
-        <button
-          onClick={() => router.push("/tracks")}
-          className="w-full rounded-xl border border-gray-200 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
-        >
-          Tous les parcours
-        </button>
+        </div>
       </div>
+
+      {/* Concepts à revoir */}
+      {failedCards.length > 0 && (
+        <div className="rounded-2xl border border-orange-200 bg-orange-50 p-6">
+          <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-orange-500">
+            À revoir
+          </p>
+          <h2 className="mb-4 text-base font-bold text-gray-900">Concepts à retravailler</h2>
+          <div className="flex flex-col gap-2">
+            {failedCards.map((card) => (
+              <div
+                key={card.id}
+                className="flex items-center justify-between gap-3 rounded-xl bg-white px-4 py-3 border border-orange-100"
+              >
+                <p className="text-sm text-gray-700 line-clamp-1 flex-1">{card.front}</p>
+                <button
+                  onClick={() =>
+                    router.push(
+                      `/session?trackId=${trackId}&lessonId=${lessonId}&mode=learn`,
+                    )
+                  }
+                  className="shrink-0 rounded-lg bg-orange-100 px-3 py-1.5 text-xs font-semibold text-orange-700 hover:bg-orange-200 transition"
+                >
+                  Revoir
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 export default function ResultsPage() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
+    <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-8">
       <Suspense fallback={<p className="text-gray-500">Chargement…</p>}>
         <ResultsContent />
       </Suspense>

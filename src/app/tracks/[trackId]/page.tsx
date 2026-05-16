@@ -58,8 +58,12 @@ export default function TrackDetailPage() {
             lessons={track.lessons}
             completedLessonIds={progress.completedLessonIds}
             lessonStars={progress.lessonStars}
-            onStart={(lessonId) =>
-              router.push(`/session?trackId=${trackId}&lessonId=${lessonId}`)
+            learnSessionIds={progress.learnSessionIds}
+            onLearn={(lessonId) =>
+              router.push(`/session?trackId=${trackId}&lessonId=${lessonId}&mode=learn`)
+            }
+            onQuiz={(lessonId) =>
+              router.push(`/session?trackId=${trackId}&lessonId=${lessonId}&mode=quiz`)
             }
           />
         )}

@@ -57,6 +57,8 @@ export interface UserProgress {
   cards: Record<string, CardProgress>;
   completedLessonIds: string[];
   lessonStars: Record<string, 0 | 1 | 2 | 3>;
+  learnedCardIds: string[];
+  learnSessionIds: string[];
 }
 
 export interface ReviewResult {
@@ -64,6 +66,15 @@ export interface ReviewResult {
   quality: AnswerQuality;
   timeSpentMs: number;
   xpGained: number;
+}
+
+// --- Session ---
+
+export type SessionMode = "learn" | "quiz";
+
+export interface LearnResult {
+  cardId: string;
+  read: boolean;
 }
 
 // --- Niveaux XP ---
