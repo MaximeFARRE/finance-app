@@ -14,6 +14,7 @@ export interface Card {
   type: CardType;
   front: string;
   back: string;
+  detail?: string;
   difficulty: Difficulty;
   tags: string[];
 }
