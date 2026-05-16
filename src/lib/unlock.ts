@@ -17,3 +17,10 @@ export function isLessonCompleted(
 ): boolean {
   return completedLessonIds.includes(lessonId);
 }
+
+export function hasCompletedLearnSession(
+  lessonId: string,
+  learnSessionIds: string[],
+): boolean {
+  return learnSessionIds.includes(lessonId);
+}

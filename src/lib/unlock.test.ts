@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { isLessonUnlocked, isLessonCompleted } from "./unlock";
+import { isLessonUnlocked, isLessonCompleted, hasCompletedLearnSession } from "./unlock";
 import type { Lesson } from "./types";
 
 function makeLesson(id: string): Lesson {
@@ -37,5 +37,19 @@ describe("isLessonCompleted", () => {
 
   it("returns true when lessonId is in completedLessonIds", () => {
     expect(isLessonCompleted("l1", ["l1", "l2"])).toBe(true);
+  });
+});
+
+describe("hasCompletedLearnSession", () => {
+  it("returns false when learnSessionIds is empty", () => {
+    expect(hasCompletedLearnSession("l1", [])).toBe(false);
+  });
+
+  it("returns true when lessonId is in learnSessionIds", () => {
+    expect(hasCompletedLearnSession("l1", ["l1", "l2"])).toBe(true);
+  });
+
+  it("returns false when lessonId is not in learnSessionIds", () => {
+    expect(hasCompletedLearnSession("l3", ["l1", "l2"])).toBe(false);
   });
 });

@@ -11,6 +11,8 @@ function makeProgress(overrides: Partial<UserProgress> = {}): UserProgress {
     cards: {},
     completedLessonIds: [],
     lessonStars: {},
+    learnedCardIds: [],
+    learnSessionIds: [],
     ...overrides,
   };
 }
