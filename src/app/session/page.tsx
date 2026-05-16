@@ -125,6 +125,7 @@ function ConceptOverlay({ cards, onClose }: { cards: Card[]; onClose: () => void
 function LearnFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) {
   const lesson = getLessonById(trackId, lessonId);
   const [readCardIds, setReadCardIds] = useState<Set<string>>(new Set());
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [done, setDone] = useState(false);
 
   if (!lesson) {
@@ -136,12 +137,24 @@ function LearnFlow({ trackId, lessonId }: { trackId: string; lessonId: string })
   }
 
   const { primary, supplementary } = groupLearnCards(lesson.cards);
+  // All cards in order: primary first, then supplementary
+  const allCards = [...primary, ...supplementary];
+  const totalCards = allCards.length;
+  const readCount = readCardIds.size;
   const allPrimaryRead = primary.every((c) => readCardIds.has(c.id));
-  const readPrimary = primary.filter((c) => readCardIds.has(c.id)).length;
-  const progressPct = primary.length > 0 ? Math.round((readPrimary / primary.length) * 100) : 0;
+  const progressPct = primary.length > 0 ? Math.round((primary.filter((c) => readCardIds.has(c.id)).length / primary.length) * 100) : 0;
+
+  const currentCard = allCards[currentIndex];
+  const isLastCard = currentIndex === totalCards - 1;
+  const isPrimarySection = currentIndex < primary.length;
 
   function markRead(cardId: string) {
     setReadCardIds((prev) => new Set([...prev, cardId]));
+  }
+
+  function handleMarkAndNext() {
+    if (currentCard) markRead(currentCard.id);
+    if (!isLastCard) setCurrentIndex((i) => i + 1);
   }
 
   function handleFinish() {
@@ -157,7 +170,7 @@ function LearnFlow({ trackId, lessonId }: { trackId: string; lessonId: string })
   if (done) {
     return (
       <LearnSessionSummary
-        readCount={readCardIds.size}
+        readCount={readCount}
         totalCount={primary.length}
         trackId={trackId}
         lessonId={lessonId}
@@ -165,12 +178,19 @@ function LearnFlow({ trackId, lessonId }: { trackId: string; lessonId: string })
     );
   }
 
+  if (!currentCard) return null;
+
   return (
     <main className="min-h-screen bg-gray-50">
       <div className="mx-auto max-w-xl px-4 py-8">
+        {/* Progress bar (primary cards only) */}
         <div className="mb-6">
           <div className="mb-1 flex items-center justify-between text-xs text-gray-400">
-            <span>{readPrimary} / {primary.length} concepts lus</span>
+            <span>
+              {isPrimarySection
+                ? `Fiche ${currentIndex + 1} / ${primary.length}`
+                : "Pour aller plus loin"}
+            </span>
             <span>{progressPct}%</span>
           </div>
           <div className="h-2 rounded-full bg-gray-200">
@@ -181,50 +201,75 @@ function LearnFlow({ trackId, lessonId }: { trackId: string; lessonId: string })
           </div>
         </div>
 
-        <div className="flex flex-col gap-4">
-          {primary.map((card) => (
-            <LearnCard
-              key={card.id}
-              card={card}
-              isRead={readCardIds.has(card.id)}
-              onRead={() => markRead(card.id)}
-            />
-          ))}
-        </div>
-
-        {supplementary.length > 0 && (
-          <div className="mt-8">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-gray-400">
-              Pour aller plus loin
-            </p>
-            <div className="flex flex-col gap-4">
-              {supplementary.map((card) => (
-                <LearnCard
-                  key={card.id}
-                  card={card}
-                  isRead={readCardIds.has(card.id)}
-                  onRead={() => markRead(card.id)}
-                />
-              ))}
-            </div>
-          </div>
+        {/* Section label when entering supplementary */}
+        {!isPrimarySection && (
+          <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-gray-400">
+            Pour aller plus loin
+          </p>
         )}
 
-        <div className="mt-8">
+        {/* Current card */}
+        <LearnCard
+          card={currentCard}
+          isRead={readCardIds.has(currentCard.id)}
+          onRead={() => markRead(currentCard.id)}
+        />
+
+        {/* Navigation row */}
+        <div className="mt-6 flex gap-3">
           <button
-            onClick={handleFinish}
-            disabled={!allPrimaryRead}
-            className={`w-full rounded-xl py-3 text-sm font-semibold transition-all ${
-              allPrimaryRead
-                ? "bg-emerald-600 text-white hover:bg-emerald-700 active:scale-95"
-                : "bg-gray-100 text-gray-400 cursor-not-allowed"
+            onClick={() => setCurrentIndex((i) => i - 1)}
+            disabled={currentIndex === 0}
+            className={`flex-none rounded-xl border px-5 py-2.5 text-sm font-semibold transition-all ${
+              currentIndex === 0
+                ? "border-gray-100 bg-gray-50 text-gray-300 cursor-not-allowed"
+                : "border-gray-200 bg-white text-gray-600 hover:bg-gray-50 active:scale-95"
             }`}
           >
-            {allPrimaryRead
-              ? "Terminer la leçon ✓"
-              : `Lisez encore ${primary.length - readPrimary} fiche(s) pour terminer`}
+            ← Précédente
           </button>
+
+          {isLastCard ? (
+            <button
+              onClick={handleFinish}
+              disabled={!allPrimaryRead}
+              className={`flex-1 rounded-xl py-2.5 text-sm font-semibold transition-all ${
+                allPrimaryRead
+                  ? "bg-emerald-600 text-white hover:bg-emerald-700 active:scale-95"
+                  : "bg-gray-100 text-gray-400 cursor-not-allowed"
+              }`}
+            >
+              {allPrimaryRead ? "Terminer ✓" : "Lisez d'abord toutes les fiches"}
+            </button>
+          ) : (
+            <button
+              onClick={handleMarkAndNext}
+              className="flex-1 rounded-xl bg-gray-900 py-2.5 text-sm font-semibold text-white hover:bg-gray-800 active:scale-95 transition-all"
+            >
+              {readCardIds.has(currentCard.id) ? "Suivante →" : "Lu & Suivante →"}
+            </button>
+          )}
         </div>
+
+        {/* Dot indicators */}
+        {totalCards > 1 && (
+          <div className="mt-5 flex justify-center gap-1.5">
+            {allCards.map((card, i) => (
+              <button
+                key={card.id}
+                onClick={() => setCurrentIndex(i)}
+                className={`h-2 rounded-full transition-all ${
+                  i === currentIndex
+                    ? "w-5 bg-emerald-500"
+                    : readCardIds.has(card.id)
+                      ? "w-2 bg-emerald-300"
+                      : "w-2 bg-gray-300"
+                }`}
+                aria-label={`Fiche ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </main>
   );
