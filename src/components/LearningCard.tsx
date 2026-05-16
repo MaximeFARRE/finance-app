@@ -20,7 +20,7 @@ export function LearningCard({ card, onReveal }: LearningCardProps) {
 
   return (
     <div
-      className={`overflow-hidden rounded-2xl border border-gray-200 shadow-md border-l-4 min-h-72 flex flex-col ${theme.accent} ${theme.cardBg}`}
+      className={`overflow-hidden rounded-2xl border border-gray-200 shadow-md border-l-4 min-h-72 shrink-0 flex flex-col ${theme.accent} ${theme.cardBg}`}
     >
       <div className="px-9 pt-9 pb-4">
         <span
