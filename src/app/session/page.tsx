@@ -250,6 +250,7 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
   useEffect(() => {
     if (!lesson) return;
     const progress = loadProgress();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSession({
       deck: buildQuizDeck(lesson.cards),
       cardIndex: 0,
@@ -261,6 +262,7 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
 
   useEffect(() => {
     cardStartedAt.current = Date.now();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setRevealed(false);
   }, [session?.cardIndex]);
 
