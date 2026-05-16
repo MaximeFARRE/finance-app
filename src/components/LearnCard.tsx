@@ -11,13 +11,14 @@ interface LearnCardProps {
 }
 
 export function LearnCard({ card, isRead, onRead }: LearnCardProps) {
-  const [expanded, setExpanded] = useState(false);
+  const [detailExpanded, setDetailExpanded] = useState(false);
   const theme = getCardTheme(card.type);
 
   return (
     <div
       className={`overflow-hidden rounded-2xl border border-gray-200 shadow-sm border-l-4 ${theme.accent} ${theme.cardBg} transition-all`}
     >
+      {/* Header: type badge + read indicator */}
       <div className="px-6 pt-6 pb-3 flex items-start justify-between gap-4">
         <span
           className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${theme.badgeBg} ${theme.badgeText}`}
@@ -30,27 +31,37 @@ export function LearnCard({ card, isRead, onRead }: LearnCardProps) {
         )}
       </div>
 
+      {/* Title */}
       <div className="px-6 pb-3">
         <p className="text-lg font-semibold leading-snug text-gray-900">{card.front}</p>
       </div>
 
-      <div className="px-6 pb-4">
-        <button
-          onClick={() => setExpanded((e) => !e)}
-          className="text-sm font-medium text-gray-500 hover:text-gray-700 underline underline-offset-2 transition-colors"
-        >
-          {expanded ? "Réduire ▲" : "En savoir plus ▼"}
-        </button>
-
-        {expanded && (
-          <div className={`mt-3 rounded-xl p-4 ${theme.answerBg}`}>
-            <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">
-              {card.back}
-            </p>
-          </div>
-        )}
+      {/* Short summary — always visible */}
+      <div className={`mx-6 mb-4 rounded-xl p-4 ${theme.answerBg}`}>
+        <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">{card.back}</p>
       </div>
 
+      {/* Deep detail — revealed on demand */}
+      {card.detail && (
+        <div className="px-6 pb-4">
+          <button
+            onClick={() => setDetailExpanded((e) => !e)}
+            className="text-sm font-medium text-gray-500 hover:text-gray-700 underline underline-offset-2 transition-colors"
+          >
+            {detailExpanded ? "Réduire ▲" : "En savoir plus ▼"}
+          </button>
+
+          {detailExpanded && (
+            <div className="mt-3 rounded-xl border border-gray-200 bg-white p-5">
+              <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">
+                {card.detail}
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Mark as read */}
       <div className="px-6 pb-5">
         <button
           onClick={onRead}
