@@ -80,10 +80,11 @@ function ConceptOverlay({ cards, onClose }: { cards: Card[]; onClose: () => void
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
-      <div className="relative z-10 h-full w-full max-w-sm overflow-y-auto bg-white shadow-2xl flex flex-col">
-        <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between">
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div className="relative z-10 w-full max-w-lg max-h-[85vh] bg-white rounded-2xl shadow-2xl flex flex-col">
+        {/* Header */}
+        <div className="shrink-0 border-b border-gray-100 px-6 py-4 flex items-center justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-orange-500">
               Bouée de sauvetage
@@ -99,13 +100,15 @@ function ConceptOverlay({ cards, onClose }: { cards: Card[]; onClose: () => void
           </button>
         </div>
 
+        {/* Scrollable cards */}
         <div className="flex-1 overflow-y-auto px-6 py-5 flex flex-col gap-4">
           {cards.map((card) => (
             <LearningCard key={card.id} card={card} />
           ))}
         </div>
 
-        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-6 py-4">
+        {/* Footer */}
+        <div className="shrink-0 border-t border-gray-100 px-6 py-4">
           <button
             onClick={onClose}
             className="w-full rounded-xl bg-gray-900 py-3 text-sm font-semibold text-white hover:bg-gray-800 transition"
