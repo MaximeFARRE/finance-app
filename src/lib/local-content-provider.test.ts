@@ -41,7 +41,7 @@ describe("seed et lecture", () => {
     expect(tracks[0]!.lessons[0]!.cards.length).toBeGreaterThan(0);
   });
 
-  it("syncBuiltinContent ajoute les nouveaux worlds, leçons et cartes sans écraser les cartes existantes", async () => {
+  it("syncBuiltinContent ajoute les nouveaux worlds, leçons et cartes et rafraîchit les cartes built-in inchangées", async () => {
     const provider = new LocalContentProvider();
     const baseTrack = {
       id: "market-finance",
@@ -124,9 +124,67 @@ describe("seed et lecture", () => {
 
     expect(track?.description).toBe("Nouvelle description");
     expect(track?.worlds?.[0]?.id).toBe("world-1");
-    expect(existingCard[0]?.front).toBe("Ancienne question");
+    expect(existingCard[0]?.front).toBe("Nouvelle question built-in");
     expect(boss?.kind).toBe("boss");
     expect(boss?.cards[0]?.id).toBe("boss-card-1");
+  });
+
+  it("syncBuiltinContent ne remplace pas une carte modifiée localement", async () => {
+    const provider = new LocalContentProvider();
+    const baseTrack = {
+      id: "market-finance",
+      title: "Finance de marché",
+      description: "Description",
+      emoji: "📈",
+      color: "blue",
+      lessons: [
+        {
+          id: "lesson-1",
+          slug: "lesson-1",
+          title: "Leçon 1",
+          description: "Leçon existante",
+          estimatedMinutes: 5,
+          cards: [
+            {
+              id: "card-1",
+              type: "definition" as const,
+              front: "Question initiale",
+              back: "Réponse initiale",
+              difficulty: 1 as const,
+              tags: [],
+            },
+          ],
+        },
+      ],
+    };
+
+    await provider.seed([baseTrack]);
+    await provider.upsertCard("lesson-1", {
+      ...baseTrack.lessons[0]!.cards[0]!,
+      front: "Question locale",
+    });
+    await provider.syncBuiltinContent(
+      [
+        {
+          ...baseTrack,
+          lessons: [
+            {
+              ...baseTrack.lessons[0]!,
+              cards: [
+                {
+                  ...baseTrack.lessons[0]!.cards[0]!,
+                  front: "Question built-in mise à jour",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      "test-version",
+    );
+
+    const cards = await provider.getCardsByLesson("lesson-1");
+    expect(cards[0]?.front).toBe("Question locale");
   });
 
   it("getTrackById retourne le bon track", async () => {

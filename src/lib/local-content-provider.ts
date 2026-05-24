@@ -522,6 +522,12 @@ export class LocalContentProvider implements ContentProvider {
               lessonId: lesson.id,
               sortOrder: ci,
             });
+          } else if (!(await this.hasCardHistory(db, card.id))) {
+            await db.put("cards", {
+              ...card,
+              lessonId: existingCard.lessonId,
+              sortOrder: existingCard.sortOrder,
+            });
           }
         }
       }
@@ -529,5 +535,10 @@ export class LocalContentProvider implements ContentProvider {
 
     await db.put("meta", { key: "seeded", value: true });
     await db.put("meta", { key: "builtinContentVersion", value: version });
+  }
+
+  private async hasCardHistory(db: ContentDB, cardId: string): Promise<boolean> {
+    const versions = await db.getAllFromIndex("card_versions", "by-cardId", cardId);
+    return versions.length > 0;
   }
 }
