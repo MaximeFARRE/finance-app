@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { href: "/admin/tracks", label: "Contenus", icon: "📚", exact: false },
   { href: "/admin/import", label: "Import", icon: "📥", exact: false },
   { href: "/admin/export", label: "Export", icon: "📤", exact: false },
+  { href: "/admin/suggestions", label: "Suggestions", icon: "🚩", exact: false },
 ] as const;
 
 function AdminGuard({ children }: { children: React.ReactNode }) {

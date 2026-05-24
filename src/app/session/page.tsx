@@ -224,6 +224,8 @@ function LearnFlow({ trackId, lessonId }: { trackId: string; lessonId: string })
           card={currentCard}
           isRead={readCardIds.has(currentCard.id)}
           onRead={() => markRead(currentCard.id)}
+          trackId={trackId}
+          lessonId={lessonId}
         />
 
         {/* Navigation row */}
@@ -478,6 +480,8 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
           key={entry.question.id}
           card={entry.question}
           onReveal={() => setRevealed(true)}
+          trackId={trackId}
+          lessonId={lessonId}
         />
 
         {revealed && entry.answer && (
