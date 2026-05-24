@@ -1,3 +1,16 @@
+# [1.4.0](https://github.com/MaximeFARRE/finance-app/compare/v1.3.0...v1.4.0) (2026-05-24)
+
+
+### Bug Fixes
+
+* use full node path and explicit port in launch.json ([7e6fa6d](https://github.com/MaximeFARRE/finance-app/commit/7e6fa6df2a01292e13eca93bf553aa6724fbe97d))
+
+
+### Features
+
+* add admin/import/export navigation buttons to main UI pages ([98bb055](https://github.com/MaximeFARRE/finance-app/commit/98bb055f7b4fd83057f637a25670e3e6081d92ea))
+* add short lesson deck builder ([f981c06](https://github.com/MaximeFARRE/finance-app/commit/f981c06b343aed9b6d8ff388c04196e37a40257b))
+
 # [1.3.0](https://github.com/MaximeFARRE/finance-app/compare/v1.2.0...v1.3.0) (2026-05-24)
 
 
