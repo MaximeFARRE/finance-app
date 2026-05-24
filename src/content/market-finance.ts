@@ -156,113 +156,125 @@ export const marketFinanceTrack: Track = {
         {
           id: "mf-found-l1-oblig-def",
           type: "definition",
+          questionType: "definition",
+          question: "Qu'est-ce qu'une obligation ?",
+          shortAnswer:
+            "Une obligation est un titre de dette : l'investisseur prête de l'argent à un émetteur, qui verse des coupons et rembourse le principal à maturité.",
+          explanation:
+            "L'émetteur peut être un État, une entreprise ou une institution financière. L'investisseur est créancier, pas propriétaire.",
           front: "Qu'est-ce qu'une obligation ?",
-          back: "Titre de dette émis par une entreprise ou un État pour emprunter sur les marchés. L'investisseur prête de l'argent en échange d'un taux d'intérêt fixe (coupon) et récupère son capital à maturité.",
+          back: "Une obligation est un titre de dette : l'investisseur prête de l'argent à un émetteur, qui verse des coupons et rembourse le principal à maturité.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["obligation", "dette", "coupon"],
+          skills: ["definition"],
           tags: ["obligation", "dette"],
-          detail: `**Les quatre caractéristiques clés d'une obligation :**
-- **Émetteur** : État (obligation souveraine), entreprise (corporate bond), institution financière
-- **Valeur nominale** (ou pair) : montant du prêt, généralement 1 000 € ou 100 €
-- **Coupon** : taux d'intérêt annuel fixe sur la valeur nominale
-- **Maturité** : durée de vie du prêt (1 an à 30 ans+)
-
-**Marché obligataire mondial :** ~130 000 milliards $ — plus grand que le marché actions (~90 000 Mds $). Pourtant bien moins médiatisé.`,
         },
         {
           id: "mf-found-l1-oblig-intuition",
-          type: "intuition",
-          front: "Comment penser à une obligation ?",
-          back: "Obligation = prêt titrisé. Au lieu d'emprunter à une banque, l'émetteur emprunte directement aux investisseurs via les marchés. L'investisseur devient créancier (pas actionnaire) : il a un droit de remboursement prioritaire.",
+          type: "definition",
+          questionType: "mechanism",
+          question: "Pourquoi une entreprise émet-elle une obligation plutôt que de prendre un prêt bancaire ?",
+          shortAnswer:
+            "Elle peut accéder à davantage d'investisseurs, emprunter des montants plus élevés et choisir des maturités parfois plus longues.",
+          explanation:
+            "Une obligation est négociable sur le marché secondaire, ce qui rend l'investissement plus flexible pour les investisseurs qu'un prêt bancaire classique.",
+          front: "Pourquoi une entreprise émet-elle une obligation plutôt que de prendre un prêt bancaire ?",
+          back: "Elle peut accéder à davantage d'investisseurs, emprunter des montants plus élevés et choisir des maturités parfois plus longues.",
           difficulty: 1,
-          tags: ["obligation", "créancier"],
-          detail: `**Pourquoi émettre des obligations plutôt qu'un emprunt bancaire ?**
-- Accès à un pool d'investisseurs plus large → meilleur taux potentiel
-- Possibilité d'emprunter des montants très élevés (1 Md€+)
-- Flexibilité : maturités longues (30 ans), que peu de banques offrent
-- Les obligations sont négociables sur le marché secondaire → les investisseurs peuvent sortir sans attendre la maturité
-
-**L'émetteur choisit la dette obligataire quand le coût est inférieur à un prêt bancaire et quand il a la notation de crédit nécessaire pour attirer les investisseurs.**`,
+          learningStage: 1,
+          topics: ["obligation", "marché-obligataire", "financement"],
+          skills: ["mechanism"],
+          tags: ["obligation", "financement"],
         },
         {
           id: "mf-found-l1-oblig-formula",
           type: "formula",
-          front: "Composants d'une obligation",
-          back: "• Valeur nominale : montant du prêt (ex: 1 000 €)\n• Coupon : intérêt annuel (ex: 3% × 1 000 = 30 €/an)\n• Maturité : durée du prêt (ex: 10 ans)\n• Prix de marché : varie inversement aux taux d'intérêt",
+          questionType: "definition",
+          question: "Quels sont les principaux composants d'une obligation ?",
+          shortAnswer:
+            "Les composants clés sont la valeur nominale, le coupon, la maturité et le prix de marché.",
+          explanation:
+            "La valeur nominale est le montant remboursé à maturité. Le coupon est l'intérêt périodique. Le prix de marché peut varier avant la maturité.",
+          example:
+            "Pour une obligation de nominal 1 000 euros avec coupon 3 %, l'investisseur reçoit 30 euros par an.",
+          front: "Quels sont les principaux composants d'une obligation ?",
+          back: "Les composants clés sont la valeur nominale, le coupon, la maturité et le prix de marché.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["obligation", "coupon", "maturité"],
+          skills: ["definition"],
           tags: ["obligation", "coupon"],
-          detail: `**Flux d'une obligation 1 000 € à 3 %, maturité 5 ans :**
-
-| Année | Flux reçu |
-|-------|-----------|
-| 1 | +30 € (coupon) |
-| 2 | +30 € |
-| 3 | +30 € |
-| 4 | +30 € |
-| 5 | +1 030 € (coupon + remboursement) |
-
-**Total reçu :** 1 150 € pour 1 000 € investis → rendement brut 15 % sur 5 ans (≈ 3 %/an)
-
-**Attention :** ce calcul suppose un rachat à la maturité. Si vous vendez avant, le prix dépend des taux du marché à ce moment-là.`,
         },
         {
           id: "mf-found-l1-oblig-example",
           type: "example",
-          front: "L'OAT française 10 ans",
-          back: "La France emprunte via les OAT (Obligations Assimilables du Trésor). En 2024, l'OAT 10 ans offrait ~3 % par an. Un investisseur prêtant 100 000 € reçoit 3 000 €/an pendant 10 ans, puis récupère ses 100 000 €.",
+          questionType: "quick-calculation",
+          question: "Une obligation de nominal 100 000 euros paie un coupon de 3 %. Quel coupon annuel reçoit l'investisseur ?",
+          shortAnswer:
+            "L'investisseur reçoit 3 000 euros par an.",
+          formula: "Coupon annuel = Nominal × Taux de coupon",
+          example: "100 000 × 3 % = 3 000 euros.",
+          front: "Une obligation de nominal 100 000 euros paie un coupon de 3 %. Quel coupon annuel reçoit l'investisseur ?",
+          back: "L'investisseur reçoit 3 000 euros par an.",
           difficulty: 1,
-          tags: ["OAT", "France", "taux"],
-          detail: `**L'OAT en pratique :**
-- La France émet des OAT régulièrement via l'Agence France Trésor (AFT)
-- L'OAT 10 ans est le **taux de référence** pour la France (comme le T-Note 10 ans aux US)
-- Son évolution reflète la confiance des marchés dans les finances publiques françaises
-- L'écart (spread) entre l'OAT française et le Bund allemand mesure la **prime de risque souverain** de la France
-
-**Contexte 2024 :** spread OAT-Bund à ~75 bp, reflétant les incertitudes budgétaires françaises vs la rigueur allemande.`,
+          learningStage: 1,
+          topics: ["obligation", "coupon", "calcul"],
+          skills: ["quick-calculation"],
+          tags: ["obligation", "coupon"],
         },
         {
           id: "mf-found-l1-oblig-trap",
-          type: "trap",
-          front: "Piège : taux qui monte = prix qui baisse",
-          back: "Quand les taux d'intérêt montent, le prix des obligations existantes baisse (et inversement). Si tu détiens une obligation à 2 % et que les taux montent à 4 %, ton obligation vaut moins car les nouvelles émissions rapportent plus.",
+          type: "definition",
+          questionType: "mechanism",
+          question: "Que se passe-t-il au prix d'une obligation existante quand les taux montent ?",
+          shortAnswer:
+            "Son prix baisse généralement, car les nouvelles obligations offrent des coupons ou rendements plus attractifs.",
+          explanation:
+            "Le prix de l'obligation existante doit baisser pour que son rendement effectif redevienne compétitif avec les nouvelles émissions.",
+          commonMistake:
+            "Ne pas confondre coupon fixe et rendement de marché : le coupon ne change pas, mais le prix peut changer.",
+          front: "Que se passe-t-il au prix d'une obligation existante quand les taux montent ?",
+          back: "Son prix baisse généralement, car les nouvelles obligations offrent des coupons ou rendements plus attractifs.",
           difficulty: 2,
+          learningStage: 1,
+          topics: ["obligation", "taux", "prix"],
+          skills: ["mechanism"],
           tags: ["obligation", "taux", "prix"],
-          detail: `**Pourquoi cette relation inverse ?**
-Si vous détenez une obligation à 2 % alors que les nouvelles émissions offrent 4 %, personne ne voudra acheter votre obligation au pair. Son prix doit baisser jusqu'au point où le rendement effectif pour l'acheteur atteint 4 %.
-
-**Formule intuitive :** Prix ≈ Coupon / Taux du marché
-- Taux 2 % → Prix = 100 (au pair)
-- Taux 4 % → Prix ≈ 50 (si coupon = 2 € et taux marché = 4 %)
-
-**En entretien :** "Les obligations longues sont plus sensibles aux variations de taux que les obligations courtes" → c'est le concept de **duration** (sensibilité du prix aux taux).`,
         },
         {
           id: "mf-found-l1-oblig-iq",
-          type: "interview-question",
+          type: "definition",
+          questionType: "mechanism",
+          question: "Pourquoi les prix des obligations baissent-ils quand les taux montent ?",
+          shortAnswer:
+            "Parce que les flux fixes de l'obligation sont actualisés à un taux plus élevé, ce qui réduit leur valeur actuelle.",
+          explanation:
+            "Il y a aussi une logique d'arbitrage : si le marché offre maintenant 4 %, une obligation existante à 2 % doit baisser de prix pour offrir un rendement comparable.",
           front: "Pourquoi les prix des obligations baissent-ils quand les taux montent ?",
-          back: "Relation inverse taux/prix : une obligation existante à coupon bas devient moins attractive quand de nouvelles obligations sont émises à taux plus élevé — son prix baisse pour offrir un rendement équivalent aux nouvelles émissions.",
+          back: "Parce que les flux fixes de l'obligation sont actualisés à un taux plus élevé, ce qui réduit leur valeur actuelle.",
           difficulty: 2,
+          learningStage: 1,
+          topics: ["obligation", "taux", "actualisation"],
+          skills: ["mechanism"],
           tags: ["obligation", "taux", "prix"],
-          detail: `**Structure de réponse (2 min) :**
-1. Énoncer la relation inverse (30 sec)
-2. Expliquer par l'arbitrage : si votre obligation à 2 % coexiste avec de nouvelles émissions à 4 %, le marché fera baisser votre prix jusqu'à égaliser les rendements
-3. Illustrer avec un chiffre simple (coupon 20 € / taux 4 % = prix 500 €)
-4. Mentionner la duration comme mesure de cette sensibilité
-
-**Ce que le recruteur veut entendre :** la logique d'actualisation — le prix d'une obligation est la VAN de ses flux futurs actualisés au taux du marché.`,
         },
         {
           id: "mf-found-l1-oblig-ma",
-          type: "model-answer",
-          front: "Réponse : relation taux/prix des obligations",
-          back: "\"Quand les taux montent, les nouvelles obligations sont émises à coupon plus élevé. Les obligations existantes à coupon plus bas deviennent moins attractives — leur prix baisse jusqu'à ce que leur rendement effectif égale celui des nouvelles émissions. C'est une relation d'arbitrage pure.\"",
+          type: "definition",
+          questionType: "definition",
+          question: "Que mesure la duration d'une obligation ?",
+          shortAnswer:
+            "La duration mesure la sensibilité approximative du prix d'une obligation à une variation des taux.",
+          explanation:
+            "Une duration de 7 signifie qu'une hausse de taux de 1 point peut faire baisser le prix d'environ 7 %, toutes choses égales par ailleurs.",
+          front: "Que mesure la duration d'une obligation ?",
+          back: "La duration mesure la sensibilité approximative du prix d'une obligation à une variation des taux.",
           difficulty: 2,
-          tags: ["obligation", "taux", "prix"],
-          detail: `**Points bonus :**
-- La **duration** mesure cette sensibilité : une duration de 7 ans signifie qu'une hausse de 1 % des taux fait baisser le prix de ~7 %
-- Les obligations **zéro-coupon** (pas de coupon intermédiaire) ont la duration la plus haute = les plus sensibles aux taux
-- En 2022, la remontée rapide des taux de la Fed (+4,5 % en 1 an) a provoqué une des pires années de l'histoire pour les obligations souveraines
-
-**Erreur à éviter :** confondre taux nominal et rendement actuariel (YTM). Le YTM est le taux qui égalise la VAN des flux avec le prix actuel.`,
+          learningStage: 1,
+          topics: ["obligation", "duration", "taux"],
+          skills: ["definition"],
+          tags: ["obligation", "taux", "duration"],
         },
       ],
     },

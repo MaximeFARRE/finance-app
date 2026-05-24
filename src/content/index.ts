@@ -2,7 +2,7 @@ import type { Track, Lesson } from "@/lib/types";
 import { marketFinanceTrack } from "./market-finance";
 import { corporateFinanceTrack } from "./corporate-finance";
 
-export const BUILTIN_CONTENT_VERSION = "2026-05-24-pedagogical-pivot-2";
+export const BUILTIN_CONTENT_VERSION = "2026-05-24-pedagogical-pivot-3";
 
 export const allTracks: Track[] = [marketFinanceTrack, corporateFinanceTrack];
 
