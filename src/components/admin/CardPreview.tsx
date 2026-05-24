@@ -1,6 +1,7 @@
 "use client";
 
-import type { CardType, Difficulty } from "@/lib/types";
+import { normalizeLearningCard } from "@/lib/card-normalizer";
+import type { Card, CardType, Difficulty, QuestionType } from "@/lib/types";
 import { getCardTheme } from "@/lib/card-themes";
 
 interface Props {
@@ -10,6 +11,15 @@ interface Props {
   detail?: string;
   difficulty: Difficulty;
   tags: string[];
+  questionType?: QuestionType;
+  question?: string;
+  shortAnswer?: string;
+  explanation?: string;
+  formula?: string;
+  example?: string;
+  commonMistake?: string;
+  topics?: string[];
+  skills?: string[];
 }
 
 const DIFFICULTY_LABEL: Record<Difficulty, string> = {
@@ -18,10 +28,29 @@ const DIFFICULTY_LABEL: Record<Difficulty, string> = {
   3: "Difficile",
 };
 
-export function CardPreview({ type, front, back, detail, difficulty, tags }: Props) {
-  const theme = getCardTheme(type);
+export function CardPreview(props: Props) {
+  const previewCard: Card = {
+    id: "preview",
+    type: props.type,
+    front: props.front,
+    back: props.back,
+    detail: props.detail,
+    difficulty: props.difficulty,
+    tags: props.tags,
+    questionType: props.questionType,
+    question: props.question,
+    shortAnswer: props.shortAnswer,
+    explanation: props.explanation,
+    formula: props.formula,
+    example: props.example,
+    commonMistake: props.commonMistake,
+    topics: props.topics,
+    skills: props.skills,
+  };
+  const normalized = normalizeLearningCard(previewCard);
+  const theme = getCardTheme(normalized.themeKey);
 
-  const isEmpty = !front.trim() && !back.trim();
+  const isEmpty = !normalized.question.trim() && !normalized.shortAnswer.trim();
 
   if (isEmpty) {
     return (
@@ -43,39 +72,47 @@ export function CardPreview({ type, front, back, detail, difficulty, tags }: Pro
           <span>{theme.icon}</span>
           {theme.label}
         </span>
-        <span className="text-xs text-gray-400">{DIFFICULTY_LABEL[difficulty]}</span>
+        <span className="text-xs text-gray-400">{DIFFICULTY_LABEL[props.difficulty]}</span>
       </div>
 
       {/* Front */}
-      {front.trim() && (
+      {normalized.question.trim() && (
         <div className="px-6 pb-3">
           <p className="text-lg font-semibold leading-snug text-gray-900 whitespace-pre-line">
-            {front}
+            {normalized.question}
           </p>
         </div>
       )}
 
       {/* Back */}
-      {back.trim() && (
+      {normalized.shortAnswer.trim() && (
         <div className={`mx-6 mb-4 rounded-xl p-4 ${theme.answerBg}`}>
-          <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">{back}</p>
+          <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">
+            {normalized.shortAnswer}
+          </p>
         </div>
       )}
 
-      {/* Detail */}
-      {detail?.trim() && (
-        <div className="mx-6 mb-4 rounded-xl border border-gray-200 bg-white p-4">
-          <p className="mb-1 text-xs font-semibold text-gray-400 uppercase tracking-wide">
-            Détail
-          </p>
-          <p className="whitespace-pre-line text-sm leading-relaxed text-gray-600">{detail}</p>
-        </div>
+      {normalized.formula && (
+        <PreviewSection label="Formule" text={normalized.formula} />
+      )}
+
+      {normalized.explanation && (
+        <PreviewSection label="Explication" text={normalized.explanation} />
+      )}
+
+      {normalized.example && (
+        <PreviewSection label="Exemple" text={normalized.example} />
+      )}
+
+      {normalized.commonMistake && (
+        <PreviewSection label="Erreur fréquente" text={normalized.commonMistake} />
       )}
 
       {/* Tags */}
-      {tags.length > 0 && (
+      {normalized.topics.length > 0 && (
         <div className="px-6 pb-4 flex flex-wrap gap-1.5">
-          {tags.map((tag) => (
+          {normalized.topics.map((tag) => (
             <span
               key={tag}
               className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-500"
@@ -94,6 +131,17 @@ export function CardPreview({ type, front, back, detail, difficulty, tags }: Pro
           Marquer comme lu
         </div>
       </div>
+    </div>
+  );
+}
+
+function PreviewSection({ label, text }: { label: string; text: string }) {
+  return (
+    <div className="mx-6 mb-4 rounded-xl border border-gray-200 bg-white p-4">
+      <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-400">
+        {label}
+      </p>
+      <p className="whitespace-pre-line text-sm leading-relaxed text-gray-600">{text}</p>
     </div>
   );
 }

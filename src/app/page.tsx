@@ -70,6 +70,35 @@ export default function HomePage() {
             </div>
           ))}
         </div>
+
+        <div className="mt-10 border-t border-gray-200 pt-8">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-400">
+            Administration
+          </p>
+          <div className="grid grid-cols-3 gap-2">
+            <Link
+              href="/admin"
+              className="flex flex-col items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-3 py-3 text-xs font-medium text-gray-600 transition hover:border-blue-300 hover:text-blue-700"
+            >
+              <span className="text-lg">⚙️</span>
+              Admin
+            </Link>
+            <Link
+              href="/admin/import"
+              className="flex flex-col items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-3 py-3 text-xs font-medium text-gray-600 transition hover:border-blue-300 hover:text-blue-700"
+            >
+              <span className="text-lg">📥</span>
+              Import
+            </Link>
+            <Link
+              href="/admin/export"
+              className="flex flex-col items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-3 py-3 text-xs font-medium text-gray-600 transition hover:border-blue-300 hover:text-blue-700"
+            >
+              <span className="text-lg">📤</span>
+              Export
+            </Link>
+          </div>
+        </div>
       </div>
     </main>
   );

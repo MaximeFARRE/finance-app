@@ -44,9 +44,18 @@ export default function TrackDetailPage() {
     <main className="min-h-screen bg-gray-50 px-4 py-10">
       <div className="mx-auto max-w-md">
         <div className="mb-8">
-          <Link href="/tracks" className="text-sm text-blue-600 hover:underline">
-            ← Tous les parcours
-          </Link>
+          <div className="flex items-center justify-between">
+            <Link href="/tracks" className="text-sm text-blue-600 hover:underline">
+              ← Tous les parcours
+            </Link>
+            <Link
+              href={`/admin/tracks/${trackId}`}
+              className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-300 hover:text-blue-700"
+              title="Gérer les cartes de ce parcours"
+            >
+              ⚙️ Gérer les cartes
+            </Link>
+          </div>
           <div className="mt-3 flex items-center gap-3">
             <span className="text-3xl">{track.emoji}</span>
             <h1 className="text-2xl font-bold text-gray-900">{track.title}</h1>

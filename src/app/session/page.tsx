@@ -10,7 +10,8 @@ import { loadProgress, saveProgress } from "@/lib/storage";
 import { computeNextReview, createInitialCardProgress } from "@/lib/spaced-repetition";
 import { computeXpGain, computeLessonStars, updateStreak } from "@/lib/progression";
 import { groupLearnCards } from "@/lib/learn-utils";
-import { buildQuizDeck, findRelatedConceptCards } from "@/lib/quiz-utils";
+import { findRelatedConceptCards } from "@/lib/quiz-utils";
+import { buildLessonDeck } from "@/lib/lesson-deck";
 import { buildReviewDeck } from "@/lib/review-utils";
 import { useContent } from "@/lib/use-content";
 import type { AnswerQuality, Card, CardProgress, ReviewResult, UserProgress } from "@/lib/types";
@@ -312,13 +313,18 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
     const progress = loadProgress();
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSession({
-      deck: buildQuizDeck(lesson.cards, progress.cards),
+      deck: buildLessonDeck({
+        trackId,
+        lessonId,
+        cards: lesson.cards,
+        progress: progress.cards,
+      }),
       cardIndex: 0,
       results: [],
       updatedCards: { ...progress.cards },
       progress,
     });
-  }, [lesson]);
+  }, [lesson, lessonId, trackId]);
 
   useEffect(() => {
     cardStartedAt.current = Date.now();
