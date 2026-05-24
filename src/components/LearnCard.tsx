@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Card } from "@/lib/types";
+import { normalizeLearningCard } from "@/lib/card-normalizer";
 import { getCardTheme } from "@/lib/card-themes";
 import { SuggestionButton } from "./SuggestionButton";
 
@@ -15,7 +16,8 @@ interface LearnCardProps {
 
 export function LearnCard({ card, isRead, onRead, trackId, lessonId }: LearnCardProps) {
   const [detailExpanded, setDetailExpanded] = useState(false);
-  const theme = getCardTheme(card.type);
+  const normalized = normalizeLearningCard(card);
+  const theme = getCardTheme(normalized.themeKey);
 
   return (
     <div
@@ -36,16 +38,22 @@ export function LearnCard({ card, isRead, onRead, trackId, lessonId }: LearnCard
 
       {/* Title */}
       <div className="px-6 pb-3">
-        <p className="text-lg font-semibold leading-snug text-gray-900">{card.front}</p>
+        <p className="text-lg font-semibold leading-snug text-gray-900">{normalized.question}</p>
       </div>
 
       {/* Short summary — always visible */}
       <div className={`mx-6 mb-4 rounded-xl p-4 ${theme.answerBg}`}>
-        <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">{card.back}</p>
+        <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">
+          {normalized.shortAnswer}
+        </p>
       </div>
 
+      {normalized.formula && (
+        <AnswerSection label="Formule" text={normalized.formula} />
+      )}
+
       {/* Deep detail — revealed on demand */}
-      {card.detail && (
+      {(normalized.explanation || normalized.example || normalized.commonMistake) && (
         <div className="px-6 pb-4">
           <button
             onClick={() => setDetailExpanded((e) => !e)}
@@ -55,10 +63,16 @@ export function LearnCard({ card, isRead, onRead, trackId, lessonId }: LearnCard
           </button>
 
           {detailExpanded && (
-            <div className="mt-3 rounded-xl border border-gray-200 bg-white p-5">
-              <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">
-                {card.detail}
-              </p>
+            <div className="mt-3 flex flex-col gap-3">
+              {normalized.explanation && (
+                <AnswerSection label="Explication" text={normalized.explanation} />
+              )}
+              {normalized.example && (
+                <AnswerSection label="Exemple" text={normalized.example} />
+              )}
+              {normalized.commonMistake && (
+                <AnswerSection label="Erreur fréquente" text={normalized.commonMistake} />
+              )}
             </div>
           )}
         </div>
@@ -83,11 +97,22 @@ export function LearnCard({ card, isRead, onRead, trackId, lessonId }: LearnCard
               cardId={card.id}
               trackId={trackId}
               lessonId={lessonId}
-              cardFront={card.front}
+              cardFront={normalized.question}
             />
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+function AnswerSection({ label, text }: { label: string; text: string }) {
+  return (
+    <div className="mx-6 rounded-xl border border-gray-200 bg-white p-4">
+      <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-400">
+        {label}
+      </p>
+      <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">{text}</p>
     </div>
   );
 }

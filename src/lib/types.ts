@@ -8,6 +8,16 @@ export type CardType =
   | "model-answer";
 
 export type Difficulty = 1 | 2 | 3;
+export type LearningDifficulty = 1 | 2 | 3 | 4 | 5;
+export type LearningStage = 1 | 2 | 3 | 4 | 5;
+
+export type QuestionType =
+  | "definition"
+  | "comparison"
+  | "mechanism"
+  | "formula"
+  | "quick-calculation"
+  | "market-culture";
 
 export interface Card {
   id: string;
@@ -17,7 +27,24 @@ export interface Card {
   detail?: string;
   difficulty: Difficulty;
   tags: string[];
+  questionType?: QuestionType;
+  question?: string;
+  shortAnswer?: string;
+  explanation?: string;
+  formula?: string;
+  example?: string;
+  commonMistake?: string;
+  trackId?: string;
+  moduleId?: string;
+  conceptId?: string;
+  topics?: string[];
+  skills?: string[];
+  learningStage?: LearningStage;
+  version?: number;
+  status?: "draft" | "ready" | "archived";
 }
+
+export type LessonKind = "lesson" | "boss" | "bonus";
 
 export interface Lesson {
   id: string;
@@ -25,7 +52,20 @@ export interface Lesson {
   title: string;
   description: string;
   estimatedMinutes: number;
+  kind?: LessonKind;
+  worldId?: string;
+  order?: number;
   cards: Card[];
+}
+
+export interface LearningWorld {
+  id: string;
+  trackId: string;
+  title: string;
+  description: string;
+  order: number;
+  lessonIds: string[];
+  bossLessonId?: string;
 }
 
 export interface Track {
@@ -34,6 +74,7 @@ export interface Track {
   description: string;
   emoji: string;
   color: string;
+  worlds?: LearningWorld[];
   lessons: Lesson[];
 }
 
