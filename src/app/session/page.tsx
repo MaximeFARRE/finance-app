@@ -11,6 +11,8 @@ import { computeNextReview, createInitialCardProgress } from "@/lib/spaced-repet
 import { computeXpGain, computeLessonStars, updateStreak } from "@/lib/progression";
 import { groupLearnCards } from "@/lib/learn-utils";
 import { buildQuizDeck, findRelatedConceptCards } from "@/lib/quiz-utils";
+import { buildReviewDeck } from "@/lib/review-utils";
+import { useContent } from "@/lib/use-content";
 import type { AnswerQuality, Card, CardProgress, ReviewResult, UserProgress } from "@/lib/types";
 import type { QuizEntry } from "@/lib/quiz-utils";
 
@@ -520,6 +522,152 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
 }
 
 // ---------------------------------------------------------------------------
+// Review mode flow (cross-lessons, cartes dues SM-2)
+// ---------------------------------------------------------------------------
+
+function ReviewFlow() {
+  const router = useRouter();
+  const { tracks, isLoading } = useContent();
+
+  const [session, setSession] = useState<QuizSession | null>(null);
+  const [revealed, setRevealed] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const cardStartedAt = useRef(0);
+
+  useEffect(() => {
+    if (isLoading || tracks.length === 0) return;
+    const progress = loadProgress();
+    const { cards } = buildReviewDeck(tracks, progress);
+    if (cards.length === 0) {
+      router.push("/tracks");
+      return;
+    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setSession({
+      deck: cards.map((c) => ({ question: c, answer: null })),
+      cardIndex: 0,
+      results: [],
+      updatedCards: { ...progress.cards },
+      progress,
+    });
+  }, [isLoading, tracks, router]);
+
+  useEffect(() => {
+    cardStartedAt.current = Date.now();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setRevealed(false);
+  }, [session?.cardIndex]);
+
+  if (isLoading || !session) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-gray-400 text-sm">Chargement des révisions…</p>
+      </div>
+    );
+  }
+
+  const entry = session.deck[session.cardIndex];
+  const totalCards = session.deck.length;
+  const doneCards = session.cardIndex;
+  const progressPct = Math.round((doneCards / totalCards) * 100);
+
+  function finishSession(finalSession: QuizSession) {
+    const { results, updatedCards, progress } = finalSession;
+    const totalXp = results.reduce((s, r) => s + r.xpGained, 0);
+    const newStreak = updateStreak(progress);
+    const updated: UserProgress = {
+      ...progress,
+      xp: progress.xp + totalXp,
+      streak: newStreak,
+      lastSessionAt: new Date().toISOString(),
+      cards: updatedCards,
+    };
+    saveProgress(updated);
+    router.push(`/results?xp=${totalXp}&count=${results.length}&stars=0&trackId=&lessonId=`);
+  }
+
+  function advance(nextSession: QuizSession) {
+    if (nextSession.cardIndex >= nextSession.deck.length) {
+      finishSession(nextSession);
+    } else {
+      setSession(nextSession);
+    }
+  }
+
+  function handleRate(quality: 0 | 4) {
+    if (!session || !entry) return;
+    const question = entry.question;
+    const timeSpentMs = Date.now() - cardStartedAt.current;
+    const xpGained = computeXpGain(quality as AnswerQuality, session.progress.streak);
+    const cardProgress =
+      session.updatedCards[question.id] ?? createInitialCardProgress(question.id);
+    const updatedCardProgress = computeNextReview(cardProgress, quality as AnswerQuality);
+    const result: ReviewResult = { cardId: question.id, quality: quality as AnswerQuality, timeSpentMs, xpGained };
+    const nextSession: QuizSession = {
+      ...session,
+      cardIndex: session.cardIndex + 1,
+      results: [...session.results, result],
+      updatedCards: { ...session.updatedCards, [question.id]: updatedCardProgress },
+    };
+    advance(nextSession);
+  }
+
+  if (!entry) return null;
+
+  return (
+    <main className="min-h-screen bg-gray-50">
+      {paused && (
+        <PauseModal
+          progress={progressPct}
+          onResume={() => setPaused(false)}
+          onQuit={() => router.push("/tracks")}
+        />
+      )}
+      <div className="mx-auto max-w-xl px-4 py-8">
+        {/* Header */}
+        <div className="mb-4 flex items-center gap-3">
+          <button
+            onClick={() => setPaused(true)}
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-gray-400 transition hover:bg-gray-200"
+            aria-label="Pause"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16" rx="1" />
+              <rect x="14" y="4" width="4" height="16" rx="1" />
+            </svg>
+          </button>
+          <div className="flex-1">
+            <div className="mb-1 flex items-center justify-between text-xs text-gray-400">
+              <span>🔁 Révisions · {doneCards + 1} / {totalCards}</span>
+              <span>{progressPct}%</span>
+            </div>
+            <div className="h-2 rounded-full bg-gray-200">
+              <div className="h-2 rounded-full bg-blue-500 transition-all duration-300" style={{ width: `${progressPct}%` }} />
+            </div>
+          </div>
+        </div>
+
+        <LearningCard key={entry.question.id} card={entry.question} onReveal={() => setRevealed(true)} />
+
+        {revealed && (
+          <div className="mt-6">
+            <p className="mb-3 text-center text-sm font-medium text-gray-700">Comment avez-vous trouvé ?</p>
+            <div className="flex gap-3">
+              <button onClick={() => handleRate(0)} className="flex-1 rounded-xl border-2 border-red-200 bg-red-50 py-3 text-sm font-semibold text-red-700 transition hover:bg-red-100">
+                ✗ Raté
+              </button>
+              <button onClick={() => handleRate(4)} className="flex-1 rounded-xl border-2 border-green-200 bg-green-50 py-3 text-sm font-semibold text-green-700 transition hover:bg-green-100">
+                ✓ Trouvé
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </main>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Root session page — branches on ?mode=
 // ---------------------------------------------------------------------------
 
@@ -528,6 +676,10 @@ function SessionContent() {
   const trackId = searchParams.get("trackId") ?? "";
   const lessonId = searchParams.get("lessonId") ?? "";
   const mode = searchParams.get("mode") ?? "quiz";
+
+  if (mode === "review") {
+    return <ReviewFlow />;
+  }
 
   if (mode === "learn") {
     return <LearnFlow trackId={trackId} lessonId={lessonId} />;
