@@ -403,84 +403,108 @@ export const marketFinanceTrack: Track = {
         {
           id: "mf-found-l1-risque-def",
           type: "definition",
+          questionType: "definition",
+          question: "Qu'est-ce que le risque en finance ?",
+          shortAnswer:
+            "Le risque est la possibilité que le rendement réalisé diffère du rendement attendu.",
+          explanation:
+            "Il ne signifie pas seulement perte certaine : il mesure l'incertitude. On peut notamment parler de risque de marché, de crédit, de liquidité ou opérationnel.",
           front: "Qu'est-ce que le risque en finance ?",
-          back: "Possibilité que le rendement réel d'un investissement diffère du rendement attendu. Le risque peut être quantifié par la volatilité (écart-type des rendements). On distingue : risque de marché, de crédit, de liquidité, opérationnel.",
+          back: "Le risque est la possibilité que le rendement réalisé diffère du rendement attendu.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["risque", "rendement", "incertitude"],
+          skills: ["definition"],
           tags: ["risque", "volatilité"],
-          detail: `**Mesures quantitatives du risque :**
-- **Volatilité (σ)** : écart-type des rendements journaliers/annuels. Une action avec σ = 30 %/an peut facilement varier de ±30 % sur un an
-- **Value at Risk (VaR)** : perte maximale avec un niveau de confiance donné (ex : VaR 99 % à 1 jour = 2 M€ → moins d'1 % de chances de perdre plus de 2 M€ demain)
-- **Beta (β)** : sensibilité d'un actif par rapport au marché. β > 1 = plus volatile que le marché
-
-**Risque systématique vs idiosyncratique :**
-- Systématique (non diversifiable) : risque de marché global (krach, guerre)
-- Idiosyncratique (diversifiable) : risque spécifique à une entreprise (fraude, perte d'un dirigeant)`,
         },
         {
           id: "mf-found-l1-risque-example",
           type: "example",
-          front: "Les 4 grands types de risques",
-          back: "• Risque de marché : actions qui chutent lors d'un krach\n• Risque de crédit : émetteur qui fait défaut (ex : Lehman Brothers 2008)\n• Risque de liquidité : impossible de revendre rapidement sans décote\n• Risque opérationnel : erreur de trading, fraude (ex : Kerviel)",
+          questionType: "comparison",
+          question: "Quels sont les quatre grands types de risques en finance de marché ?",
+          shortAnswer:
+            "Les grands types sont le risque de marché, le risque de crédit, le risque de liquidité et le risque opérationnel.",
+          explanation:
+            "Le risque de marché vient des mouvements de prix. Le crédit vient du défaut d'un émetteur. La liquidité vient de la difficulté à vendre. L'opérationnel vient d'erreurs, fraudes ou défaillances internes.",
+          example:
+            "Exemples : krach actions, défaut Lehman Brothers, actifs invendables en 2008, fraude Kerviel.",
+          front: "Quels sont les quatre grands types de risques en finance de marché ?",
+          back: "Les grands types sont le risque de marché, le risque de crédit, le risque de liquidité et le risque opérationnel.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["risque", "crédit", "liquidité"],
+          skills: ["comparison"],
           tags: ["risque", "crédit", "liquidité"],
-          detail: `**Exemples historiques marquants par type :**
-
-**Risque de marché :** crise 2008 (S&P 500 -57 %), COVID mars 2020 (-34 % en 5 semaines)
-
-**Risque de crédit :** Lehman Brothers (2008, défaut sur ~600 Mds $ de dette), Evergrande (2021, ~300 Mds $ de dette)
-
-**Risque de liquidité :** MBS (Mortgage-Backed Securities) en 2008 — devenus invendables du jour au lendemain malgré des notations AAA
-
-**Risque opérationnel :**
-- Jérôme Kerviel (SG, 2008) : 4,9 Mds € de pertes cachées
-- Nick Leeson (Barings, 1995) : 827 M£ → faillite de la banque`,
         },
         {
           id: "mf-found-l1-risque-intuition",
-          type: "intuition",
-          front: "Risque ≠ perte certaine",
-          back: "Le risque est l'incertitude du résultat, pas forcément une perte. Un actif risqué peut générer d'excellentes performances. Un actif 'sans risque apparent' peut cacher des risques non visibles (ex : un placement illiquide qui semble stable).",
+          type: "definition",
+          questionType: "comparison",
+          question: "Quelle est la différence entre risque et perte certaine ?",
+          shortAnswer:
+            "Le risque est une incertitude sur le résultat. Une perte certaine est déjà connue ou quasiment inévitable.",
+          explanation:
+            "Un actif risqué peut très bien produire une excellente performance. À l'inverse, un actif apparemment stable peut cacher un risque de défaut ou d'illiquidité.",
+          commonMistake:
+            "Assimiler tout risque à une perte alors que le risque mesure une distribution de résultats possibles.",
+          front: "Quelle est la différence entre risque et perte certaine ?",
+          back: "Le risque est une incertitude sur le résultat. Une perte certaine est déjà connue ou quasiment inévitable.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["risque", "incertitude", "perte"],
+          skills: ["comparison"],
           tags: ["risque", "incertitude"],
-          detail: `**L'erreur classique :** confondre volatilité et risque permanent.
-- Un actif très volatile peut être un excellent investissement sur le long terme (ex : actions tech)
-- Un actif apparemment "stable" peut cacher un risque de défaut (ex : obligations d'entreprises zombies)
-
-**La "volatilité positive" existe :** si votre portefeuille monte de 30 %, c'est aussi de la volatilité — mais personne ne s'en plaint.
-
-**Principe de Taleb (Black Swan) :** les événements rares mais extrêmes sont systématiquement sous-estimés par les modèles de risque classiques. La crise de 2008 était "impossible" selon les modèles VaR des banques.`,
         },
         {
           id: "mf-found-l1-risque-iq",
-          type: "interview-question",
-          front: "Citez les principaux types de risques en finance de marché et donnez un exemple pour chacun.",
-          back: "Risque de marché (krach), de crédit (défaut), de liquidité (ABS 2008), opérationnel (fraude Kerviel). Structurer : définir chaque type, donner 1 exemple historique, mentionner comment il se mesure/gère.",
+          type: "definition",
+          questionType: "definition",
+          question: "Qu'est-ce que la volatilité ?",
+          shortAnswer:
+            "La volatilité mesure l'ampleur des variations de prix ou de rendement d'un actif sur une période.",
+          explanation:
+            "Elle est souvent calculée comme l'écart-type des rendements. Une volatilité élevée signifie que les résultats possibles sont plus dispersés.",
+          front: "Qu'est-ce que la volatilité ?",
+          back: "La volatilité mesure l'ampleur des variations de prix ou de rendement d'un actif sur une période.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["risque", "volatilité", "rendement"],
+          skills: ["definition"],
           tags: ["risque"],
-          detail: `**Conseils pour répondre à cette question :**
-- Structurer la réponse en 4 catégories clairement nommées
-- Pour chaque catégorie : définition + exemple + outil de mesure ou de gestion
-- Montrer que vous connaissez les événements historiques récents
-- Conclure en mentionnant l'agrégation des risques et la diversification
-
-**Piège courant :** oublier le risque opérationnel (souvent négligé par les candidats), et ne pas mentionner le risque de contrepartie (très important en dérivés).`,
         },
         {
           id: "mf-found-l1-risque-ma",
-          type: "model-answer",
-          front: "Réponse : types de risques",
-          back: "Risque de marché (krach 2008 : -40 % sur les actions), risque de crédit (défaut Lehman Brothers), risque de liquidité (ABS devenus invendables en 2008), risque opérationnel (fraude Kerviel chez SG). On peut aussi citer le risque de contrepartie et le risque réglementaire.",
+          type: "definition",
+          questionType: "mechanism",
+          question: "Comment la diversification réduit-elle le risque d'un portefeuille ?",
+          shortAnswer:
+            "Elle réduit le risque spécifique en combinant des actifs dont les performances ne bougent pas parfaitement ensemble.",
+          explanation:
+            "La diversification ne supprime pas le risque de marché global, mais elle peut réduire l'impact d'un problème propre à une entreprise ou un secteur.",
+          front: "Comment la diversification réduit-elle le risque d'un portefeuille ?",
+          back: "Elle réduit le risque spécifique en combinant des actifs dont les performances ne bougent pas parfaitement ensemble.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["risque", "diversification", "portefeuille"],
+          skills: ["mechanism"],
           tags: ["risque"],
-          detail: `**Réponse complète structurée :**
-
-"Je distingue quatre grandes catégories :
-1. **Risque de marché** : baisse de valeur due aux mouvements de marché. Exemple : le S&P 500 a perdu 57 % en 2008-2009.
-2. **Risque de crédit** : défaut d'un émetteur. Exemple : Lehman Brothers a fait défaut sur 600 Mds $ en 2008.
-3. **Risque de liquidité** : impossibilité de céder un actif au prix souhaité. En 2008, les MBS sont devenus invendables.
-4. **Risque opérationnel** : erreurs internes ou fraudes. Kerviel a coûté 4,9 Mds € à la Société Générale.
-
-Je citerais aussi le risque de contrepartie sur les dérivés OTC, et le risque réglementaire croissant depuis Bâle III."`,
+        },
+        {
+          id: "mf-found-l1-risque-credit-market",
+          type: "definition",
+          questionType: "comparison",
+          question: "Quelle est la différence entre risque de marché et risque de crédit ?",
+          shortAnswer:
+            "Le risque de marché vient des mouvements de prix. Le risque de crédit vient de la capacité d'un émetteur ou d'une contrepartie à payer.",
+          explanation:
+            "Une action qui baisse avec le marché illustre le risque de marché. Une obligation dont l'émetteur fait défaut illustre le risque de crédit.",
+          front: "Quelle est la différence entre risque de marché et risque de crédit ?",
+          back: "Le risque de marché vient des mouvements de prix. Le risque de crédit vient de la capacité d'un émetteur ou d'une contrepartie à payer.",
+          difficulty: 1,
+          learningStage: 1,
+          topics: ["risque", "risque-de-marché", "risque-de-crédit"],
+          skills: ["comparison"],
+          tags: ["risque", "crédit"],
         },
       ],
     },
