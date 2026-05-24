@@ -217,6 +217,17 @@ export function LessonMap({
               {nodeIcon}
             </button>
 
+            {/* Learn-done badge (learn completed, quiz not yet) */}
+            {learnDone && !completed && (
+              <div
+                aria-label="Apprendre terminé"
+                className="absolute flex items-center justify-center rounded-full bg-emerald-400 border-2 border-white"
+                style={{ width: 18, height: 18, bottom: 0, right: 0, transform: "translate(20%, 20%)", zIndex: 2, fontSize: 9, color: "white" }}
+              >
+                📖
+              </div>
+            )}
+
             {/* Label to the side */}
             <div style={labelStyle}>
               <p
