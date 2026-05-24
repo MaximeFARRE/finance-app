@@ -13,9 +13,32 @@ export default function TracksPage() {
     <main className="min-h-screen bg-gray-50 px-4 py-10">
       <div className="mx-auto max-w-2xl">
         <div className="mb-8">
-          <Link href="/" className="text-sm text-blue-600 hover:underline">
-            ← Accueil
-          </Link>
+          <div className="flex items-center justify-between">
+            <Link href="/" className="text-sm text-blue-600 hover:underline">
+              ← Accueil
+            </Link>
+            <div className="flex items-center gap-2">
+              <Link
+                href="/admin/import"
+                className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-300 hover:text-blue-700"
+              >
+                📥 Import
+              </Link>
+              <Link
+                href="/admin/export"
+                className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-300 hover:text-blue-700"
+              >
+                📤 Export
+              </Link>
+              <Link
+                href="/admin"
+                className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-300 hover:text-blue-700"
+                title="Administration"
+              >
+                ⚙️
+              </Link>
+            </div>
+          </div>
           <h1 className="mt-3 text-3xl font-bold text-gray-900">
             Choisissez votre parcours
           </h1>
