@@ -6,6 +6,7 @@ export default defineConfig({
     environment: "jsdom",
     include: ["src/**/*.test.ts"],
     passWithNoTests: true,
+    setupFiles: ["fake-indexeddb/auto"],
   },
   resolve: {
     alias: {
