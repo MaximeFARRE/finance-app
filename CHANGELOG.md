@@ -1,3 +1,28 @@
+# [1.3.0](https://github.com/MaximeFARRE/finance-app/compare/v1.2.0...v1.3.0) (2026-05-24)
+
+
+### Features
+
+* **admin:** full content management UI at `/admin` — track/lesson/card browser, CRUD editor with live preview and version history
+* **admin:** import page with YAML/JSON/CSV file upload, diff preview (added/modified/unchanged), and one-click apply
+* **admin:** export page with scope selector (all/track/lesson), format selector (YAML/JSON/CSV), and filename preview
+* **admin:** suggestions management page with accept/reject workflow and optional admin note
+* **content:** ContentProvider abstraction (`LocalContentProvider` backed by IndexedDB) for Supabase-ready migration
+* **content:** import/export engine — `analyzeImport`, `applyImport`, `exportContent` with Zod validation, diff computation, and deterministic ID generation
+* **content:** YAML import supports full (track-scoped) and quick (lesson-scoped) formats; auto-detects format
+* **content:** CSV import/export with BOM, pipe-separated tags, auto-separator detection (`;` vs `,`)
+* **difficulty-gate:** d2/d3 cards unlock progressively at 70% mastery of lower-difficulty cards
+* **quiz-utils:** `buildQuizDeck` now filters by unlocked difficulty and sorts due cards first (most overdue first)
+* **review-utils:** `buildReviewDeck` and `countDueCards` for cross-lesson review sessions
+* **session:** review mode (`?mode=review`) — cross-lesson daily review queue (due cards first, up to 5 new cards to fill limit of 15)
+* **home:** daily review badge showing due card count, links to review session
+* **suggestions:** `SuggestionButton` and `SuggestionModal` integrated into `LearnCard` and `LearningCard`
+* **content:** Corporate Finance track added — 5 lessons, 42+ cards (structure du capital, DCF, comparables, M&A, LBO)
+* **content:** Market Finance track enriched — `detail` field on all cards, missing trap/IQ/MA cards added to 7 lessons
+* **docs:** `AI_CONTENT_TEMPLATE.md` — YAML schema, 7 card type examples, generation prompts for Claude/GPT-4
+* **docs:** `CONTENT_STYLE_GUIDE.md` — ID conventions, card rules, IQ/MA pairing, difficulty guidelines
+
+
 # [1.2.0](https://github.com/MaximeFARRE/finance-app/compare/v1.1.0...v1.2.0) (2026-05-16)
 
 

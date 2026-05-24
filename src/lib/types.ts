@@ -87,3 +87,72 @@ export interface LevelInfo {
   xpForNext: number;
   progressPercent: number;
 }
+
+// --- Gestion de contenu ---
+
+/** Source d'une carte : built-in (TS statique) ou custom (IndexedDB / Supabase) */
+export type CardSource = "builtin" | "custom";
+
+/** Snapshot d'une carte avant modification, pour le versioning */
+export interface CardVersion {
+  id: string;
+  cardId: string;
+  version: number;
+  snapshot: Card;
+  changedAt: string;       // ISO date
+  changedBy: string;       // "admin" | "import:<filename>"
+  source: "manual" | "import";
+}
+
+// --- Suggestions utilisateurs ---
+
+export type SuggestionCategory =
+  | "error"
+  | "missing-detail"
+  | "wording"
+  | "new-card"
+  | "other";
+
+export type SuggestionStatus = "pending" | "accepted" | "rejected";
+
+export interface Suggestion {
+  id: string;
+  cardId: string | null;         // null si suggestion de nouvelle carte
+  trackId: string;
+  lessonId: string;
+  category: SuggestionCategory;
+  message: string;
+  proposedCard?: Partial<Card>;  // rempli si category === "new-card"
+  status: SuggestionStatus;
+  createdAt: string;
+  reviewedAt: string | null;
+  adminNote?: string;
+}
+
+// --- Import / Export ---
+
+export interface ImportResult {
+  /** Cartes à créer, avec leur contexte track/leçon */
+  added: { card: Card; trackId: string; lessonId: string }[];
+  /** Cartes existantes à mettre à jour (avec snapshot avant/après) */
+  modified: { before: Card; after: Card; trackId: string; lessonId: string }[];
+  /** Cartes identiques, inchangées */
+  unchanged: Card[];
+  /** Erreurs de validation ou de parsing */
+  errors: { line?: number; field?: string; message: string }[];
+  /** Nouveaux tracks à créer (absents du store) */
+  newTracks: Omit<Track, "lessons">[];
+  /** Nouvelles leçons à créer (absentes du store) */
+  newLessons: { trackId: string; lesson: Omit<Lesson, "cards"> }[];
+}
+
+export type ExportFormat = "yaml" | "json" | "csv";
+export type ExportScope = "all" | "track" | "lesson";
+
+export interface ExportOptions {
+  format: ExportFormat;
+  scope: ExportScope;
+  trackId?: string;
+  lessonId?: string;
+  csvSeparator?: ";" | ",";
+}

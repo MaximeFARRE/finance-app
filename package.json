@@ -12,9 +12,13 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "idb": "^8.0.3",
     "next": "16.2.6",
+    "papaparse": "^5.5.3",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "yaml": "^2.9.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
@@ -24,11 +28,13 @@
     "@semantic-release/release-notes-generator": "^14.1.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/papaparse": "^5.5.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.0.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
+    "fake-indexeddb": "^6.2.5",
     "jsdom": "^29.1.1",
     "semantic-release": "^24.2.9",
     "tailwindcss": "^4",

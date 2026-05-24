@@ -3,14 +3,17 @@
 import { useState } from "react";
 import type { Card } from "@/lib/types";
 import { getCardTheme } from "@/lib/card-themes";
+import { SuggestionButton } from "./SuggestionButton";
 
 interface LearnCardProps {
   card: Card;
   isRead: boolean;
   onRead: () => void;
+  trackId?: string;
+  lessonId?: string;
 }
 
-export function LearnCard({ card, isRead, onRead }: LearnCardProps) {
+export function LearnCard({ card, isRead, onRead, trackId, lessonId }: LearnCardProps) {
   const [detailExpanded, setDetailExpanded] = useState(false);
   const theme = getCardTheme(card.type);
 
@@ -61,8 +64,8 @@ export function LearnCard({ card, isRead, onRead }: LearnCardProps) {
         </div>
       )}
 
-      {/* Mark as read */}
-      <div className="px-6 pb-5">
+      {/* Mark as read + suggestion */}
+      <div className="px-6 pb-5 flex flex-col gap-2">
         <button
           onClick={onRead}
           disabled={isRead}
@@ -74,6 +77,16 @@ export function LearnCard({ card, isRead, onRead }: LearnCardProps) {
         >
           {isRead ? "Lu ✓" : "Marquer comme lu"}
         </button>
+        {trackId && lessonId && (
+          <div className="flex justify-end">
+            <SuggestionButton
+              cardId={card.id}
+              trackId={trackId}
+              lessonId={lessonId}
+              cardFront={card.front}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

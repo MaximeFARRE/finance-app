@@ -3,13 +3,16 @@
 import { useState } from "react";
 import type { Card } from "@/lib/types";
 import { getCardTheme } from "@/lib/card-themes";
+import { SuggestionButton } from "./SuggestionButton";
 
 interface LearningCardProps {
   card: Card;
   onReveal?: () => void;
+  trackId?: string;
+  lessonId?: string;
 }
 
-export function LearningCard({ card, onReveal }: LearningCardProps) {
+export function LearningCard({ card, onReveal, trackId, lessonId }: LearningCardProps) {
   const [revealed, setRevealed] = useState(false);
   const theme = getCardTheme(card.type);
 
@@ -45,12 +48,22 @@ export function LearningCard({ card, onReveal }: LearningCardProps) {
           </button>
         </div>
       ) : (
-        <div className="mt-auto px-9 pb-7">
+        <div className="mt-auto px-9 pb-7 flex flex-col gap-2">
           <div className={`rounded-xl p-5 ${theme.answerBg}`}>
             <p className="whitespace-pre-line text-base leading-relaxed text-gray-800">
               {card.back}
             </p>
           </div>
+          {trackId && lessonId && (
+            <div className="flex justify-end">
+              <SuggestionButton
+                cardId={card.id}
+                trackId={trackId}
+                lessonId={lessonId}
+                cardFront={card.front}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>
