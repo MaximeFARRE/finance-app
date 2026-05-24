@@ -144,4 +144,10 @@ export interface ContentProvider {
    * Idempotent : peut être appelé plusieurs fois sans danger.
    */
   seed(tracks: Track[]): Promise<void>;
+
+  /**
+   * Synchronise les nouveautés du contenu built-in sans écraser les cartes déjà
+   * présentes dans le store local.
+   */
+  syncBuiltinContent(tracks: Track[], version: string): Promise<void>;
 }

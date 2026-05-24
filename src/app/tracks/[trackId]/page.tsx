@@ -74,6 +74,7 @@ export default function TrackDetailPage() {
         ) : (
           <LessonList
             lessons={track.lessons}
+            worlds={track.worlds}
             completedLessonIds={progress.completedLessonIds}
             lessonStars={progress.lessonStars}
             learnSessionIds={progress.learnSessionIds}

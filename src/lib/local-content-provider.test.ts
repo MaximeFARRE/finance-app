@@ -41,6 +41,94 @@ describe("seed et lecture", () => {
     expect(tracks[0]!.lessons[0]!.cards.length).toBeGreaterThan(0);
   });
 
+  it("syncBuiltinContent ajoute les nouveaux worlds, leçons et cartes sans écraser les cartes existantes", async () => {
+    const provider = new LocalContentProvider();
+    const baseTrack = {
+      id: "market-finance",
+      title: "Finance de marché",
+      description: "Ancienne description",
+      emoji: "📈",
+      color: "blue",
+      lessons: [
+        {
+          id: "lesson-1",
+          slug: "lesson-1",
+          title: "Leçon 1",
+          description: "Leçon existante",
+          estimatedMinutes: 5,
+          cards: [
+            {
+              id: "card-1",
+              type: "definition" as const,
+              front: "Ancienne question",
+              back: "Ancienne réponse",
+              difficulty: 1 as const,
+              tags: [],
+            },
+          ],
+        },
+      ],
+    };
+    const updatedTrack = {
+      ...baseTrack,
+      description: "Nouvelle description",
+      worlds: [
+        {
+          id: "world-1",
+          trackId: "market-finance",
+          title: "World 1",
+          description: "World ajouté",
+          order: 1,
+          lessonIds: ["lesson-1", "boss-1"],
+          bossLessonId: "boss-1",
+        },
+      ],
+      lessons: [
+        {
+          ...baseTrack.lessons[0]!,
+          cards: [
+            {
+              ...baseTrack.lessons[0]!.cards[0]!,
+              front: "Nouvelle question built-in",
+            },
+          ],
+        },
+        {
+          id: "boss-1",
+          slug: "boss-1",
+          title: "Boss 1",
+          description: "Boss ajouté",
+          estimatedMinutes: 10,
+          kind: "boss" as const,
+          worldId: "world-1",
+          cards: [
+            {
+              id: "boss-card-1",
+              type: "definition" as const,
+              front: "Question boss",
+              back: "Réponse boss",
+              difficulty: 1 as const,
+              tags: [],
+            },
+          ],
+        },
+      ],
+    };
+
+    await provider.seed([baseTrack]);
+    await provider.syncBuiltinContent([updatedTrack], "test-version");
+
+    const track = await provider.getTrackById("market-finance");
+    const existingCard = await provider.getCardsByLesson("lesson-1");
+    const boss = await provider.getLessonById("market-finance", "boss-1");
+
+    expect(track?.description).toBe("Nouvelle description");
+    expect(track?.worlds?.[0]?.id).toBe("world-1");
+    expect(existingCard[0]?.front).toBe("Ancienne question");
+    expect(boss?.kind).toBe("boss");
+    expect(boss?.cards[0]?.id).toBe("boss-card-1");
+  });
+
   it("getTrackById retourne le bon track", async () => {
     const provider = new LocalContentProvider();
     await provider.seed(allTracks);

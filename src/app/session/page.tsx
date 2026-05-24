@@ -12,6 +12,7 @@ import { computeXpGain, computeLessonStars, updateStreak } from "@/lib/progressi
 import { groupLearnCards } from "@/lib/learn-utils";
 import { findRelatedConceptCards } from "@/lib/quiz-utils";
 import { buildLessonDeck } from "@/lib/lesson-deck";
+import { buildBossDeck } from "@/lib/boss-deck";
 import { buildReviewDeck } from "@/lib/review-utils";
 import { useContent } from "@/lib/use-content";
 import type { AnswerQuality, Card, CardProgress, ReviewResult, UserProgress } from "@/lib/types";
@@ -298,6 +299,8 @@ function LearnFlow({ trackId, lessonId }: { trackId: string; lessonId: string })
 function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) {
   const router = useRouter();
   const { lesson, isLoading } = useLesson(trackId, lessonId);
+  const { tracks } = useContent();
+  const track = tracks.find((item) => item.id === trackId);
 
   const [session, setSession] = useState<QuizSession | null>(null);
   const [revealed, setRevealed] = useState(false);
@@ -311,20 +314,31 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
   useEffect(() => {
     if (!lesson) return;
     const progress = loadProgress();
+    const lessonDeck = buildLessonDeck({
+      trackId,
+      lessonId,
+      cards: lesson.cards,
+      progress: progress.cards,
+    });
+    const bossDeck =
+      lesson.kind === "boss" && lesson.worldId && track
+        ? buildBossDeck({
+            track,
+            worldId: lesson.worldId,
+            progress: progress.cards,
+          })
+        : [];
+    const deck = bossDeck.length > 0 ? bossDeck : lessonDeck;
+
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSession({
-      deck: buildLessonDeck({
-        trackId,
-        lessonId,
-        cards: lesson.cards,
-        progress: progress.cards,
-      }),
+      deck,
       cardIndex: 0,
       results: [],
       updatedCards: { ...progress.cards },
       progress,
     });
-  }, [lesson, lessonId, trackId]);
+  }, [lesson, lessonId, track, trackId]);
 
   useEffect(() => {
     cardStartedAt.current = Date.now();

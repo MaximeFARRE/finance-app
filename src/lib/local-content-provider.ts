@@ -480,4 +480,54 @@ export class LocalContentProvider implements ContentProvider {
 
     await db.put("meta", { key: "seeded", value: true });
   }
+
+  async syncBuiltinContent(tracks: Track[], version: string): Promise<void> {
+    const db = await this.getDB();
+    const currentVersion = await db.get("meta", "builtinContentVersion");
+    if (currentVersion?.value === version) return;
+
+    if (!(await this.isSeeded())) {
+      await this.seed(tracks);
+      await db.put("meta", { key: "builtinContentVersion", value: version });
+      return;
+    }
+
+    for (let ti = 0; ti < tracks.length; ti++) {
+      const track = tracks[ti]!;
+      const { lessons, ...trackMeta } = track;
+      const existingTrack = await db.get("tracks", track.id);
+      await db.put("tracks", {
+        ...existingTrack,
+        ...trackMeta,
+        sortOrder: existingTrack?.sortOrder ?? ti,
+      });
+
+      for (let li = 0; li < lessons.length; li++) {
+        const lesson = lessons[li]!;
+        const { cards, ...lessonMeta } = lesson;
+        const existingLesson = await db.get("lessons", lesson.id);
+        await db.put("lessons", {
+          ...existingLesson,
+          ...lessonMeta,
+          trackId: track.id,
+          sortOrder: existingLesson?.sortOrder ?? li,
+        });
+
+        for (let ci = 0; ci < cards.length; ci++) {
+          const card = cards[ci]!;
+          const existingCard = await db.get("cards", card.id);
+          if (!existingCard) {
+            await db.put("cards", {
+              ...card,
+              lessonId: lesson.id,
+              sortOrder: ci,
+            });
+          }
+        }
+      }
+    }
+
+    await db.put("meta", { key: "seeded", value: true });
+    await db.put("meta", { key: "builtinContentVersion", value: version });
+  }
 }
