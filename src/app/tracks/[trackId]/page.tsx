@@ -39,6 +39,10 @@ export default function TrackDetailPage() {
   }
 
   const levelInfo = progress ? getLevelInfo(progress.xp) : null;
+  const completedCount = progress
+    ? track.lessons.filter((l) => progress.completedLessonIds.includes(l.id)).length
+    : 0;
+  const totalLessons = track.lessons.length;
 
   return (
     <main className="min-h-screen bg-gray-50 px-4 py-10">
@@ -61,6 +65,22 @@ export default function TrackDetailPage() {
             <h1 className="text-2xl font-bold text-gray-900">{track.title}</h1>
           </div>
           <p className="mt-2 text-sm text-gray-600">{track.description}</p>
+          {progress && (
+            <div className="mt-3">
+              <div className="mb-1 flex items-center justify-between text-xs text-gray-500">
+                <span>{completedCount} / {totalLessons} leçons complétées</span>
+                <span className="font-semibold text-blue-600">
+                  {Math.round((completedCount / totalLessons) * 100)}%
+                </span>
+              </div>
+              <div className="h-1.5 w-full rounded-full bg-gray-200">
+                <div
+                  className="h-1.5 rounded-full bg-blue-500 transition-all duration-500"
+                  style={{ width: `${(completedCount / totalLessons) * 100}%` }}
+                />
+              </div>
+            </div>
+          )}
         </div>
 
         {levelInfo && progress && (
