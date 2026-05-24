@@ -42,6 +42,9 @@ export interface Card {
   learningStage?: LearningStage;
   version?: number;
   status?: "draft" | "ready" | "archived";
+  // QCM — si présents, la carte s'affiche en mode choix multiples au lieu du flip card
+  choices?: string[];
+  correctIndex?: number;
 }
 
 export type LessonKind = "lesson" | "boss" | "bonus";

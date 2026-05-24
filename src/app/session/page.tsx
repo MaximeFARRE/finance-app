@@ -478,6 +478,8 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
 
   if (!entry) return null;
 
+  const isMcq = Array.isArray(entry.question.choices) && entry.question.choices.length > 0;
+
   return (
     <main className="min-h-screen bg-gray-50">
       {paused && (
@@ -521,11 +523,12 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
           key={entry.question.id}
           card={entry.question}
           onReveal={() => setRevealed(true)}
+          onAnswer={(correct) => handleRate(correct ? 4 : 0)}
           trackId={trackId}
           lessonId={lessonId}
         />
 
-        {revealed && entry.answer && (
+        {revealed && !isMcq && entry.answer && (
           <div className="mt-4 rounded-xl bg-teal-50 border border-teal-100 p-5">
             <p className="mb-1 text-xs font-semibold text-teal-600">✅ Réponse modèle</p>
             <p className="whitespace-pre-line text-sm leading-relaxed text-gray-800">
@@ -534,7 +537,7 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
           </div>
         )}
 
-        {revealed && (
+        {revealed && !isMcq && (
           <div className="mt-6">
             <p className="mb-3 text-center text-sm font-medium text-gray-700">
               Comment avez-vous trouvé ?
