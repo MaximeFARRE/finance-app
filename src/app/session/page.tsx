@@ -310,7 +310,7 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
     const progress = loadProgress();
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSession({
-      deck: buildQuizDeck(lesson.cards),
+      deck: buildQuizDeck(lesson.cards, progress.cards),
       cardIndex: 0,
       results: [],
       updatedCards: { ...progress.cards },
