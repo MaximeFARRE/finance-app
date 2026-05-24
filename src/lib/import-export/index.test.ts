@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { analyzeImport, applyImport, exportContent } from "./index";
 import type { ContentProvider } from "../content-provider";
 import type { Card, Track } from "../types";

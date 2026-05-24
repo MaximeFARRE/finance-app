@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { exportCsv, parseCsv } from "./csv-io";
 import type { Track } from "../types";
-import type { ExportOptions } from "../types";
 
 // ---------------------------------------------------------------------------
 // Fixtures

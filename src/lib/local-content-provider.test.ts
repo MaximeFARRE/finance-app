@@ -5,7 +5,7 @@ import { LocalContentProvider } from "./local-content-provider";
 
 // Réinitialise IndexedDB avant chaque test pour garantir l'isolation
 beforeEach(() => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (globalThis as any).indexedDB = new IDBFactory();
 });
 

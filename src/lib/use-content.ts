@@ -44,7 +44,8 @@ export function useContent(): UseContentReturn {
   }, []);
 
   useEffect(() => {
-    void load();
+    async function run() { await load(); }
+    void run();
   }, [load]);
 
   return { tracks, isLoading, error, refetch: load };
@@ -65,14 +66,11 @@ export function useLesson(
   lessonId: string,
 ): UseLessonReturn {
   const [lesson, setLesson] = useState<Lesson | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(Boolean(trackId && lessonId));
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!trackId || !lessonId) {
-      setIsLoading(false);
-      return;
-    }
+    if (!trackId || !lessonId) return;
 
     let cancelled = false;
 
