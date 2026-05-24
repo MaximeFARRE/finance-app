@@ -6,7 +6,7 @@ import Link from "next/link";
 import { loadProgress } from "@/lib/storage";
 import { getLevelInfo } from "@/lib/level-engine";
 import { useContent } from "@/lib/use-content";
-import { LessonList } from "@/components/LessonList";
+import { LessonMap } from "@/components/LessonMap";
 import { XPBar } from "@/components/XPBar";
 import type { UserProgress } from "@/lib/types";
 
@@ -72,7 +72,7 @@ export default function TrackDetailPage() {
         {!progress ? (
           <div className="py-12 text-center text-sm text-gray-400">Chargement…</div>
         ) : (
-          <LessonList
+          <LessonMap
             lessons={track.lessons}
             worlds={track.worlds}
             completedLessonIds={progress.completedLessonIds}
