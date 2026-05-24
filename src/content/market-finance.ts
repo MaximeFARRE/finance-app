@@ -288,107 +288,108 @@ export const marketFinanceTrack: Track = {
         {
           id: "mf-found-l1-rend-def",
           type: "definition",
+          questionType: "definition",
+          question: "Qu'est-ce que le rendement d'un investissement ?",
+          shortAnswer:
+            "Le rendement est le gain total d'un investissement exprimé en pourcentage du capital investi.",
+          explanation:
+            "Il peut inclure à la fois les revenus reçus, comme dividendes ou coupons, et la plus-value ou moins-value sur le prix.",
           front: "Qu'est-ce que le rendement ?",
-          back: "Gain total d'un investissement exprimé en pourcentage du capital investi sur une période donnée. Il comprend les revenus (dividendes, coupons) et les plus ou moins-values.",
+          back: "Le rendement est le gain total d'un investissement exprimé en pourcentage du capital investi.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["rendement", "performance", "investissement"],
+          skills: ["definition"],
           tags: ["rendement"],
-          detail: `**Deux composantes du rendement :**
-- **Rendement en revenu** (income return) : dividendes, coupons, loyers — flux reçus pendant la détention
-- **Rendement en capital** (capital return) : plus ou moins-value entre le prix d'achat et de vente
-
-**Exemple :** une action achetée 100 €, revendue 115 € après avoir reçu 5 € de dividende
-→ Rendement total = (15 + 5) / 100 = **20 %** sur la période
-
-**Rendement annualisé :** si la période est de 2 ans, le rendement annualisé ≈ √1,20 - 1 ≈ 9,5 %/an`,
         },
         {
           id: "mf-found-l1-rend-formula",
           type: "formula",
-          front: "Formule du rendement simple",
-          back: "Rendement = (Plus-value + Revenus) / Capital investi × 100 %\n\nEx : achat 100 €, vente 110 €, dividende reçu 3 €\n→ Rendement = (10 + 3) / 100 = 13 %",
+          questionType: "formula",
+          question: "Quelle est la formule du rendement simple ?",
+          shortAnswer:
+            "Le rendement simple rapporte le gain total au capital investi.",
+          formula: "Rendement = (Prix final - Prix initial + Revenus) / Prix initial",
+          example: "Achat 100, vente 110, dividende 3 : rendement = (110 - 100 + 3) / 100 = 13 %.",
+          front: "Quelle est la formule du rendement simple ?",
+          back: "Rendement = (Prix final - Prix initial + Revenus) / Prix initial.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["rendement", "calcul", "performance"],
+          skills: ["formula"],
           tags: ["rendement", "calcul"],
-          detail: `**Formules à maîtriser :**
-
-**Rendement simple (holding period return) :**
-R = (P₁ - P₀ + D) / P₀
-
-Où : P₀ = prix d'achat, P₁ = prix de vente, D = dividendes reçus
-
-**Rendement annualisé (CAGR) :**
-CAGR = (P₁/P₀)^(1/n) - 1
-
-Où n = nombre d'années
-
-**Rendement actuariel (YTM) pour une obligation :**
-Résoudre : P₀ = Σ [Ct / (1+r)^t] + N/(1+r)^n
-
-**En entretien :** toujours préciser si vous parlez de rendement brut ou net (après frais et impôts).`,
         },
         {
           id: "mf-found-l1-rend-intuition",
-          type: "intuition",
-          front: "Rendement et risque sont indissociables",
-          back: "Plus un investissement est risqué, plus les investisseurs exigent un rendement élevé pour compenser. C'est la prime de risque. Une OAT française à 3 % vs une obligation d'une PME à 8 % : l'écart rémunère le risque de défaut supplémentaire.",
+          type: "definition",
+          questionType: "mechanism",
+          question: "Pourquoi rendement attendu et risque sont-ils indissociables ?",
+          shortAnswer:
+            "Parce qu'un investisseur exige généralement un rendement plus élevé pour accepter un risque plus élevé.",
+          explanation:
+            "L'écart de rendement demandé pour porter un risque supplémentaire s'appelle une prime de risque.",
+          example:
+            "Une obligation d'État solide à 3 % et une obligation fragile à 8 % ne rémunèrent pas le même niveau de risque.",
+          front: "Pourquoi rendement attendu et risque sont-ils indissociables ?",
+          back: "Parce qu'un investisseur exige généralement un rendement plus élevé pour accepter un risque plus élevé.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["rendement", "risque", "prime-de-risque"],
+          skills: ["mechanism"],
           tags: ["rendement", "risque", "prime"],
-          detail: `**La hiérarchie des rendements attendus (en ordre croissant de risque) :**
-1. Obligations d'État AAA (~2-4 %) — taux "sans risque"
-2. Obligations d'État BB-B (~5-8 %) — risque souverain
-3. Obligations corporate investment grade (~4-6 %)
-4. Obligations high yield ("junk bonds") (~7-12 %)
-5. Actions (~8-12 % de rendement historique long terme)
-6. Private Equity (~15-20 % TRI visé)
-7. Venture Capital (~20 %+ avec taux d'échec élevé)
-
-**Principe fondamental :** un rendement plus élevé sans risque plus élevé est une anomalie qui ne peut pas durer. Si quelqu'un vous propose 15 % "sans risque", c'est soit une erreur soit une fraude.`,
         },
         {
           id: "mf-found-l1-rend-trap",
-          type: "trap",
-          front: "Piège : rendement brut ≠ rendement net",
-          back: "Le rendement brut ignore les frais de courtage, la fiscalité (30 % flat tax en France) et l'inflation. Un rendement de 5 % brut peut devenir négatif en termes réels si l'inflation est à 6 %. Toujours raisonner en net réel.",
+          type: "definition",
+          questionType: "comparison",
+          question: "Quelle est la différence entre rendement brut, rendement net et rendement réel ?",
+          shortAnswer:
+            "Le rendement brut ignore frais et fiscalité. Le rendement net les déduit. Le rendement réel déduit aussi l'inflation.",
+          explanation:
+            "Un rendement nominal positif peut être faible, voire négatif, en pouvoir d'achat si l'inflation est élevée.",
+          commonMistake:
+            "Comparer deux performances sans préciser si elles sont brutes ou nettes, nominales ou réelles.",
+          front: "Quelle est la différence entre rendement brut, rendement net et rendement réel ?",
+          back: "Le rendement brut ignore frais et fiscalité. Le rendement net les déduit. Le rendement réel déduit aussi l'inflation.",
           difficulty: 2,
+          learningStage: 1,
+          topics: ["rendement", "inflation", "frais"],
+          skills: ["comparison"],
           tags: ["rendement", "fiscalité", "inflation"],
-          detail: `**Le chemin de 5 % brut à rendement réel net :**
-- Rendement brut : **5,0 %**
-- Moins frais de courtage (0,2 %) : **4,8 %**
-- Moins flat tax 30 % (sur gains et revenus) : **3,36 %**
-- Moins inflation 2,5 % : **rendement réel net ≈ 0,8 %**
-
-**L'inflation est le grand oublié :** 1 000 € à 3 %/an pendant 30 ans = 2 427 € nominaux. Mais si l'inflation moyenne est 2 %/an, le pouvoir d'achat réel n'augmente que de ~35 % sur 30 ans (taux réel ≈ 1 %).
-
-**Règle en entretien :** quand on vous parle de performances ou projections, demandez toujours si c'est nominal ou réel, brut ou net de frais.`,
         },
         {
           id: "mf-found-l1-rend-iq",
-          type: "interview-question",
-          front: "Qu'est-ce que le taux sans risque et comment l'estimez-vous en pratique ?",
-          back: "Taux de rendement d'un actif théoriquement sans risque de défaut. En pratique : rendement des obligations d'État des pays les plus sûrs (T-bill US, Bund allemand). Base de tout modèle de valorisation (CAPM, DCF).",
+          type: "definition",
+          questionType: "definition",
+          question: "Qu'est-ce que le taux sans risque ?",
+          shortAnswer:
+            "Le taux sans risque est le rendement théorique d'un actif sans risque de défaut sur une maturité donnée.",
+          explanation:
+            "En pratique, on l'approche avec les obligations d'État les plus sûres, par exemple le T-bill ou le Treasury américain, ou le Bund allemand en euros.",
+          front: "Qu'est-ce que le taux sans risque ?",
+          back: "Le taux sans risque est le rendement théorique d'un actif sans risque de défaut sur une maturité donnée.",
           difficulty: 2,
+          learningStage: 1,
+          topics: ["rendement", "taux", "taux-sans-risque"],
+          skills: ["definition"],
           tags: ["rendement", "taux", "CAPM"],
-          detail: `**Structure de réponse (2 min) :**
-1. Définir le taux sans risque théorique (actif sans risque de défaut, pas de réinvestissement)
-2. En pratique : T-bill 3 mois US pour court terme, T-note 10 ans pour valorisation long terme
-3. Pourquoi le 10 ans : correspond à l'horizon typique des projections DCF
-4. En Europe : Bund 10 ans (Allemagne, notation AAA)
-
-**Nuance importante :** même les Bunds ou T-notes ont un risque de taux (leur prix varie). Le "sans risque" signifie sans risque de défaut, pas sans risque de marché.
-
-**Chiffres 2024 :** T-note 10 ans ~4,2 %, Bund 10 ans ~2,5 %, OAT 10 ans ~3,0 %`,
         },
         {
           id: "mf-found-l1-rend-ma",
-          type: "model-answer",
-          front: "Réponse : taux sans risque",
-          back: "\"Le taux sans risque est le rendement d'un actif sans risque de défaut. En pratique j'utilise le rendement du T-note américain à 10 ans pour un DCF en USD, ou le Bund 10 ans en EUR. Aujourd'hui, le T-note 10 ans est autour de 4 %. C'est la base du CAPM pour calculer le coût des capitaux propres.\"",
+          type: "definition",
+          questionType: "comparison",
+          question: "Le taux sans risque signifie-t-il vraiment qu'il n'y a aucun risque ?",
+          shortAnswer:
+            "Non. Il signifie surtout absence de risque de défaut dans l'approximation utilisée, mais il peut rester un risque de taux ou d'inflation.",
+          explanation:
+            "Une obligation d'État très sûre peut perdre de la valeur si les taux montent avant sa maturité.",
+          front: "Le taux sans risque signifie-t-il vraiment qu'il n'y a aucun risque ?",
+          back: "Non. Il signifie surtout absence de risque de défaut dans l'approximation utilisée, mais il peut rester un risque de taux ou d'inflation.",
           difficulty: 2,
+          learningStage: 1,
+          topics: ["rendement", "taux-sans-risque", "risque-de-taux"],
+          skills: ["comparison"],
           tags: ["rendement", "taux", "CAPM"],
-          detail: `**Points bonus :**
-- Distinguer court terme (T-bill 3 mois) vs long terme (T-note 10 ans) selon l'horizon de l'analyse
-- Le taux sans risque + prime de risque equity historique (~5-6 %) + beta × prime = coût des capitaux propres (CAPM)
-- En période de QE (2015-2021), taux sans risque quasi-nul → modèles de valorisation gonflés → surévaluation des actifs à duration longue (growth stocks)
-- Remonter le taux sans risque de 0 % à 4 % réduit mécaniquement la valorisation de toute entreprise, même sans changement des bénéfices`,
         },
       ],
     },

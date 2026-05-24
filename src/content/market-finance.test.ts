@@ -16,7 +16,11 @@ const FORBIDDEN_LEGACY_TYPES = new Set([
   "interview-question",
   "model-answer",
 ]);
-const MIGRATED_LESSON_IDS = new Set(["mf-found-l1-action", "mf-found-l1-obligation"]);
+const MIGRATED_LESSON_IDS = new Set([
+  "mf-found-l1-action",
+  "mf-found-l1-obligation",
+  "mf-found-l1-rendement",
+]);
 
 describe("marketFinanceTrack pedagogical structure", () => {
   it("declares worlds that reference existing lessons", () => {
