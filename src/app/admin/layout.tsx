@@ -62,7 +62,7 @@ function Sidebar() {
           href="/tracks"
           className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
         >
-          ← Retour à l'app
+          ← Retour à l&apos;app
         </Link>
       </div>
     </aside>

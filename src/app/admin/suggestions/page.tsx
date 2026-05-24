@@ -89,10 +89,6 @@ export default function AdminSuggestionsPage() {
   const [rejectTarget, setRejectTarget] = useState<Suggestion | null>(null);
   const [actionInProgress, setActionInProgress] = useState<string | null>(null);
 
-  useEffect(() => {
-    void load();
-  }, []);
-
   async function load() {
     setIsLoading(true);
     try {
@@ -103,6 +99,11 @@ export default function AdminSuggestionsPage() {
       setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    async function run() { await load(); }
+    void run();
+  }, []);
 
   async function accept(suggestion: Suggestion) {
     setActionInProgress(suggestion.id);

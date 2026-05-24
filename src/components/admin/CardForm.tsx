@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Card, CardType, Difficulty } from "@/lib/types";
+import type { CardType, Difficulty } from "@/lib/types";
 
 const CARD_TYPES: { value: CardType; label: string; icon: string }[] = [
   { value: "definition", label: "Définition", icon: "📖" },

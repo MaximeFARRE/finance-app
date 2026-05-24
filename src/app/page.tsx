@@ -1,19 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useContent } from "@/lib/use-content";
 import { loadProgress } from "@/lib/storage";
 import { countDueCards } from "@/lib/review-utils";
 
 function ReviewBadge() {
   const { tracks, isLoading } = useContent();
-  const [dueCount, setDueCount] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (isLoading || tracks.length === 0) return;
+  const dueCount = useMemo(() => {
+    if (isLoading || tracks.length === 0) return null;
     const progress = loadProgress();
-    setDueCount(countDueCards(tracks, progress));
+    return countDueCards(tracks, progress);
   }, [tracks, isLoading]);
 
   if (dueCount === null) return null;

@@ -53,13 +53,13 @@ export function CardHistory({ cardId, onRestore }: Props) {
   }
 
   if (isLoading) {
-    return <p className="text-xs text-gray-400">Chargement de l'historique…</p>;
+    return <p className="text-xs text-gray-400">Chargement de l&apos;historique…</p>;
   }
 
   if (versions.length === 0) {
     return (
       <p className="text-xs text-gray-400">
-        Aucune version précédente. L'historique apparaît après la première modification.
+        Aucune version précédente. L&apos;historique apparaît après la première modification.
       </p>
     );
   }

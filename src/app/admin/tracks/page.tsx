@@ -46,7 +46,7 @@ export default function AdminTracksPage() {
         </div>
       ) : tracks.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-gray-300 bg-white p-12 text-center">
-          <p className="text-gray-400 text-sm">Aucun track pour l'instant.</p>
+          <p className="text-gray-400 text-sm">Aucun track pour l&apos;instant.</p>
           <p className="text-gray-400 text-xs mt-1">
             Importez du contenu via la page{" "}
             <Link href="/admin/import" className="underline text-blue-500">Import</Link>.
