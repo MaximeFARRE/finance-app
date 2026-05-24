@@ -85,7 +85,14 @@ export default function TrackDetailPage() {
 
         {levelInfo && progress && (
           <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-4">
-            <XPBar levelInfo={levelInfo} xp={progress.xp} />
+            <div className="flex items-center gap-3">
+              <XPBar levelInfo={levelInfo} xp={progress.xp} className="flex-1" />
+              {progress.streak > 0 && (
+                <div className="flex shrink-0 items-center gap-1 rounded-full bg-orange-100 px-3 py-1 text-sm font-bold text-orange-600">
+                  🔥 {progress.streak}
+                </div>
+              )}
+            </div>
           </div>
         )}
 
