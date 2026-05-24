@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { loadProgress } from "@/lib/storage";
 import { getLevelInfo } from "@/lib/level-engine";
-import { getLessonById } from "@/content";
+import { useLesson } from "@/lib/use-content";
 import { XPBar } from "@/components/XPBar";
 
 function StarDisplay({ stars }: { stars: 0 | 1 | 2 | 3 }) {
@@ -37,8 +37,11 @@ function ResultsContent() {
 
   // Resolve failed card IDs to card objects for the "Concepts à revoir" section
   const failedIds = failedParam ? failedParam.split(",").filter(Boolean) : [];
-  const lesson = failedIds.length > 0 && trackId && lessonId ? getLessonById(trackId, lessonId) : null;
-  const failedCards = lesson ? lesson.cards.filter((c) => failedIds.includes(c.id)) : [];
+  const { lesson } = useLesson(trackId, lessonId);
+  const failedCards =
+    lesson && failedIds.length > 0
+      ? lesson.cards.filter((c) => failedIds.includes(c.id))
+      : [];
 
   const starLabel =
     stars === 3 ? "Parfait ! 🎉" : stars === 2 ? "Très bien ! 👍" : stars === 1 ? "Bien joué ! 💪" : "";

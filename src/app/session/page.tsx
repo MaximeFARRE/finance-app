@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { getLessonById } from "@/content";
+import { useLesson } from "@/lib/use-content";
 import { LearningCard } from "@/components/LearningCard";
 import { LearnCard } from "@/components/LearnCard";
 import { LearnSessionSummary } from "@/components/LearnSessionSummary";
@@ -126,10 +126,18 @@ function ConceptOverlay({ cards, onClose }: { cards: Card[]; onClose: () => void
 // ---------------------------------------------------------------------------
 
 function LearnFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) {
-  const lesson = getLessonById(trackId, lessonId);
+  const { lesson, isLoading } = useLesson(trackId, lessonId);
   const [readCardIds, setReadCardIds] = useState<Set<string>>(new Set());
   const [currentIndex, setCurrentIndex] = useState(0);
   const [done, setDone] = useState(false);
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-gray-400 text-sm">Chargement…</p>
+      </div>
+    );
+  }
 
   if (!lesson) {
     return (
@@ -284,7 +292,7 @@ function LearnFlow({ trackId, lessonId }: { trackId: string; lessonId: string })
 
 function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) {
   const router = useRouter();
-  const lesson = getLessonById(trackId, lessonId);
+  const { lesson, isLoading } = useLesson(trackId, lessonId);
 
   const [session, setSession] = useState<QuizSession | null>(null);
   const [revealed, setRevealed] = useState(false);
@@ -314,6 +322,14 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
     setRevealed(false);
   }, [session?.cardIndex]);
 
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-gray-400 text-sm">Chargement…</p>
+      </div>
+    );
+  }
+
   if (!lesson) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -325,7 +341,7 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
   if (!session) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p className="text-gray-500">Chargement…</p>
+        <p className="text-gray-400 text-sm">Chargement…</p>
       </div>
     );
   }

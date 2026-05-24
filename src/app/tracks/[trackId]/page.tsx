@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { getTrackById } from "@/content";
 import { loadProgress } from "@/lib/storage";
 import { getLevelInfo } from "@/lib/level-engine";
+import { useContent } from "@/lib/use-content";
 import { LessonList } from "@/components/LessonList";
 import { XPBar } from "@/components/XPBar";
 import type { UserProgress } from "@/lib/types";
@@ -13,13 +13,22 @@ import type { UserProgress } from "@/lib/types";
 export default function TrackDetailPage() {
   const { trackId } = useParams<{ trackId: string }>();
   const router = useRouter();
-  const track = getTrackById(trackId);
+  const { tracks, isLoading: tracksLoading } = useContent();
+  const track = tracks.find((t) => t.id === trackId);
   const [progress, setProgress] = useState<UserProgress | null>(null);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setProgress(loadProgress());
   }, []);
+
+  if (tracksLoading) {
+    return (
+      <main className="flex min-h-screen items-center justify-center">
+        <p className="text-gray-400 text-sm">Chargement…</p>
+      </main>
+    );
+  }
 
   if (!track) {
     return (
