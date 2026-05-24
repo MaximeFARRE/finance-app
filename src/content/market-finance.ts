@@ -633,98 +633,106 @@ export const marketFinanceTrack: Track = {
         {
           id: "mf-found-l1-ms-def",
           type: "definition",
+          questionType: "definition",
+          question: "Qu'est-ce que le marché secondaire ?",
+          shortAnswer:
+            "Le marché secondaire est le marché où des titres déjà émis s'échangent entre investisseurs.",
+          explanation:
+            "L'émetteur ne reçoit pas les fonds de ces échanges : l'argent va au vendeur. La Bourse est l'exemple le plus visible de marché secondaire.",
           front: "Qu'est-ce que le marché secondaire ?",
-          back: "Marché sur lequel s'échangent des titres déjà émis entre investisseurs. Aucun capital ne va à l'émetteur : c'est un simple transfert de propriété entre acheteur et vendeur. La Bourse est le principal marché secondaire.",
+          back: "Le marché secondaire est le marché où des titres déjà émis s'échangent entre investisseurs.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["marché-secondaire", "bourse", "liquidité"],
+          skills: ["definition"],
           tags: ["marché secondaire", "bourse"],
-          detail: `**Les différentes formes de marché secondaire :**
-- **Marchés organisés (exchanges)** : Euronext (Paris), NYSE, Nasdaq, LSE — prix transparent, centralisé, réglementé
-- **Marchés de gré à gré (OTC)** : trading bilatéral entre deux parties, surtout pour les obligations, dérivés, produits structurés — moins transparent
-- **MTF (Multilateral Trading Facilities)** : CBOE Europe, Turquoise — alternatives aux exchanges traditionnels
-
-**Rôle des chambres de compensation (CCP) :** se posent entre acheteur et vendeur pour garantir le règlement-livraison et éliminer le risque de contrepartie.`,
         },
         {
           id: "mf-found-l1-ms-intuition",
-          type: "intuition",
-          front: "Marché secondaire = liquidité pour les investisseurs",
-          back: "Sans marché secondaire, un investisseur qui achète une obligation à 10 ans serait bloqué pendant 10 ans. La Bourse permet de revendre à tout moment. C'est ce qui rend les titres financiers attractifs : on peut sortir quand on veut.",
+          type: "definition",
+          questionType: "mechanism",
+          question: "Pourquoi le marché secondaire apporte-t-il de la liquidité aux investisseurs ?",
+          shortAnswer:
+            "Parce qu'il permet aux investisseurs de revendre leurs titres sans attendre leur maturité ou un événement particulier.",
+          explanation:
+            "Sans marché secondaire, acheter une obligation à 10 ans signifierait rester bloqué pendant 10 ans. La possibilité de sortir rend les titres plus attractifs.",
+          front: "Pourquoi le marché secondaire apporte-t-il de la liquidité aux investisseurs ?",
+          back: "Parce qu'il permet aux investisseurs de revendre leurs titres sans attendre leur maturité ou un événement particulier.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["marché-secondaire", "liquidité", "investisseurs"],
+          skills: ["mechanism"],
           tags: ["liquidité", "marché secondaire"],
-          detail: `**Le cercle vertueux de la liquidité :**
-1. Un marché secondaire liquide attire plus d'investisseurs
-2. Plus d'investisseurs → plus de transactions → marché encore plus liquide
-3. Marché liquide → les émetteurs peuvent lever des fonds à meilleur prix sur le marché primaire
-
-**L'importance pour le marché primaire :** si les investisseurs savent qu'ils peuvent revendre facilement leurs actions ou obligations, ils acceptent de les acheter à l'émission avec une décote moindre. La liquidité du secondaire **réduit le coût de financement** des émetteurs.
-
-**Exemple :** le marché obligataire des PME est peu liquide → coût de financement plus élevé pour les PME vs les grands groupes.`,
         },
         {
           id: "mf-found-l1-ms-example",
           type: "example",
-          front: "Marché secondaire au quotidien",
-          back: "Quand tu achètes des actions Apple via un courtier, tu achètes à un autre investisseur via le NYSE (New York Stock Exchange). Apple ne reçoit rien : l'entreprise avait levé ses fonds lors de son IPO en 1980.",
+          questionType: "mechanism",
+          question: "Quand vous achetez une action Apple en bourse, Apple reçoit-elle votre argent ?",
+          shortAnswer:
+            "Non. Vous achetez l'action à un autre investisseur sur le marché secondaire.",
+          explanation:
+            "Apple a reçu des fonds lors de son émission primaire. Les échanges quotidiens entre investisseurs ne financent pas directement l'entreprise.",
+          front: "Quand vous achetez une action Apple en bourse, Apple reçoit-elle votre argent ?",
+          back: "Non. Vous achetez l'action à un autre investisseur sur le marché secondaire.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["marché-secondaire", "action", "bourse"],
+          skills: ["mechanism"],
           tags: ["Apple", "NYSE", "marché secondaire"],
-          detail: `**Les chiffres du marché secondaire :**
-- NYSE : ~20 milliards $ de volume quotidien
-- Nasdaq : ~15 milliards $/jour
-- Euronext Paris : ~3-5 milliards €/jour
-- Marché obligataire mondial OTC : ~700 milliards $/jour
-
-**Apple en 1980 vs 2024 :**
-- IPO 1980 : 100 M$ levés (marché primaire)
-- Capitalisation 2024 : ~3 000 milliards $ (marché secondaire)
-- Chaque jour, des milliards de $ d'actions Apple s'échangent sans qu'Apple reçoive 1 dollar`,
         },
         {
           id: "mf-found-l1-ms-trap",
-          type: "trap",
-          front: "Piège : confondre les deux marchés",
-          back: "Une IPO se passe sur le marché primaire, mais dès le 1er jour de cotation les échanges sur la Bourse sont du marché secondaire. Une augmentation de capital d'une entreprise déjà cotée est aussi du marché primaire (nouvelle émission).",
+          type: "definition",
+          questionType: "comparison",
+          question: "Quelle est la différence entre marché primaire et marché secondaire ?",
+          shortAnswer:
+            "Le primaire sert à émettre de nouveaux titres et finance l'émetteur. Le secondaire sert à échanger des titres déjà émis entre investisseurs.",
+          explanation:
+            "Une IPO est primaire au moment de l'émission. Les échanges en bourse dès le premier jour de cotation sont secondaires.",
+          commonMistake:
+            "Penser qu'une entreprise reçoit de l'argent à chaque échange de ses actions en bourse.",
+          front: "Quelle est la différence entre marché primaire et marché secondaire ?",
+          back: "Le primaire sert à émettre de nouveaux titres et finance l'émetteur. Le secondaire sert à échanger des titres déjà émis entre investisseurs.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["marché-primaire", "marché-secondaire", "émission"],
+          skills: ["comparison"],
           tags: ["IPO", "marché primaire", "marché secondaire"],
-          detail: `**Cas ambigus à maîtriser :**
-
-| Opération | Marché | Argent vers |
-|-----------|--------|------------|
-| IPO (souscription) | Primaire | Entreprise |
-| IPO J+1 (1er échange) | Secondaire | Vendeur |
-| Augmentation de capital | Primaire | Entreprise |
-| Rachat d'actions (buyback) | Secondaire | Actionnaires |
-| Émission d'obligations | Primaire | Émetteur |
-| Vente d'obligations en portefeuille | Secondaire | Vendeur |
-
-**En entretien :** si on vous demande "où lève-t-on des capitaux ?", la réponse est toujours le marché **primaire**. Le secondaire ne finance pas les émetteurs.`,
         },
         {
           id: "mf-found-l1-ms-iq",
-          type: "interview-question",
+          type: "definition",
+          questionType: "mechanism",
+          question: "Pourquoi le marché secondaire aide-t-il aussi le marché primaire ?",
+          shortAnswer:
+            "Parce que la liquidité du secondaire rassure les investisseurs, qui acceptent plus facilement d'acheter les titres à l'émission.",
+          explanation:
+            "Si les investisseurs savent qu'ils pourront revendre, ils demandent une prime d'illiquidité plus faible. Cela peut réduire le coût de financement des émetteurs.",
           front: "Quelle est l'utilité économique du marché secondaire si l'entreprise n'y reçoit aucun argent ?",
-          back: "Le secondaire crée la liquidité qui rend le primaire possible. Sans possibilité de revendre, les investisseurs exigeraient une prime de risque massive pour immobiliser leur capital. Le secondaire réduit le coût du capital pour les émetteurs.",
+          back: "Parce que la liquidité du secondaire rassure les investisseurs, qui acceptent plus facilement d'acheter les titres à l'émission.",
           difficulty: 2,
+          learningStage: 1,
+          topics: ["marché-secondaire", "liquidité", "marché-primaire"],
+          skills: ["mechanism"],
           tags: ["marché secondaire", "liquidité"],
-          detail: `**Structure de réponse (2 min) :**
-1. Reconnaître l'apparente contradiction (l'émetteur ne reçoit rien)
-2. Expliquer le mécanisme de la liquidité : les investisseurs acceptent de s'engager sur le primaire uniquement s'ils peuvent sortir via le secondaire
-3. Exemple chiffré : sans secondaire liquide, une entreprise devrait offrir 2-3 % de plus pour lever des fonds (prime d'illiquidité)
-4. Autres utilités : formation des prix, signal d'information sur la valeur des entreprises, allocation efficace du capital
-
-**C'est une bonne question de fond** que les recruteurs posent pour tester la compréhension systémique au-delà des définitions.`,
         },
         {
           id: "mf-found-l1-ms-ma",
-          type: "model-answer",
-          front: "Réponse : utilité économique du marché secondaire",
-          back: "\"Le secondaire est indispensable au primaire : il crée la liquidité qui permet aux investisseurs d'accepter de s'engager. Sans pouvoir revendre, ils exigeraient une prime d'illiquidité massive, ce qui renchérirait le coût de financement des entreprises. Le secondaire forme aussi les prix et alloue le capital vers les usages les plus productifs.\"",
+          type: "definition",
+          questionType: "definition",
+          question: "Qu'est-ce que la price discovery ?",
+          shortAnswer:
+            "La price discovery est le processus par lequel les échanges de marché agrègent l'information pour former un prix.",
+          explanation:
+            "Sur le marché secondaire, chaque ordre d'achat ou de vente apporte une information. Le prix devient un signal visible pour les investisseurs et les émetteurs.",
+          front: "Qu'est-ce que la price discovery ?",
+          back: "La price discovery est le processus par lequel les échanges de marché agrègent l'information pour former un prix.",
           difficulty: 2,
+          learningStage: 1,
+          topics: ["marché-secondaire", "price-discovery", "prix"],
+          skills: ["definition"],
           tags: ["marché secondaire", "liquidité"],
-          detail: `**Arguments complémentaires à développer :**
-- **Formation des prix (price discovery)** : le cours en temps réel agrège l'information de milliers d'acteurs → signal pour les dirigeants d'entreprise
-- **Discipline managériale** : une chute du cours envoie un signal au management et au CA, peut provoquer un changement de stratégie ou d'équipe
-- **Financement continu** : le cours boursier est une "monnaie" que l'entreprise peut utiliser pour financer des acquisitions (actions comme moyen de paiement)
-- **Épargne longue** : les épargnants investissent à long terme (retraite) car ils savent pouvoir liquider leur position à tout moment`,
         },
       ],
     },
