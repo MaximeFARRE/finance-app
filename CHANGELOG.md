@@ -1,3 +1,22 @@
+# [1.5.0](https://github.com/MaximeFARRE/finance-app/compare/v1.4.0...v1.5.0) (2026-05-24)
+
+
+### Bug Fixes
+
+* refresh unchanged builtin content ([e149c6b](https://github.com/MaximeFARRE/finance-app/commit/e149c6bb698ef8c8d2e367c28eaff1ba1403af94))
+
+
+### Features
+
+* add market worlds and boss deck ([6c0a4f6](https://github.com/MaximeFARRE/finance-app/commit/6c0a4f6f7b17fdfe2908c7125790889559571ddc))
+* migrate market bond lesson cards ([a0a66ca](https://github.com/MaximeFARRE/finance-app/commit/a0a66ca62f6f8cc607f98b5ec984c98ef41d99c3))
+* migrate market cap lesson cards ([9ccb6de](https://github.com/MaximeFARRE/finance-app/commit/9ccb6de04b893ea24cd774d4ae2636c0b8b0ca42))
+* migrate market equity lesson cards ([c3ef713](https://github.com/MaximeFARRE/finance-app/commit/c3ef713e0ca0f9f3c0226463eda9a9df8716ac4d))
+* migrate market return lesson cards ([2ee35ec](https://github.com/MaximeFARRE/finance-app/commit/2ee35ec55209948ee60d835d03a54f4e7b20ea31))
+* migrate market risk lesson cards ([0a4e350](https://github.com/MaximeFARRE/finance-app/commit/0a4e350088f7798f41e9d6c478856f50da23b928))
+* migrate primary market lesson cards ([9562043](https://github.com/MaximeFARRE/finance-app/commit/9562043c363353fd621397d4b9b0ac4bf10bf449))
+* migrate secondary market lesson cards ([c023b9b](https://github.com/MaximeFARRE/finance-app/commit/c023b9b9f8bedf0ffd6ec875d35cfb5e762a073f))
+
 # [1.4.0](https://github.com/MaximeFARRE/finance-app/compare/v1.3.0...v1.4.0) (2026-05-24)
 
 
