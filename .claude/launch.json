@@ -6,7 +6,8 @@
       "runtimeExecutable": "/opt/homebrew/bin/node",
       "runtimeArgs": ["/opt/homebrew/bin/npm", "run", "dev", "--", "--port", "3210"],
       "env": { "PATH": "/opt/homebrew/bin:/usr/bin:/bin" },
-      "port": 3210
+      "port": 3210,
+      "autoPort": false
     }
   ]
 }

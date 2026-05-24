@@ -4,7 +4,8 @@ import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { loadProgress } from "@/lib/storage";
 import { getLevelInfo } from "@/lib/level-engine";
-import { useLesson } from "@/lib/use-content";
+import { useContent, useLesson } from "@/lib/use-content";
+import { isLessonUnlocked, isLessonCompleted, hasCompletedLearnSession } from "@/lib/unlock";
 import { XPBar } from "@/components/XPBar";
 
 function StarDisplay({ stars }: { stars: 0 | 1 | 2 | 3 }) {
@@ -34,10 +35,22 @@ function ResultsContent() {
 
   const progress = loadProgress();
   const levelInfo = getLevelInfo(progress.xp);
+  const { tracks } = useContent();
+  const track = tracks.find((t) => t.id === trackId);
 
   // Resolve failed card IDs to card objects for the "Concepts à revoir" section
   const failedIds = failedParam ? failedParam.split(",").filter(Boolean) : [];
   const { lesson } = useLesson(trackId, lessonId);
+
+  // Find next lesson to continue
+  const nextLesson = track?.lessons.find((l) => {
+    const unlocked = isLessonUnlocked(track.lessons, l.id, progress.completedLessonIds);
+    const completed = isLessonCompleted(l.id, progress.completedLessonIds);
+    return unlocked && !completed;
+  }) ?? null;
+  const nextMode = nextLesson && hasCompletedLearnSession(nextLesson.id, progress.learnSessionIds)
+    ? "quiz"
+    : "learn";
   const failedCards =
     lesson && failedIds.length > 0
       ? lesson.cards.filter((c) => failedIds.includes(c.id))
@@ -67,17 +80,25 @@ function ResultsContent() {
         </div>
 
         <div className="flex flex-col gap-3">
+          {nextLesson && trackId && (
+            <button
+              onClick={() => router.push(`/session?trackId=${trackId}&lessonId=${nextLesson.id}&mode=${nextMode}`)}
+              className="w-full rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 active:scale-95"
+            >
+              {nextMode === "quiz" ? "🎯" : "📖"} Leçon suivante — {nextLesson.title}
+            </button>
+          )}
           {trackId && (
             <button
               onClick={() => router.push(`/tracks/${trackId}`)}
-              className="w-full rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+              className="w-full rounded-xl border border-gray-200 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
             >
-              Continuer le parcours →
+              Voir le parcours
             </button>
           )}
           <button
             onClick={() => router.push("/tracks")}
-            className="w-full rounded-xl border border-gray-200 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+            className="w-full rounded-xl border border-gray-200 py-3 text-sm font-medium text-gray-500 transition hover:bg-gray-50"
           >
             Tous les parcours
           </button>
