@@ -746,84 +746,106 @@ export const marketFinanceTrack: Track = {
         {
           id: "mf-found-l1-cap-def",
           type: "definition",
+          questionType: "definition",
+          question: "Qu'est-ce que la capitalisation boursière ?",
+          shortAnswer:
+            "La capitalisation boursière est la valeur de marché des capitaux propres d'une entreprise cotée.",
+          formula: "Capitalisation boursière = Cours de l'action × Nombre d'actions en circulation",
+          explanation:
+            "Elle varie en permanence avec le cours de bourse et ne tient pas compte directement de la dette de l'entreprise.",
           front: "Qu'est-ce que la capitalisation boursière ?",
-          back: "Valeur totale de marché d'une entreprise cotée à un instant T. Elle se calcule : Cours de l'action × Nombre d'actions en circulation.",
+          back: "La capitalisation boursière est la valeur de marché des capitaux propres d'une entreprise cotée.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["capitalisation", "action", "valeur-de-marché"],
+          skills: ["definition"],
           tags: ["market cap", "capitalisation"],
-          detail: `**Nuance : actions en circulation ≠ actions totales émises**
-- **Actions émises** : toutes les actions créées par l'entreprise
-- **Actions en circulation (float)** : actions disponibles sur le marché (hors actions auto-détenues = trésorerie)
-- **Free float** : actions réellement disponibles pour les investisseurs (hors bloc de contrôle des fondateurs)
-
-**Exemple :** une entreprise avec 100 M d'actions émises, mais 20 M en autocontrôle et 30 M bloquées chez le fondateur → free float = 50 M × cours = market cap du free float
-
-**Importance du free float :** plus le free float est bas, plus les mouvements de prix peuvent être amplifiés par des volumes limités.`,
         },
         {
           id: "mf-found-l1-cap-formula",
           type: "formula",
-          front: "Market Cap = Cours × Nombre d'actions",
-          back: "Exemple LVMH (2024) :\nCours ≈ 750 € × 500 M d'actions ≈ 375 Mds €\n\nTop mondial 2024 :\n• Apple : ~3 000 Mds $\n• Microsoft : ~3 000 Mds $\n• Nvidia : ~2 000 Mds $",
+          questionType: "quick-calculation",
+          question: "Une entreprise a 500 millions d'actions et un cours de 750 euros. Quelle est sa capitalisation boursière ?",
+          shortAnswer:
+            "Sa capitalisation boursière est de 375 milliards d'euros.",
+          formula: "Market cap = Cours × Nombre d'actions",
+          example: "750 × 500 000 000 = 375 000 000 000 euros.",
+          front: "Une entreprise a 500 millions d'actions et un cours de 750 euros. Quelle est sa capitalisation boursière ?",
+          back: "Sa capitalisation boursière est de 375 milliards d'euros.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["capitalisation", "calcul", "action"],
+          skills: ["quick-calculation"],
           tags: ["market cap", "LVMH", "calcul"],
-          detail: `**Market Cap vs Enterprise Value (EV) :**
-
-| Concept | Formule | Représente |
-|---------|---------|-----------|
-| Market Cap | Cours × Actions | Valeur des capitaux propres |
-| Enterprise Value | Market Cap + Dette nette | Valeur totale de l'entreprise |
-
-**EV = Market Cap + Dette financière nette (dette brute - trésorerie)**
-
-**Pourquoi EV est plus pertinent pour les comparaisons :**
-- Deux entreprises avec la même Market Cap mais des structures de dette différentes ont des EV très différentes
-- L'EV est "structure-neutre" : on compare la valeur opérationnelle de l'entreprise indépendamment de la façon dont elle est financée
-
-**Exemple :** une entreprise avec Market Cap 100 M€, dette 200 M€, trésorerie 50 M€ → EV = 100 + 200 - 50 = **250 M€**`,
         },
         {
           id: "mf-found-l1-cap-intuition",
-          type: "intuition",
-          front: "Market cap ≠ valeur réelle de l'entreprise",
-          back: "La market cap reflète ce que le marché est prêt à payer aujourd'hui, pas la 'valeur intrinsèque'. Elle change à chaque seconde. Une entreprise peut être surévaluée (bulle) ou sous-évaluée (opportunité). C'est le point de départ de la valorisation, pas la conclusion.",
+          type: "definition",
+          questionType: "comparison",
+          question: "La capitalisation boursière est-elle la valeur intrinsèque d'une entreprise ?",
+          shortAnswer:
+            "Non. Elle reflète le prix auquel le marché valorise l'equity à un instant donné, pas nécessairement la valeur intrinsèque.",
+          explanation:
+            "Le marché peut surévaluer ou sous-évaluer une entreprise. La market cap est un point de départ d'analyse, pas une preuve de juste valeur.",
+          front: "La capitalisation boursière est-elle la valeur intrinsèque d'une entreprise ?",
+          back: "Non. Elle reflète le prix auquel le marché valorise l'equity à un instant donné, pas nécessairement la valeur intrinsèque.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["capitalisation", "valorisation", "prix-de-marché"],
+          skills: ["comparison"],
           tags: ["valorisation", "market cap"],
-          detail: `**L'exemple de la bulle dot-com (2000) :**
-Des entreprises sans revenus valaient des milliards en market cap. Pets.com : IPO à 300 M$ de market cap, moins de 20 M$ de revenus, liquidée 9 mois plus tard.
-
-**L'exemple inverse (sous-évaluation) :**
-En 2009, des banques européennes cotaient à 0,3× leur valeur comptable — le marché anticipait des pertes massives non encore reconnues. Ceux qui ont acheté à ces niveaux ont fait 5-10× en quelques années.
-
-**La market cap est un consensus momentané :** elle agrège les anticipations de millions d'investisseurs avec des horizons et informations différents. Elle peut se tromper — c'est ce qui crée les opportunités d'investissement.`,
         },
         {
           id: "mf-found-l1-cap-iq",
-          type: "interview-question",
-          front: "Comment calculez-vous la capitalisation boursière et quelles sont ses limites ?",
-          back: "Market Cap = cours × actions en circulation. Limites : n'inclut pas la dette, varie seconde par seconde, peut refléter des bulles ou sous-évaluations, ignore le free float.",
+          type: "definition",
+          questionType: "comparison",
+          question: "Quelle est la différence entre capitalisation boursière et Enterprise Value ?",
+          shortAnswer:
+            "La market cap mesure la valeur de l'equity. L'Enterprise Value mesure la valeur totale de l'entreprise en ajoutant la dette nette.",
+          formula: "EV = Market cap + Dette financière nette",
+          explanation:
+            "L'EV est souvent plus pertinente pour comparer des entreprises avec des structures de financement différentes.",
+          front: "Quelle est la différence entre capitalisation boursière et Enterprise Value ?",
+          back: "La market cap mesure la valeur de l'equity. L'Enterprise Value mesure la valeur totale de l'entreprise en ajoutant la dette nette.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["capitalisation", "enterprise-value", "dette"],
+          skills: ["comparison"],
           tags: ["market cap"],
-          detail: `**Structure de réponse (2 min) :**
-1. Formule simple : Cours × Actions en circulation
-2. Première limite : ne mesure que la valeur des capitaux propres, pas de l'entreprise entière (oublier la dette)
-3. Deuxième limite : instantanéité → fluctue en permanence, difficile à utiliser comme référence stable
-4. Troisième limite : peut refléter des irrationalités de marché (bulles, paniques)
-5. Solution : utiliser l'EV (Enterprise Value) pour une vision plus complète
-
-**Bonne transition :** "C'est pourquoi pour comparer des entreprises, j'utilise l'EV plutôt que la simple market cap."`,
         },
         {
           id: "mf-found-l1-cap-ma",
-          type: "model-answer",
-          front: "Réponse : market cap et ses limites",
-          back: "Market cap = cours × nombre d'actions. Limite principale : ne reflète que la valeur des capitaux propres, pas la dette. L'enterprise value (EV = market cap + dette nette) est plus pertinente pour comparer des entreprises avec des structures financières différentes.",
+          type: "definition",
+          questionType: "definition",
+          question: "Qu'est-ce que le free float ?",
+          shortAnswer:
+            "Le free float est la part des actions réellement disponible à l'échange sur le marché.",
+          explanation:
+            "Il exclut notamment les blocs détenus durablement par fondateurs, États ou actionnaires de contrôle. Un free float faible peut amplifier les mouvements de prix.",
+          front: "Qu'est-ce que le free float ?",
+          back: "Le free float est la part des actions réellement disponible à l'échange sur le marché.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["capitalisation", "free-float", "liquidité"],
+          skills: ["definition"],
           tags: ["market cap", "enterprise value", "EV"],
-          detail: `**Réponse enrichie pour se distinguer :**
-
-"La market cap = cours × actions en circulation. Sa première limite est de n'intégrer que les capitaux propres : pour comparer deux entreprises, je préfère l'Enterprise Value qui ajoute la dette nette. Sa deuxième limite est d'être un snapshot instantané soumis aux mouvements irrationnels du marché. Enfin, le free float (portion réellement échangeable) peut être bien inférieur à la market cap totale — ce qui peut amplifier la volatilité."
-
-**Chiffre à retenir :** les 10 plus grandes entreprises mondiales (par market cap) représentent ~20 % de l'indice MSCI World.`,
+        },
+        {
+          id: "mf-found-l1-cap-ev-calculation",
+          type: "formula",
+          questionType: "quick-calculation",
+          question: "Une entreprise a 100 M€ de market cap, 200 M€ de dette et 50 M€ de trésorerie. Quelle est son Enterprise Value ?",
+          shortAnswer:
+            "Son Enterprise Value est de 250 M€.",
+          formula: "EV = Market cap + Dette - Trésorerie",
+          example: "100 + 200 - 50 = 250 M€.",
+          front: "Une entreprise a 100 M€ de market cap, 200 M€ de dette et 50 M€ de trésorerie. Quelle est son Enterprise Value ?",
+          back: "Son Enterprise Value est de 250 M€.",
+          difficulty: 1,
+          learningStage: 1,
+          topics: ["enterprise-value", "capitalisation", "calcul"],
+          skills: ["quick-calculation"],
+          tags: ["enterprise value", "EV", "calcul"],
         },
       ],
     },
