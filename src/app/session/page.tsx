@@ -130,10 +130,12 @@ function ConceptOverlay({ cards, onClose }: { cards: Card[]; onClose: () => void
 // ---------------------------------------------------------------------------
 
 function LearnFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) {
+  const router = useRouter();
   const { lesson, isLoading } = useLesson(trackId, lessonId);
   const [readCardIds, setReadCardIds] = useState<Set<string>>(new Set());
   const [currentIndex, setCurrentIndex] = useState(0);
   const [done, setDone] = useState(false);
+  const [paused, setPaused] = useState(false);
 
   if (isLoading) {
     return (
@@ -197,22 +199,39 @@ function LearnFlow({ trackId, lessonId }: { trackId: string; lessonId: string })
 
   return (
     <main className="min-h-screen bg-gray-50">
+      {paused && (
+        <PauseModal
+          progress={progressPct}
+          onResume={() => setPaused(false)}
+          onQuit={() => router.push(`/tracks/${trackId}`)}
+        />
+      )}
+
       <div className="mx-auto max-w-xl px-4 py-8">
         {/* Progress bar (primary cards only) */}
-        <div className="mb-6">
-          <div className="mb-1 flex items-center justify-between text-xs text-gray-400">
-            <span>
-              {isPrimarySection
-                ? `Fiche ${currentIndex + 1} / ${primary.length}`
-                : "Pour aller plus loin"}
-            </span>
-            <span>{progressPct}%</span>
-          </div>
-          <div className="h-2 rounded-full bg-gray-200">
-            <div
-              className="h-2 rounded-full bg-emerald-500 transition-all duration-300"
-              style={{ width: `${progressPct}%` }}
-            />
+        <div className="mb-6 flex items-center gap-4">
+          <button
+            onClick={() => setPaused(true)}
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-gray-400 transition hover:bg-gray-200 hover:text-gray-600"
+            aria-label="Quitter"
+          >
+            ✕
+          </button>
+          <div className="flex-1">
+            <div className="mb-1 flex items-center justify-between text-xs text-gray-400">
+              <span>
+                {isPrimarySection
+                  ? `Fiche ${currentIndex + 1} / ${primary.length}`
+                  : "Pour aller plus loin"}
+              </span>
+              <span>{progressPct}%</span>
+            </div>
+            <div className="h-2 rounded-full bg-gray-200">
+              <div
+                className="h-2 rounded-full bg-emerald-500 transition-all duration-300"
+                style={{ width: `${progressPct}%` }}
+              />
+            </div>
           </div>
         </div>
 
