@@ -518,95 +518,108 @@ export const marketFinanceTrack: Track = {
         {
           id: "mf-found-l1-mp-def",
           type: "definition",
+          questionType: "definition",
+          question: "Qu'est-ce que le marché primaire ?",
+          shortAnswer:
+            "Le marché primaire est le marché où de nouveaux titres sont émis pour la première fois afin de lever des capitaux.",
+          explanation:
+            "Les émetteurs, comme les entreprises ou les États, y vendent de nouvelles actions ou obligations directement aux investisseurs.",
           front: "Qu'est-ce que le marché primaire ?",
-          back: "Marché sur lequel de nouveaux titres (actions, obligations) sont émis et vendus pour la première fois aux investisseurs. C'est là que les émetteurs (entreprises, États) lèvent des capitaux directement.",
+          back: "Le marché primaire est le marché où de nouveaux titres sont émis pour la première fois afin de lever des capitaux.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["marché-primaire", "émission", "financement"],
+          skills: ["definition"],
           tags: ["marché primaire"],
-          detail: `**Le circuit du marché primaire :**
-1. L'émetteur mandate des **banques d'investissement** (arrangeurs, bookrunners)
-2. Les banques structurent l'offre et conduisent le **roadshow** (présentation aux investisseurs)
-3. Le **livre d'ordres** (orderbook) est constitué : les investisseurs expriment leur demande à différents prix
-4. Le prix final est fixé et les titres sont **alloués** aux investisseurs
-5. À la date de règlement-livraison, les fonds vont à l'émetteur
-
-**Acteurs clés :** banques d'investissement (lead manager), avocats, agences de notation (pour les obligations), régulateurs (AMF en France, SEC aux US).`,
         },
         {
           id: "mf-found-l1-mp-intuition",
-          type: "intuition",
-          front: "Marché primaire = création de titres",
-          back: "Lors d'une IPO, l'entreprise crée de nouvelles actions et les vend. L'argent va directement à l'entreprise. C'est du financement direct : l'entreprise n'emprunte pas à une banque, elle lève des fonds sur les marchés.",
+          type: "definition",
+          questionType: "mechanism",
+          question: "Pourquoi dit-on que le marché primaire finance directement les émetteurs ?",
+          shortAnswer:
+            "Parce que l'argent des investisseurs va à l'émetteur lorsqu'il crée ou vend de nouveaux titres.",
+          explanation:
+            "Lors d'une émission obligataire, l'État ou l'entreprise reçoit les fonds. Lors d'une augmentation de capital primaire, l'entreprise reçoit aussi les fonds.",
+          front: "Pourquoi dit-on que le marché primaire finance directement les émetteurs ?",
+          back: "Parce que l'argent des investisseurs va à l'émetteur lorsqu'il crée ou vend de nouveaux titres.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["marché-primaire", "financement", "émission"],
+          skills: ["mechanism"],
           tags: ["IPO", "financement"],
-          detail: `**Primaire vs Secondaire : qui reçoit l'argent ?**
-- **Marché primaire** : l'argent va à l'**émetteur** (entreprise ou État). C'est un vrai financement.
-- **Marché secondaire** : l'argent va à l'**investisseur vendeur**. L'émetteur ne reçoit rien.
-
-**Analogie :** le marché primaire est comme la vente d'une maison neuve par le promoteur (il reçoit les fonds). Le secondaire est la revente de la même maison entre particuliers (le promoteur n'est plus dans la boucle).
-
-**Impact réel de l'économie :** seul le marché primaire finance directement l'investissement des entreprises et les dépenses des États.`,
         },
         {
           id: "mf-found-l1-mp-example",
           type: "example",
-          front: "Exemples d'opérations de marché primaire",
-          back: "• IPO : Arm Holdings sur le Nasdaq (sept. 2023, 54 Mds $)\n• Émission obligataire : la France émet des OAT régulièrement\n• Augmentation de capital : une entreprise émet de nouvelles actions pour financer une acquisition\n• Privatisation : État cède des parts d'une entreprise publique",
+          questionType: "definition",
+          question: "Quels sont des exemples d'opérations de marché primaire ?",
+          shortAnswer:
+            "Une IPO, une émission obligataire et une augmentation de capital sont des opérations de marché primaire.",
+          explanation:
+            "Dans chaque cas, de nouveaux titres peuvent être proposés aux investisseurs pour financer l'émetteur ou organiser son accès au marché.",
+          example:
+            "Une entreprise qui émet de nouvelles actions pour financer une acquisition utilise le marché primaire.",
+          front: "Quels sont des exemples d'opérations de marché primaire ?",
+          back: "Une IPO, une émission obligataire et une augmentation de capital sont des opérations de marché primaire.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["marché-primaire", "ipo", "obligation"],
+          skills: ["definition"],
           tags: ["IPO", "OAT", "augmentation de capital"],
-          detail: `**Focus IPO — le processus en pratique :**
-- **Pre-IPO** (6-12 mois avant) : sélection des banques, restructuration, préparation du prospectus
-- **Roadshow** (2-3 semaines) : management présente l'entreprise à 50-100 investisseurs institutionnels
-- **Pricing** : le soir avant la cotation, le prix est fixé sur la base des ordres reçus
-- **J+1** : premier jour de cotation sur le marché secondaire
-
-**Les grandes IPO françaises récentes :** EDF (2005, 7 Mds €), CNP Assurances, Technip, Eurofins.
-
-**À noter :** une IPO donne de la liquidité aux actionnaires existants, pas seulement des fonds frais à l'entreprise. Les fondateurs/fonds PE peuvent vendre leurs parts lors de l'IPO.`,
         },
         {
           id: "mf-found-l1-mp-trap",
-          type: "trap",
-          front: "⚠️ Piège : marché primaire = toujours du financement frais ?",
-          back: "Non — lors d'une IPO, une partie des actions vendues peut appartenir à des actionnaires existants (secondary offering). Dans ce cas, l'entreprise ne reçoit rien : seuls les vendeurs sont rémunérés.",
+          type: "definition",
+          questionType: "comparison",
+          question: "Dans une IPO, quelle est la différence entre primary shares et secondary shares ?",
+          shortAnswer:
+            "Les primary shares sont de nouvelles actions vendues pour financer l'entreprise. Les secondary shares sont des actions existantes vendues par des actionnaires.",
+          explanation:
+            "Dans le second cas, l'argent va aux vendeurs, pas à l'entreprise.",
+          commonMistake:
+            "Croire que tout le montant d'une IPO va automatiquement dans les caisses de l'entreprise.",
+          front: "Dans une IPO, quelle est la différence entre primary shares et secondary shares ?",
+          back: "Les primary shares sont de nouvelles actions vendues pour financer l'entreprise. Les secondary shares sont des actions existantes vendues par des actionnaires.",
           difficulty: 2,
+          learningStage: 1,
+          topics: ["marché-primaire", "ipo", "financement"],
+          skills: ["comparison"],
           tags: ["IPO", "marché primaire", "financement"],
-          detail: `**Primary vs Secondary offering dans une IPO :**
-- **Primary shares** : nouvelles actions émises → le produit va à l'entreprise (vrai financement)
-- **Secondary shares** : actions existantes vendues par les actionnaires actuels (fondateurs, fonds PE) → le produit va aux vendeurs, pas à l'entreprise
-
-**Exemple typique :** une IPO lève 500 M€ dont 200 M€ de primary (pour l'entreprise) et 300 M€ de secondary (pour les fonds qui sortent). L'entreprise ne lève que 200 M€.
-
-**En entretien :** si on vous parle d'une IPO, précisez toujours la distinction primary/secondary pour montrer que vous comprenez où va réellement l'argent.`,
         },
         {
           id: "mf-found-l1-mp-iq",
-          type: "interview-question",
-          front: "Décrivez le processus d'une IPO, de la décision de s'introduire en bourse jusqu'au premier jour de cotation.",
-          back: "Sélection des banques → due diligence & documentation → roadshow → constitution du livre d'ordres → pricing → cotation J+1. Durée typique : 6-18 mois.",
+          type: "definition",
+          questionType: "mechanism",
+          question: "Quelles sont les grandes étapes d'une IPO ?",
+          shortAnswer:
+            "Les grandes étapes sont la sélection des banques, la préparation du prospectus, le roadshow, le bookbuilding, le pricing puis la cotation.",
+          explanation:
+            "Le roadshow sert à présenter l'entreprise aux investisseurs. Le bookbuilding collecte la demande pour aider à fixer le prix final.",
+          front: "Quelles sont les grandes étapes d'une IPO ?",
+          back: "Les grandes étapes sont la sélection des banques, la préparation du prospectus, le roadshow, le bookbuilding, le pricing puis la cotation.",
           difficulty: 3,
+          learningStage: 1,
+          topics: ["marché-primaire", "ipo", "processus"],
+          skills: ["mechanism"],
           tags: ["IPO", "marché primaire", "processus"],
-          detail: `**Structure de réponse (3-4 min) :**
-1. **Décision et sélection des banques** (12 mois avant) : mandats, beauty contest, rémunération (3-7 % des fonds levés)
-2. **Préparation** (6-12 mois) : due diligence, restructuration si nécessaire, préparation du prospectus (document réglementaire exhaustif)
-3. **Pre-marketing** (3 mois) : analyst presentations, pre-deal research publiée par les banques
-4. **Roadshow** (2-3 semaines) : management + banquiers présentent à ~100 investisseurs institutionnels dans les grandes places (NY, Londres, Paris, Zurich)
-5. **Pricing & allocation** (j-1) : fixation du prix final dans la fourchette annoncée, allocation des actions aux investisseurs
-6. **Premier jour de cotation** : trading commence sur le marché secondaire
-
-**Ce qui peut faire échouer une IPO :** mauvais timing de marché, valorisation trop élevée, manque d'intérêt institutionnel, problèmes de gouvernance révélés pendant la due diligence.`,
         },
         {
           id: "mf-found-l1-mp-ma",
-          type: "model-answer",
-          front: "Réponse : processus d'une IPO",
-          back: "\"Une IPO prend typiquement 12 à 18 mois. L'entreprise sélectionne ses banques via un beauty contest, prépare le prospectus avec avocats et auditeurs, puis conduit un roadshow de 2-3 semaines auprès des institutionnels. Le livre d'ordres constitué, le prix est fixé la veille de la cotation. Le premier jour, les actions s'échangent sur le marché secondaire.\"",
+          type: "definition",
+          questionType: "mechanism",
+          question: "À quoi servent le roadshow et le livre d'ordres dans une IPO ?",
+          shortAnswer:
+            "Le roadshow présente l'entreprise aux investisseurs. Le livre d'ordres mesure la demande et aide à fixer le prix et l'allocation.",
+          explanation:
+            "Si la demande est forte, le prix peut être fixé haut dans la fourchette. Si elle est faible, l'opération peut être repricée ou reportée.",
+          front: "À quoi servent le roadshow et le livre d'ordres dans une IPO ?",
+          back: "Le roadshow présente l'entreprise aux investisseurs. Le livre d'ordres mesure la demande et aide à fixer le prix et l'allocation.",
           difficulty: 3,
+          learningStage: 1,
+          topics: ["marché-primaire", "ipo", "bookbuilding"],
+          skills: ["mechanism"],
           tags: ["IPO", "marché primaire"],
-          detail: `**Précisions pour se distinguer :**
-- Mentionner la **stabilisation** (greenshoe option) : les banques peuvent racheter des actions en marché pour soutenir le cours les 30 premiers jours
-- La **lock-up period** : les actionnaires pré-IPO s'engagent généralement à ne pas vendre pendant 180 jours
-- Le rôle du **stabilizing agent** qui gère la fourchette de prix indicative vs prix final
-- En France : dossier déposé à l'**AMF** (Autorité des marchés financiers) qui vise le prospectus`,
         },
       ],
     },

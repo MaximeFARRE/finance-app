@@ -21,6 +21,7 @@ const MIGRATED_LESSON_IDS = new Set([
   "mf-found-l1-obligation",
   "mf-found-l1-rendement",
   "mf-found-l1-risque",
+  "mf-found-l1-marche-primaire",
 ]);
 
 describe("marketFinanceTrack pedagogical structure", () => {
