@@ -132,10 +132,18 @@ export interface Suggestion {
 // --- Import / Export ---
 
 export interface ImportResult {
-  added: Card[];
-  modified: { before: Card; after: Card; lessonId: string }[];
+  /** Cartes à créer, avec leur contexte track/leçon */
+  added: { card: Card; trackId: string; lessonId: string }[];
+  /** Cartes existantes à mettre à jour (avec snapshot avant/après) */
+  modified: { before: Card; after: Card; trackId: string; lessonId: string }[];
+  /** Cartes identiques, inchangées */
   unchanged: Card[];
+  /** Erreurs de validation ou de parsing */
   errors: { line?: number; field?: string; message: string }[];
+  /** Nouveaux tracks à créer (absents du store) */
+  newTracks: Omit<Track, "lessons">[];
+  /** Nouvelles leçons à créer (absentes du store) */
+  newLessons: { trackId: string; lesson: Omit<Lesson, "cards"> }[];
 }
 
 export type ExportFormat = "yaml" | "json" | "csv";
