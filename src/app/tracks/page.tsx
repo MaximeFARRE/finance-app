@@ -3,11 +3,20 @@
 // Note : metadata ne peut pas être exportée depuis un Client Component.
 // SEO non prioritaire pour une app locale. À revoir si déploiement public.
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useContent } from "@/lib/use-content";
+import { loadProgress } from "@/lib/storage";
+import type { UserProgress } from "@/lib/types";
 
 export default function TracksPage() {
   const { tracks, isLoading } = useContent();
+  const [progress, setProgress] = useState<UserProgress | null>(null);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setProgress(loadProgress());
+  }, []);
 
   return (
     <main className="min-h-screen bg-gray-50 px-4 py-10">
@@ -69,9 +78,31 @@ export default function TracksPage() {
                     <p className="mt-1 text-sm text-gray-500">
                       {track.description}
                     </p>
-                    <p className="mt-2 text-xs font-medium text-blue-600">
-                      {track.lessons.length} leçons
-                    </p>
+                    {(() => {
+                      const done = progress
+                        ? track.lessons.filter((l) => progress.completedLessonIds.includes(l.id)).length
+                        : 0;
+                      const total = track.lessons.length;
+                      const pct = Math.round((done / total) * 100);
+                      return (
+                        <div className="mt-2">
+                          <div className="mb-1 flex items-center gap-2">
+                            <span className="text-xs font-medium text-gray-500">
+                              {done} / {total} leçons
+                            </span>
+                            {done > 0 && (
+                              <span className="text-xs font-semibold text-blue-600">{pct}%</span>
+                            )}
+                          </div>
+                          <div className="h-1 w-32 rounded-full bg-gray-100">
+                            <div
+                              className="h-1 rounded-full bg-blue-400 transition-all duration-500"
+                              style={{ width: `${pct}%` }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })()}
                   </div>
                 </div>
               </Link>
