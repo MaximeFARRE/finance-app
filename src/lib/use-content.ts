@@ -1,8 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { allTracks as builtinTracks } from "@/content";
+import { allTracks as builtinTracks, BUILTIN_CONTENT_VERSION } from "@/content";
 import { getContentProvider } from "./content";
+import type { ContentProvider } from "./content-provider";
 import type { Lesson, Track } from "./types";
 
 // ---------------------------------------------------------------------------
@@ -16,6 +17,10 @@ interface UseContentReturn {
   refetch: () => void;
 }
 
+async function ensureBuiltinContent(provider: ContentProvider): Promise<void> {
+  await provider.syncBuiltinContent(builtinTracks, BUILTIN_CONTENT_VERSION);
+}
+
 export function useContent(): UseContentReturn {
   const [tracks, setTracks] = useState<Track[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,9 +32,7 @@ export function useContent(): UseContentReturn {
     try {
       const provider = getContentProvider();
 
-      if (!(await provider.isSeeded())) {
-        await provider.seed(builtinTracks);
-      }
+      await ensureBuiltinContent(provider);
 
       setTracks(await provider.getAllTracks());
     } catch (err) {
@@ -80,9 +83,7 @@ export function useLesson(
       try {
         const provider = getContentProvider();
 
-        if (!(await provider.isSeeded())) {
-          await provider.seed(builtinTracks);
-        }
+        await ensureBuiltinContent(provider);
 
         const data = await provider.getLessonById(trackId, lessonId);
         if (!cancelled) setLesson(data);

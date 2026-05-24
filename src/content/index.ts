@@ -2,6 +2,8 @@ import type { Track, Lesson } from "@/lib/types";
 import { marketFinanceTrack } from "./market-finance";
 import { corporateFinanceTrack } from "./corporate-finance";
 
+export const BUILTIN_CONTENT_VERSION = "2026-05-24-pedagogical-pivot-8";
+
 export const allTracks: Track[] = [marketFinanceTrack, corporateFinanceTrack];
 
 export function getTrackById(id: string): Track | undefined {

@@ -44,6 +44,7 @@ function makeMockProvider(existingCards: Card[] = []): ContentProvider {
     bulkUpsertCards: vi.fn().mockResolvedValue(undefined),
     isSeeded: vi.fn().mockResolvedValue(true),
     seed: vi.fn().mockResolvedValue(undefined),
+    syncBuiltinContent: vi.fn().mockResolvedValue(undefined),
   } as ContentProvider;
 }
 
