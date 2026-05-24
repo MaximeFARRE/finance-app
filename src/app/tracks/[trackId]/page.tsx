@@ -8,6 +8,7 @@ import { getLevelInfo } from "@/lib/level-engine";
 import { useContent } from "@/lib/use-content";
 import { LessonMap } from "@/components/LessonMap";
 import { XPBar } from "@/components/XPBar";
+import { isLessonUnlocked, isLessonCompleted, hasCompletedLearnSession } from "@/lib/unlock";
 import type { UserProgress } from "@/lib/types";
 
 export default function TrackDetailPage() {
@@ -43,6 +44,18 @@ export default function TrackDetailPage() {
     ? track.lessons.filter((l) => progress.completedLessonIds.includes(l.id)).length
     : 0;
   const totalLessons = track.lessons.length;
+
+  // Next actionable lesson: unlocked, not completed. Prefer quiz-ready (learn done) over learn-first.
+  const nextLesson = progress
+    ? track.lessons.find((l) => {
+        const unlocked = isLessonUnlocked(track.lessons, l.id, progress.completedLessonIds);
+        const completed = isLessonCompleted(l.id, progress.completedLessonIds);
+        return unlocked && !completed;
+      })
+    : null;
+  const nextMode = nextLesson && hasCompletedLearnSession(nextLesson.id, progress?.learnSessionIds ?? [])
+    ? "quiz"
+    : "learn";
 
   return (
     <main className="min-h-screen bg-gray-50 px-4 py-10">
@@ -94,6 +107,15 @@ export default function TrackDetailPage() {
               )}
             </div>
           </div>
+        )}
+
+        {nextLesson && (
+          <button
+            onClick={() => router.push(`/session?trackId=${trackId}&lessonId=${nextLesson.id}&mode=${nextMode}`)}
+            className="mb-6 w-full rounded-2xl bg-blue-600 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 active:scale-95"
+          >
+            {nextMode === "quiz" ? "🎯" : "📖"} Reprendre — {nextLesson.title}
+          </button>
         )}
 
         {!progress ? (
