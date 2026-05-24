@@ -82,8 +82,9 @@ export function LessonMap({
     const stars = (lessonStars[lesson.id] ?? 0) as 0 | 1 | 2 | 3;
     const isBoss = lesson.kind === "boss";
     const isBonus = lesson.kind === "bonus";
+    const r = isBoss ? 44 : NODE_R;
     const displayIndex = !isBoss && !isBonus ? ++regularCount : 0;
-    return { lesson, x, y, isRight, unlocked, completed, learnDone, stars, isBoss, isBonus, displayIndex };
+    return { lesson, x, y, r, isRight, unlocked, completed, learnDone, stars, isBoss, isBonus, displayIndex };
   });
 
   const totalHeight = orderedLessons.length * SLOT_HEIGHT + 60;
@@ -112,7 +113,7 @@ export function LessonMap({
         {nodes.slice(0, -1).map((node, i) => {
           const next = nodes[i + 1];
           if (!next) return null;
-          const d = curvePath(node.x, node.y + NODE_R, next.x, next.y - NODE_R);
+          const d = curvePath(node.x, node.y + node.r, next.x, next.y - next.r);
           const bothDone = node.completed && next.completed;
           const partialProgress = node.completed && !next.completed;
           return (
@@ -138,7 +139,7 @@ export function LessonMap({
 
       {/* Nodes */}
       {nodes.map((node, i) => {
-        const { lesson, x, y, isRight, unlocked, completed, learnDone, stars, isBoss, isBonus, displayIndex } = node;
+        const { lesson, x, y, r, isRight, unlocked, completed, learnDone, stars, isBoss, isBonus, displayIndex } = node;
         const isNext = i === nextAvailableIndex;
         const isSelected = selectedId === lesson.id;
         const labelAlign = isRight ? "right" : "left";
@@ -171,8 +172,8 @@ export function LessonMap({
           textAlign: labelAlign,
           pointerEvents: "none",
           ...(isRight
-            ? { right: NODE_R * 2 + 10 }
-            : { left: NODE_R * 2 + 10 }),
+            ? { right: r * 2 + 10 }
+            : { left: r * 2 + 10 }),
         };
 
         return (
@@ -180,10 +181,10 @@ export function LessonMap({
             key={lesson.id}
             style={{
               position: "absolute",
-              left: x - NODE_R,
-              top: y - NODE_R,
-              width: NODE_R * 2,
-              height: NODE_R * 2,
+              left: x - r,
+              top: y - r,
+              width: r * 2,
+              height: r * 2,
               zIndex: isSelected ? 20 : 10,
             }}
           >
@@ -205,13 +206,13 @@ export function LessonMap({
               disabled={!unlocked}
               aria-label={lesson.title}
               className={[
-                "relative flex h-full w-full items-center justify-center rounded-full font-bold shadow-md",
+                `relative flex h-full w-full items-center justify-center rounded-full font-bold ${isBoss ? "shadow-lg" : "shadow-md"}`,
                 "transition-transform duration-150 ease-out",
                 nodeBg,
                 unlocked ? "cursor-pointer text-white hover:scale-110 active:scale-95" : "cursor-not-allowed text-gray-400 opacity-50",
                 isSelected ? "scale-110 ring-4 ring-blue-400 ring-offset-2" : "",
               ].join(" ")}
-              style={{ fontSize: isBoss || !unlocked ? 18 : 14 }}
+              style={{ fontSize: isBoss ? 22 : !unlocked ? 18 : 14 }}
             >
               {nodeIcon}
             </button>
@@ -245,7 +246,7 @@ export function LessonMap({
       {selectedId && (() => {
         const node = nodes.find((n) => n.lesson.id === selectedId);
         if (!node) return null;
-        const { lesson, x, y, learnDone, isBoss } = node;
+        const { lesson, x, y, r, learnDone, isBoss } = node;
 
         const popupWidth = 220;
         const leftClamped = Math.max(8, Math.min(x - popupWidth / 2, width - popupWidth - 8));
@@ -257,8 +258,8 @@ export function LessonMap({
           width: popupWidth,
           zIndex: 30,
           ...(showAbove
-            ? { bottom: totalHeight - (y - NODE_R) + 10 }
-            : { top: y + NODE_R + 10 }),
+            ? { bottom: totalHeight - (y - r) + 10 }
+            : { top: y + r + 10 }),
         };
 
         return (
