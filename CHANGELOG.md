@@ -1,6 +1,42 @@
 # [1.3.0](https://github.com/MaximeFARRE/finance-app/compare/v1.2.0...v1.3.0) (2026-05-24)
 
 
+### Bug Fixes
+
+* clean up lint warnings (unused imports, stale disable directives) ([b701076](https://github.com/MaximeFARRE/finance-app/commit/b701076d51026d9000d7d8638d3660d47c80cbbb))
+* resolve all CI lint errors ([2aaa932](https://github.com/MaximeFARRE/finance-app/commit/2aaa93210ded65eec7c65b8869cb0f09f78cbd91))
+
+
+### Features
+
+* add admin layout with sidebar and dashboard page ([4a581ef](https://github.com/MaximeFARRE/finance-app/commit/4a581ef5d63ab63f17380807d8930092f79f7626))
+* add admin suggestions page with accept/reject workflow ([2784e28](https://github.com/MaximeFARRE/finance-app/commit/2784e288fb81f58247a891ef0f7f604237b5d60a))
+* add admin tracks, track detail, and lesson detail pages ([3f03abe](https://github.com/MaximeFARRE/finance-app/commit/3f03abeb6f2c6e2435086bff8fd91d59a2fb7820))
+* add card editor with live preview and version history ([bbc5bed](https://github.com/MaximeFARRE/finance-app/commit/bbc5bedde5dba2f4af395b78e52241117f682f2a))
+* add card ID generator with djb2 hash and collision handling ([883c148](https://github.com/MaximeFARRE/finance-app/commit/883c1486b0a629afd9710a4dd3852b6fc54bd790))
+* add content singleton and useContent/useLesson hooks ([f9f7ea2](https://github.com/MaximeFARRE/finance-app/commit/f9f7ea2ec39f8fc29fb992c12a0332a2a4d806ab))
+* add ContentProvider interface and storage types ([4ea057f](https://github.com/MaximeFARRE/finance-app/commit/4ea057f0853885bdb8019c6b1a80c01c686e6c4e))
+* add corporate-finance track with 5 lessons and 40+ cards ([f30d983](https://github.com/MaximeFARRE/finance-app/commit/f30d9836420220aede6dca7696940d22956d3933))
+* add CSV import/export with auto-separator detection and UTF-8 BOM ([feca448](https://github.com/MaximeFARRE/finance-app/commit/feca448d18b984fc9f87b50b5b8a7e2d1b7e2c85))
+* add difficulty gating (unlock d2/d3 at 70% mastery threshold) ([0035568](https://github.com/MaximeFARRE/finance-app/commit/0035568f52944fb4e37996eb00563c42cf4d7b3c))
+* add import diff engine (added/modified/unchanged classification) ([03a4098](https://github.com/MaximeFARRE/finance-app/commit/03a4098e9e6d744e2f69968805f3ef08f5756e64))
+* add import normalizer to convert Zod-parsed data to domain objects ([66c4b43](https://github.com/MaximeFARRE/finance-app/commit/66c4b432db08c5d01dd0df5f21237d82d556850a))
+* add import page with diff preview and export page with format/scope selector ([3b32e5a](https://github.com/MaximeFARRE/finance-app/commit/3b32e5a46d23db983732c9b4def094e3bb97fd59))
+* add import-export public API (analyzeImport, applyImport, exportContent) ([d82f375](https://github.com/MaximeFARRE/finance-app/commit/d82f375bc94d2956070b0f574ebdb11ddf14b666))
+* add JSON import/export with same API as YAML ([c8a44f2](https://github.com/MaximeFARRE/finance-app/commit/c8a44f2fa7bc993cc735aaa8c5b4046a8a3dd391))
+* add review mode session and due-cards badge on homepage ([737f8d0](https://github.com/MaximeFARRE/finance-app/commit/737f8d09c839977c08be61ac9ba30a445aa7bebe))
+* add SuggestionButton and SuggestionModal, integrate into LearnCard and LearningCard ([7913f85](https://github.com/MaximeFARRE/finance-app/commit/7913f85f8322ac639ff39d5541b4657539e10c7c))
+* add YAML import/export with auto-format detection and roundtrip ([43ff8f1](https://github.com/MaximeFARRE/finance-app/commit/43ff8f1a93a62f1fff2d258d482a40387f5b5a23))
+* add zod validation schemas for import formats ([f419ed2](https://github.com/MaximeFARRE/finance-app/commit/f419ed21c04a2c1f58a0382e9a64b6e9285ee008))
+* enrich market-finance track with detail fields, trap cards, and missing IQ/MA pairs ([e40b2bd](https://github.com/MaximeFARRE/finance-app/commit/e40b2bdebd1b631d2a0c4cb335535625c1d24776))
+* extend types with CardVersion, Suggestion, ImportResult, ExportOptions ([2dcf761](https://github.com/MaximeFARRE/finance-app/commit/2dcf76140f40f20409a2e1e3012e698a16f98bec))
+* implement LocalContentProvider with IndexedDB ([e980d4b](https://github.com/MaximeFARRE/finance-app/commit/e980d4bb855806abb45881e140fe15ed13d57fe9))
+* prioritize due cards in quiz deck and add cross-lesson review deck builder ([6e2d95a](https://github.com/MaximeFARRE/finance-app/commit/6e2d95ac0825702b8ae33c7fada52473f0e70dac))
+* register corporate-finance track in content index ([44a5c3a](https://github.com/MaximeFARRE/finance-app/commit/44a5c3ac70941dea1f766307e937b15c62b22d00))
+
+# [1.3.0](https://github.com/MaximeFARRE/finance-app/compare/v1.2.0...v1.3.0) (2026-05-24)
+
+
 ### Features
 
 * **admin:** full content management UI at `/admin` — track/lesson/card browser, CRUD editor with live preview and version history
