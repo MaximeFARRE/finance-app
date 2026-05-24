@@ -1,3 +1,17 @@
+# [1.6.0](https://github.com/MaximeFARRE/finance-app/compare/v1.5.0...v1.6.0) (2026-05-24)
+
+
+### Features
+
+* add lesson progress counter on track page ([6258012](https://github.com/MaximeFARRE/finance-app/commit/6258012d3ff21ff5a1942a51b02dad446b81d83e))
+* add next lesson button on results page ([e61c7b1](https://github.com/MaximeFARRE/finance-app/commit/e61c7b1e5f434a4676349a6762b9dd4977581395))
+* add reprendre button on track page ([6713cae](https://github.com/MaximeFARRE/finance-app/commit/6713cae6f0e739c66ae5b0bdc14337c15753a91c))
+* display streak badge on track page ([cf19c24](https://github.com/MaximeFARRE/finance-app/commit/cf19c24160a05e4b775ef20f1ad736966ea14e6e))
+* make boss lesson node larger on the map ([f7c9345](https://github.com/MaximeFARRE/finance-app/commit/f7c9345e3de5df303967c5c753ba16b9ef9c5c3d))
+* replace lesson list with serpentine path map ([7bf71e8](https://github.com/MaximeFARRE/finance-app/commit/7bf71e8822e5617622650d2f162170c9f8ebbcdc))
+* show learn-done badge on map nodes ([53a7b32](https://github.com/MaximeFARRE/finance-app/commit/53a7b3293c34a350cb033de8b70b3e7e93ebac8a))
+* show lesson completion progress on track cards ([a478bf0](https://github.com/MaximeFARRE/finance-app/commit/a478bf03c3471c5f12dfe0ec346c418cf62e50dc))
+
 # [1.5.0](https://github.com/MaximeFARRE/finance-app/compare/v1.4.0...v1.5.0) (2026-05-24)
 
 
