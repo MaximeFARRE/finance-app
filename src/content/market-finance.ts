@@ -42,88 +42,107 @@ export const marketFinanceTrack: Track = {
         {
           id: "mf-found-l1-action-def",
           type: "definition",
+          questionType: "definition",
+          question: "Qu'est-ce qu'une action ?",
+          shortAnswer:
+            "Une action est un titre de propriété représentant une fraction du capital d'une entreprise.",
+          explanation:
+            "L'actionnaire est copropriétaire : il peut recevoir des dividendes, voter en assemblée générale et profiter d'une hausse du cours. En contrepartie, il supporte le risque résiduel : en cas de faillite, il passe après les créanciers.",
           front: "Qu'est-ce qu'une action ?",
-          back: "Titre de propriété représentant une fraction du capital d'une entreprise. L'actionnaire est copropriétaire, a droit aux dividendes distribués et au vote en assemblée générale.",
+          back: "Une action est un titre de propriété représentant une fraction du capital d'une entreprise.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["action", "equity", "capital"],
+          skills: ["definition"],
           tags: ["action", "equity"],
-          detail: `Trois droits fondamentaux de l'actionnaire :
-- **Droit financier** : percevoir les dividendes si l'entreprise les distribue
-- **Droit de vote** : voter en AG sur les résolutions (approbation des comptes, nomination du CA, etc.)
-- **Droit résiduel** : en cas de liquidation, récupérer sa quote-part de l'actif net — après remboursement de tous les créanciers
-
-C'est ce droit résiduel qui fait de l'actionnaire le porteur de risque ultime, et justifie l'exigence de rendement plus élevé qu'une obligation.`,
         },
         {
           id: "mf-found-l1-action-intuition",
-          type: "intuition",
-          front: "Comment penser à une action ?",
-          back: "Acheter une action = devenir associé d'une entreprise. Tu profites de sa croissance (plus-value) et de ses bénéfices (dividendes), mais tu assumes aussi ses pertes. L'upside est illimité, la perte maximale est le capital investi.",
+          type: "definition",
+          questionType: "mechanism",
+          question: "Pourquoi dit-on qu'acheter une action revient à devenir associé d'une entreprise ?",
+          shortAnswer:
+            "Parce que l'actionnaire détient une part du capital : il participe à la création de valeur, mais supporte aussi le risque économique de l'entreprise.",
+          explanation:
+            "Si l'entreprise grandit, le cours peut monter et l'actionnaire peut toucher des dividendes. Si elle va mal, le cours baisse et la perte peut aller jusqu'au capital investi.",
+          front: "Pourquoi dit-on qu'acheter une action revient à devenir associé d'une entreprise ?",
+          back: "Parce que l'actionnaire détient une part du capital : il participe à la création de valeur, mais supporte aussi le risque économique de l'entreprise.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["action", "risque", "plus-value"],
+          skills: ["mechanism"],
           tags: ["action", "risque"],
-          detail: `**La métaphore de la pizzeria :**
-Imaginez acheter 10 % d'une pizzeria qui gagne 100 k€/an. Cette part vaut peut-être 50 k€ (soit 5× les bénéfices annuels). Si le quartier se gentrifie et les bénéfices doublent, votre 10 % vaut maintenant 100 k€. Mais si la pizzeria fait faillite, vous perdez tout — le bailleur et les fournisseurs sont remboursés en premier.
-
-Le cours d'une action fonctionne exactement de la même façon : il **capitalise les attentes de profits futurs** du marché. Quand ces attentes changent, le cours bouge instantanément.`,
         },
         {
           id: "mf-found-l1-action-example",
           type: "example",
-          front: "Exemple concret d'actionnaire",
-          back: "Tu achètes 1 action LVMH à 800 €. Tu deviens propriétaire d'une fraction infinitésimale du groupe. Si LVMH distribue 12 € de dividende, tu reçois 12 €. Si le cours monte à 900 €, ta plus-value latente est de 100 €.",
+          questionType: "quick-calculation",
+          question: "Vous achetez une action à 800 euros et elle monte à 900 euros. Quelle est votre plus-value ?",
+          shortAnswer:
+            "La plus-value est de 100 euros par action, avant impôts et frais.",
+          formula: "Plus-value = Prix de vente - Prix d'achat",
+          example:
+            "Si vous possédez 10 actions, la plus-value latente est 10 × 100 = 1 000 euros.",
+          front: "Vous achetez une action à 800 euros et elle monte à 900 euros. Quelle est votre plus-value ?",
+          back: "La plus-value est de 100 euros par action, avant impôts et frais.",
           difficulty: 1,
-          tags: ["action", "LVMH"],
-          detail: `**Ordres de grandeur LVMH (2024) :**
-- ~500 millions d'actions en circulation
-- Cours ~750 € → capitalisation boursière ~375 Mds €
-- Dividende annuel ~12 €/action → dividend yield ~1,6 %
-
-**Pour 10 000 € investis (~13 actions) :**
-- Dividende annuel reçu : ~156 €
-- Si le cours monte de 10 % : plus-value latente de 1 000 €
-- Si LVMH fait faillite (très improbable) : perte quasi-totale
-
-**À noter :** les actions peuvent faire l'objet de splits (division) ou de regroupements, ce qui change le nombre d'actions et le cours, mais pas la capitalisation totale.`,
+          learningStage: 1,
+          topics: ["action", "p&l", "plus-value"],
+          skills: ["quick-calculation"],
+          tags: ["action", "p&l"],
         },
         {
           id: "mf-found-l1-action-trap",
-          type: "trap",
-          front: "⚠️ Piège : une action sans dividende est-elle mauvaise ?",
-          back: "Non — les entreprises en forte croissance préfèrent réinvestir. Amazon n'a pas versé de dividende pendant 25 ans. Absence de dividende ≠ absence de création de valeur pour l'actionnaire.",
+          type: "definition",
+          questionType: "definition",
+          question: "Une action sans dividende est-elle forcément une mauvaise action ?",
+          shortAnswer:
+            "Non. Une entreprise peut créer de la valeur en réinvestissant ses bénéfices plutôt qu'en les distribuant.",
+          explanation:
+            "Les entreprises de croissance privilégient souvent l'investissement, la R&D ou les acquisitions. La rémunération de l'actionnaire peut alors venir surtout de la hausse du cours.",
+          commonMistake:
+            "Ne pas confondre absence de dividende et absence de création de valeur.",
+          front: "Une action sans dividende est-elle forcément une mauvaise action ?",
+          back: "Non. Une entreprise peut créer de la valeur en réinvestissant ses bénéfices plutôt qu'en les distribuant.",
           difficulty: 2,
+          learningStage: 1,
+          topics: ["action", "dividende", "croissance"],
+          skills: ["definition"],
           tags: ["action", "dividende", "croissance"],
-          detail: `**Deux modèles valables :**
-- **Croissance (growth)** : l'entreprise réinvestit tous ses bénéfices → expansion, R&D, acquisitions → le cours monte → l'actionnaire crée de la valeur via la plus-value. Ex : Amazon, Berkshire Hathaway longtemps.
-- **Revenu (value/income)** : l'entreprise mûre distribue ses bénéfices → dividendes réguliers. Ex : Total, Orange, utilities.
-
-**En entretien :** si on vous demande si une entreprise "crée de la valeur pour ses actionnaires", ne pensez pas uniquement aux dividendes — regardez aussi la **progression du cours** et le **buyback de titres** (rachat d'actions, une autre façon de rétribuer les actionnaires).`,
         },
         {
           id: "mf-found-l1-action-iq",
-          type: "interview-question",
+          type: "definition",
+          questionType: "comparison",
+          question: "Quelle est la différence entre une action et une obligation ?",
+          shortAnswer:
+            "Une action est une part de capital : l'investisseur est propriétaire. Une obligation est une dette : l'investisseur est créancier.",
+          explanation:
+            "L'action offre un potentiel de hausse plus élevé mais passe après la dette en cas de faillite. L'obligation verse généralement un coupon et a une priorité de remboursement supérieure.",
           front: "Quelle est la différence entre une action et une obligation ?",
-          back: "Action = capital (propriété, risque total, upside illimité). Obligation = dette (créancier, coupon fixe, priorité en faillite). Rendement attendu et risque sont fondamentalement différents.",
+          back: "Une action est une part de capital : l'investisseur est propriétaire. Une obligation est une dette : l'investisseur est créancier.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["action", "obligation", "capital"],
+          skills: ["comparison"],
           tags: ["action", "obligation"],
-          detail: `**Structure de réponse attendue (90 secondes) :**
-1. Définir les deux instruments brièvement
-2. Contraster sur 3 axes : nature (propriété vs dette), rémunération (dividende variable vs coupon fixe), priorité en faillite (obligataire avant actionnaire)
-3. Conclure sur le couple rendement/risque : l'action exige une prime de risque plus élevée
-
-**Ce que le recruteur cherche :** clarté du raisonnement et compréhension de la hiérarchie des créanciers.`,
         },
         {
           id: "mf-found-l1-action-ma",
-          type: "model-answer",
-          front: "Réponse : action vs obligation",
-          back: "Action = part de capital (propriété, dividende variable, upside illimité, risque total). Obligation = prêt (créancier, coupon fixe, priorité en cas de faillite, capital remboursé à maturité). En cas de faillite, les obligataires sont remboursés avant les actionnaires.",
+          type: "definition",
+          questionType: "mechanism",
+          question: "Pourquoi l'actionnaire exige-t-il généralement un rendement supérieur à l'obligataire ?",
+          shortAnswer:
+            "Parce que l'actionnaire porte le risque résiduel : il est servi après les créanciers et son rendement n'est pas contractuel.",
+          explanation:
+            "Le coupon obligataire est prévu à l'avance, alors que dividendes et plus-values sont incertains. Cette incertitude justifie une prime de risque equity.",
+          front: "Pourquoi l'actionnaire exige-t-il généralement un rendement supérieur à l'obligataire ?",
+          back: "Parce que l'actionnaire porte le risque résiduel : il est servi après les créanciers et son rendement n'est pas contractuel.",
           difficulty: 1,
+          learningStage: 1,
+          topics: ["action", "obligation", "prime-de-risque"],
+          skills: ["mechanism"],
           tags: ["action", "obligation"],
-          detail: `**Points bonus à mentionner :**
-- La **hiérarchie complète** en faillite : dettes senior sécurisées → dettes senior non sécurisées → dettes subordonnées → actionnaires préférentiels → actionnaires ordinaires
-- Le concept de **leverage** : une entreprise avec beaucoup de dette amplifie les gains et pertes des actionnaires (effet de levier)
-- Les **obligations convertibles** : hybride entre les deux — obligation qui peut être convertie en actions à certaines conditions
-
-**Formulation suggérée :** "L'actionnaire est le dernier servi en cas de liquidation, ce qui justifie qu'il exige un rendement supérieur à celui de l'obligataire — c'est la prime de risque equity."`,
         },
       ],
     },

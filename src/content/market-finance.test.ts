@@ -10,6 +10,13 @@ const APPROVED_QUESTION_TYPES = new Set<QuestionType>([
   "quick-calculation",
   "market-culture",
 ]);
+const FORBIDDEN_LEGACY_TYPES = new Set([
+  "intuition",
+  "trap",
+  "interview-question",
+  "model-answer",
+]);
+const MIGRATED_LESSON_IDS = new Set(["mf-found-l1-action"]);
 
 describe("marketFinanceTrack pedagogical structure", () => {
   it("declares worlds that reference existing lessons", () => {
@@ -58,6 +65,30 @@ describe("marketFinanceTrack pedagogical structure", () => {
 
     for (const card of structuredCards) {
       expect(card.trackId === undefined || card.trackId === marketFinanceTrack.id).toBe(true);
+    }
+  });
+
+  it("keeps migrated lessons short and free of removed V1 legacy types", () => {
+    const migratedLessons = marketFinanceTrack.lessons.filter((lesson) =>
+      MIGRATED_LESSON_IDS.has(lesson.id),
+    );
+
+    expect(migratedLessons).toHaveLength(MIGRATED_LESSON_IDS.size);
+
+    for (const lesson of migratedLessons) {
+      expect(lesson.cards.length).toBeGreaterThanOrEqual(6);
+      expect(lesson.cards.length).toBeLessThanOrEqual(10);
+
+      for (const card of lesson.cards) {
+        expect(FORBIDDEN_LEGACY_TYPES.has(card.type)).toBe(false);
+        expect(card.questionType).toBeTruthy();
+        expect(APPROVED_QUESTION_TYPES.has(card.questionType!)).toBe(true);
+        expect(card.question?.trim()).toBeTruthy();
+        expect(card.shortAnswer?.trim()).toBeTruthy();
+        expect(card.learningStage).toBeTruthy();
+        expect(card.topics?.length).toBeGreaterThan(0);
+        expect(card.skills?.length).toBeGreaterThan(0);
+      }
     }
   });
 });
