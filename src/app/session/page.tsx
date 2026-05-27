@@ -335,7 +335,6 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
     const progress = loadProgress();
     const lessonDeck = buildLessonDeck({
       trackId,
-      lessonId,
       cards: lesson.cards,
       progress: progress.cards,
     });

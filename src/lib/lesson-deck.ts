@@ -5,7 +5,6 @@ export const DEFAULT_LESSON_DECK_LIMIT = 10;
 
 export interface BuildLessonDeckParams {
   trackId: string;
-  lessonId: string;
   cards: Card[];
   progress?: Record<string, CardProgress>;
   limit?: number;
