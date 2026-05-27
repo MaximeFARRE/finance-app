@@ -2,14 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  TrendingUp, LayoutDashboard, BookMarked,
+  Download, Upload, MessageSquare,
+} from "lucide-react";
 import { isAdmin } from "@/lib/auth";
 
 const NAV_ITEMS = [
-  { href: "/admin", label: "Dashboard", icon: "📊", exact: true },
-  { href: "/admin/tracks", label: "Contenus", icon: "📚", exact: false },
-  { href: "/admin/import", label: "Import", icon: "📥", exact: false },
-  { href: "/admin/export", label: "Export", icon: "📤", exact: false },
-  { href: "/admin/suggestions", label: "Suggestions", icon: "🚩", exact: false },
+  { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { href: "/admin/tracks", label: "Contenus", icon: BookMarked, exact: false },
+  { href: "/admin/import", label: "Import", icon: Download, exact: false },
+  { href: "/admin/export", label: "Export", icon: Upload, exact: false },
+  { href: "/admin/suggestions", label: "Suggestions", icon: MessageSquare, exact: false },
 ] as const;
 
 function AdminGuard({ children }: { children: React.ReactNode }) {
@@ -30,13 +34,13 @@ function Sidebar() {
     <aside className="flex w-56 shrink-0 flex-col border-r border-gray-200 bg-white py-6">
       <div className="px-6 mb-8">
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl">📈</span>
+          <TrendingUp size={20} className="text-blue-600" />
           <span className="text-sm font-bold text-gray-900">Finance Admin</span>
         </Link>
       </div>
 
       <nav className="flex flex-col gap-1 px-3">
-        {NAV_ITEMS.map(({ href, label, icon, exact }) => {
+        {NAV_ITEMS.map(({ href, label, icon: Icon, exact }) => {
           const active = exact
             ? pathname === href
             : pathname.startsWith(href);
@@ -50,7 +54,7 @@ function Sidebar() {
                   : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
               }`}
             >
-              <span>{icon}</span>
+              <Icon size={16} />
               {label}
             </Link>
           );

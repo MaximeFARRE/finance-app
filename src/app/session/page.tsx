@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { CheckCircle2, RefreshCw } from "lucide-react";
 import { useLesson } from "@/lib/use-content";
 import { LearningCard } from "@/components/LearningCard";
 import { LearnCard } from "@/components/LearnCard";
@@ -529,7 +530,7 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
 
         {revealed && !isMcq && entry.answer && (
           <div className="mt-4 rounded-xl bg-teal-50 border border-teal-100 p-5">
-            <p className="mb-1 text-xs font-semibold text-teal-600">✅ Réponse modèle</p>
+            <p className="mb-1 flex items-center gap-1 text-xs font-semibold text-teal-600"><CheckCircle2 size={12} /> Réponse modèle</p>
             <p className="whitespace-pre-line text-sm leading-relaxed text-gray-800">
               {entry.answer.back}
             </p>
@@ -679,7 +680,7 @@ function ReviewFlow() {
           </button>
           <div className="flex-1">
             <div className="mb-1 flex items-center justify-between text-xs text-gray-400">
-              <span>🔁 Révisions · {doneCards + 1} / {totalCards}</span>
+              <span className="flex items-center gap-1"><RefreshCw size={11} /> Révisions · {doneCards + 1} / {totalCards}</span>
               <span>{progressPct}%</span>
             </div>
             <div className="h-2 rounded-full bg-gray-200">

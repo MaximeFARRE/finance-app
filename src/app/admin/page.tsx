@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { BookMarked, Download, Upload, GraduationCap, BookOpen, CreditCard } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { getContentProvider } from "@/lib/content";
 
 interface Stats {
@@ -29,10 +31,16 @@ export default function AdminDashboard() {
     void loadStats();
   }, []);
 
-  const QUICK_LINKS = [
-    { href: "/admin/tracks", label: "Gérer les contenus", icon: "📚", desc: "Tracks, leçons, cartes" },
-    { href: "/admin/import", label: "Importer du contenu", icon: "📥", desc: "YAML · JSON · CSV" },
-    { href: "/admin/export", label: "Exporter du contenu", icon: "📤", desc: "Télécharger un fichier" },
+  const QUICK_LINKS: { href: string; label: string; icon: LucideIcon; desc: string }[] = [
+    { href: "/admin/tracks", label: "Gérer les contenus", icon: BookMarked, desc: "Tracks, leçons, cartes" },
+    { href: "/admin/import", label: "Importer du contenu", icon: Download, desc: "YAML · JSON · CSV" },
+    { href: "/admin/export", label: "Exporter du contenu", icon: Upload, desc: "Télécharger un fichier" },
+  ];
+
+  const STAT_ITEMS: { key: keyof Stats; label: string; icon: LucideIcon }[] = [
+    { key: "tracks", label: "Tracks", icon: GraduationCap },
+    { key: "lessons", label: "Leçons", icon: BookOpen },
+    { key: "cards", label: "Cartes", icon: CreditCard },
   ];
 
   return (
@@ -49,18 +57,14 @@ export default function AdminDashboard() {
                 <div className="h-4 w-16 rounded bg-gray-100" />
               </div>
             ))
-          : [
-              { value: stats?.tracks ?? 0, label: "Tracks", icon: "🎓" },
-              { value: stats?.lessons ?? 0, label: "Leçons", icon: "📖" },
-              { value: stats?.cards ?? 0, label: "Cartes", icon: "🃏" },
-            ].map(({ value, label, icon }) => (
+          : STAT_ITEMS.map(({ key, label, icon: Icon }) => (
               <div
                 key={label}
                 className="rounded-2xl border border-gray-200 bg-white p-5"
               >
-                <p className="text-3xl font-bold text-gray-900">{value}</p>
-                <p className="mt-1 text-sm text-gray-500">
-                  <span className="mr-1">{icon}</span>
+                <p className="text-3xl font-bold text-gray-900">{stats?.[key] ?? 0}</p>
+                <p className="mt-1 flex items-center gap-1.5 text-sm text-gray-500">
+                  <Icon size={14} />
                   {label}
                 </p>
               </div>
@@ -72,13 +76,15 @@ export default function AdminDashboard() {
         Actions rapides
       </h2>
       <div className="flex flex-col gap-3">
-        {QUICK_LINKS.map(({ href, label, icon, desc }) => (
+        {QUICK_LINKS.map(({ href, label, icon: Icon, desc }) => (
           <Link
             key={href}
             href={href}
             className="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 transition hover:border-blue-300 hover:shadow-sm"
           >
-            <span className="text-2xl">{icon}</span>
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-gray-600">
+              <Icon size={20} />
+            </div>
             <div>
               <p className="font-semibold text-gray-900">{label}</p>
               <p className="text-xs text-gray-400 mt-0.5">{desc}</p>

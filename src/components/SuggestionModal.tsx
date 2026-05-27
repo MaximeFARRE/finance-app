@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { Bug, FileText, Pencil, Plus, MessageCircle } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import type { CardType, Difficulty, SuggestionCategory } from "@/lib/types";
 import { getContentProvider } from "@/lib/content";
 
-const CATEGORIES: { value: SuggestionCategory; icon: string; label: string }[] = [
-  { value: "error", icon: "🐛", label: "Erreur dans le contenu" },
-  { value: "missing-detail", icon: "📝", label: "Détail manquant" },
-  { value: "wording", icon: "✏️", label: "Formulation confuse" },
-  { value: "new-card", icon: "➕", label: "Proposer une nouvelle carte" },
-  { value: "other", icon: "💬", label: "Autre" },
+const CATEGORIES: { value: SuggestionCategory; icon: LucideIcon; label: string }[] = [
+  { value: "error", icon: Bug, label: "Erreur dans le contenu" },
+  { value: "missing-detail", icon: FileText, label: "Détail manquant" },
+  { value: "wording", icon: Pencil, label: "Formulation confuse" },
+  { value: "new-card", icon: Plus, label: "Proposer une nouvelle carte" },
+  { value: "other", icon: MessageCircle, label: "Autre" },
 ];
 
 const CARD_TYPES: { value: CardType; label: string }[] = [
@@ -134,7 +136,7 @@ export function SuggestionModal({
               Type de suggestion
             </label>
             <div className="flex flex-col gap-2">
-              {CATEGORIES.map(({ value, icon, label }) => (
+              {CATEGORIES.map(({ value, icon: Icon, label }) => (
                 <label
                   key={value}
                   className={`flex items-center gap-3 cursor-pointer rounded-xl border px-3 py-2.5 transition ${
@@ -151,8 +153,9 @@ export function SuggestionModal({
                     onChange={() => setCategory(value)}
                     className="accent-blue-600"
                   />
-                  <span className="text-sm text-gray-700">
-                    {icon} {label}
+                  <span className="flex items-center gap-1.5 text-sm text-gray-700">
+                    <Icon size={14} />
+                    {label}
                   </span>
                 </label>
               ))}

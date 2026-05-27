@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { BookOpen, Target, Flag, Lock, Check } from "lucide-react";
 import type { LearningWorld, Lesson } from "@/lib/types";
 import { isLessonUnlocked, isLessonCompleted, hasCompletedLearnSession } from "@/lib/unlock";
 
@@ -219,16 +220,6 @@ export function LessonMap({
                 ? "bg-amber-500"
                 : "bg-blue-600";
 
-        const nodeIcon = !unlocked
-          ? "🔒"
-          : completed
-            ? "✓"
-            : isBoss
-              ? "★"
-              : isBonus
-                ? "✦"
-                : String(displayIndex);
-
         const labelStyle: React.CSSProperties = {
           position: "absolute",
           top: "50%",
@@ -238,6 +229,8 @@ export function LessonMap({
           pointerEvents: "none",
           ...(isRight ? { right: r * 2 + 10 } : { left: r * 2 + 10 }),
         };
+
+        const iconSize = isBoss ? 22 : 16;
 
         return (
           <div
@@ -273,18 +266,28 @@ export function LessonMap({
                 unlocked ? "cursor-pointer text-white hover:scale-110 active:scale-95" : "cursor-not-allowed text-gray-400 opacity-50",
                 isSelected ? "scale-110 ring-4 ring-blue-400 ring-offset-2" : "",
               ].join(" ")}
-              style={{ fontSize: isBoss ? 22 : !unlocked ? 18 : 14 }}
+              style={{ fontSize: isBoss ? 22 : 14 }}
             >
-              {nodeIcon}
+              {!unlocked ? (
+                <Lock size={iconSize} />
+              ) : completed ? (
+                "✓"
+              ) : isBoss ? (
+                "★"
+              ) : isBonus ? (
+                "✦"
+              ) : (
+                String(displayIndex)
+              )}
             </button>
 
             {learnDone && !completed && (
               <div
                 aria-label="Apprendre terminé"
-                className="absolute flex items-center justify-center rounded-full bg-emerald-400 border-2 border-white"
-                style={{ width: 18, height: 18, bottom: 0, right: 0, transform: "translate(20%, 20%)", zIndex: 2, fontSize: 9, color: "white" }}
+                className="absolute flex items-center justify-center rounded-full bg-emerald-400 border-2 border-white text-white"
+                style={{ width: 18, height: 18, bottom: 0, right: 0, transform: "translate(20%, 20%)", zIndex: 2 }}
               >
-                📖
+                <Check size={9} strokeWidth={3} />
               </div>
             )}
 
@@ -343,21 +346,23 @@ export function LessonMap({
             <div className="flex gap-2">
               <button
                 onClick={() => onLearn(lesson.id)}
-                className="flex-1 rounded-xl py-2 text-xs font-semibold bg-emerald-100 text-emerald-700 hover:bg-emerald-200 active:scale-95 transition-all"
+                className="flex flex-1 items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-semibold bg-emerald-100 text-emerald-700 hover:bg-emerald-200 active:scale-95 transition-all"
               >
-                📖 Apprendre
+                <BookOpen size={13} />
+                Apprendre
               </button>
               <div className="relative flex-1 group">
                 <button
                   onClick={() => onQuiz(lesson.id)}
                   className={[
-                    "w-full rounded-xl py-2 text-xs font-semibold transition-all active:scale-95",
+                    "flex w-full items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-semibold transition-all active:scale-95",
                     learnDone || isBoss
                       ? "bg-blue-600 text-white hover:bg-blue-700"
                       : "bg-blue-100 text-blue-500 hover:bg-blue-200",
                   ].join(" ")}
                 >
-                  {isBoss ? "🏁 Boss" : "🎯 Quiz"}
+                  {isBoss ? <Flag size={13} /> : <Target size={13} />}
+                  {isBoss ? "Boss" : "Quiz"}
                 </button>
                 {!learnDone && !isBoss && (
                   <div className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-800 px-2.5 py-1.5 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">

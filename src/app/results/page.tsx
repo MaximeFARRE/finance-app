@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { Trophy, Target, BookOpen } from "lucide-react";
 import { loadProgress } from "@/lib/storage";
 import { getLevelInfo } from "@/lib/level-engine";
 import { useContent, useLesson } from "@/lib/use-content";
@@ -64,7 +65,9 @@ function ResultsContent() {
       {/* Main results card */}
       <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
         <div className="mb-4 text-center">
-          <div className="mb-3 text-5xl">{stars === 3 ? "🏆" : "🎯"}</div>
+          <div className="mb-3 flex justify-center text-gray-700">
+            {stars === 3 ? <Trophy size={52} strokeWidth={1.5} className="text-yellow-500" /> : <Target size={52} strokeWidth={1.5} />}
+          </div>
           <h1 className="text-2xl font-bold text-gray-900">Session terminée !</h1>
           {starLabel && <p className="mt-1 text-base font-medium text-gray-600">{starLabel}</p>}
         </div>
@@ -85,7 +88,8 @@ function ResultsContent() {
               onClick={() => router.push(`/session?trackId=${trackId}&lessonId=${nextLesson.id}&mode=${nextMode}`)}
               className="w-full rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 active:scale-95"
             >
-              {nextMode === "quiz" ? "🎯" : "📖"} Leçon suivante — {nextLesson.title}
+              {nextMode === "quiz" ? <Target size={15} className="inline mr-1.5" /> : <BookOpen size={15} className="inline mr-1.5" />}
+              Leçon suivante — {nextLesson.title}
             </button>
           )}
           {trackId && (

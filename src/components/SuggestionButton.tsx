@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Flag } from "lucide-react";
 import { SuggestionModal } from "./SuggestionModal";
 
 interface Props {
@@ -31,7 +32,8 @@ export function SuggestionButton({ cardId, trackId, lessonId, cardFront }: Props
         aria-label="Signaler un problème ou faire une suggestion"
         title="Faire une suggestion"
       >
-        🚩 Suggérer
+        <Flag size={12} className="inline mr-1" />
+        Suggérer
       </button>
 
       {uiState === "open" && (

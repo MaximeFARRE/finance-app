@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { Settings, Flame, BookOpen, Target } from "lucide-react";
 import { loadProgress } from "@/lib/storage";
 import { getLevelInfo } from "@/lib/level-engine";
 import { useContent } from "@/lib/use-content";
@@ -70,7 +71,8 @@ export default function TrackDetailPage() {
               className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-300 hover:text-blue-700"
               title="Gérer les cartes de ce parcours"
             >
-              ⚙️ Gérer les cartes
+              <Settings size={13} className="inline mr-1" />
+              Gérer les cartes
             </Link>
           </div>
           <div className="mt-3 flex items-center gap-3">
@@ -102,7 +104,8 @@ export default function TrackDetailPage() {
               <XPBar levelInfo={levelInfo} xp={progress.xp} className="flex-1" />
               {progress.streak > 0 && (
                 <div className="flex shrink-0 items-center gap-1 rounded-full bg-orange-100 px-3 py-1 text-sm font-bold text-orange-600">
-                  🔥 {progress.streak}
+                  <Flame size={14} />
+                  {progress.streak}
                 </div>
               )}
             </div>
@@ -114,7 +117,8 @@ export default function TrackDetailPage() {
             onClick={() => router.push(`/session?trackId=${trackId}&lessonId=${nextLesson.id}&mode=${nextMode}`)}
             className="mb-6 w-full rounded-2xl bg-blue-600 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 active:scale-95"
           >
-            {nextMode === "quiz" ? "🎯" : "📖"} Reprendre — {nextLesson.title}
+            {nextMode === "quiz" ? <Target size={16} className="inline mr-1.5" /> : <BookOpen size={16} className="inline mr-1.5" />}
+          Reprendre — {nextLesson.title}
           </button>
         )}
 

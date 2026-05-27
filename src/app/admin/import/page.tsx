@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { Download, CheckCircle2 } from "lucide-react";
 import { getContentProvider } from "@/lib/content";
 import { analyzeImport, applyImport, type ImportFormat } from "@/lib/import-export";
 import { ImportDiff } from "@/components/admin/ImportDiff";
@@ -128,7 +129,7 @@ export default function AdminImportPage() {
             onChange={handleFileInput}
             className="hidden"
           />
-          <p className="text-4xl mb-3">📥</p>
+          <div className="mb-3 flex justify-center text-gray-400"><Download size={40} strokeWidth={1.5} /></div>
           <p className="text-sm font-semibold text-gray-700">
             Glissez un fichier ici ou cliquez pour sélectionner
           </p>
@@ -148,7 +149,7 @@ export default function AdminImportPage() {
       {/* Analyzing */}
       {step === "analyzing" && (
         <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center">
-          <p className="text-4xl mb-3 animate-pulse">🔍</p>
+          <div className="mb-3 flex justify-center text-gray-400 animate-pulse"><Download size={40} strokeWidth={1.5} /></div>
           <p className="text-sm text-gray-500">Analyse de {fileName}…</p>
         </div>
       )}
@@ -210,7 +211,7 @@ export default function AdminImportPage() {
       {/* Done */}
       {step === "done" && (
         <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-12 text-center">
-          <p className="text-4xl mb-3">✅</p>
+          <div className="mb-3 flex justify-center text-emerald-500"><CheckCircle2 size={40} strokeWidth={1.5} /></div>
           <p className="text-sm font-semibold text-emerald-700">Import réussi !</p>
           <p className="text-xs text-emerald-600 mt-1">
             {totalChanges} carte{totalChanges > 1 ? "s" : ""} importée{totalChanges > 1 ? "s" : ""} depuis {fileName}
