@@ -15,10 +15,25 @@ interface Props {
 }
 
 const SLOT_HEIGHT = 140;
+const WORLD_HEADER_HEIGHT = 56;
 const NODE_R = 36;
 const LEFT_PCT = 0.22;
 const RIGHT_PCT = 0.78;
 const LABEL_WIDTH = 120;
+
+// ---------------------------------------------------------------------------
+// Types internes
+// ---------------------------------------------------------------------------
+
+interface HeaderItem { type: "header"; world: LearningWorld }
+interface LessonItem { type: "lesson"; lesson: Lesson; lessonIndex: number }
+type MapItem = HeaderItem | LessonItem;
+
+interface ItemWithY { item: MapItem; y: number }
+
+// ---------------------------------------------------------------------------
+// Sub-components
+// ---------------------------------------------------------------------------
 
 function StarRow({ count, align }: { count: 0 | 1 | 2 | 3; align: "left" | "right" }) {
   return (
@@ -31,6 +46,10 @@ function StarRow({ count, align }: { count: 0 | 1 | 2 | 3; align: "left" | "righ
     </div>
   );
 }
+
+// ---------------------------------------------------------------------------
+// LessonMap
+// ---------------------------------------------------------------------------
 
 export function LessonMap({
   lessons,
@@ -54,43 +73,68 @@ export function LessonMap({
     return () => ro.disconnect();
   }, []);
 
-  // Ordered lessons: worlds first (by world order, then lessonIds order), then ungrouped
+  // ---------------------------------------------------------------------------
+  // Build ordered item list (headers + lessons) with cumulative Y positions
+  // ---------------------------------------------------------------------------
+
   const lessonById = new Map(lessons.map((l) => [l.id, l]));
   const orderedWorlds = [...(worlds ?? [])].sort((a, b) => a.order - b.order);
   const seen = new Set<string>();
-  const orderedLessons: Lesson[] = [];
+  const items: MapItem[] = [];
+  let lessonIndex = 0;
 
   for (const world of orderedWorlds) {
+    items.push({ type: "header", world });
     for (const id of world.lessonIds) {
       const l = lessonById.get(id);
-      if (l && !seen.has(l.id)) { orderedLessons.push(l); seen.add(l.id); }
+      if (l && !seen.has(l.id)) {
+        items.push({ type: "lesson", lesson: l, lessonIndex: lessonIndex++ });
+        seen.add(l.id);
+      }
     }
   }
   for (const l of lessons) {
-    if (!seen.has(l.id)) orderedLessons.push(l);
+    if (!seen.has(l.id)) {
+      items.push({ type: "lesson", lesson: l, lessonIndex: lessonIndex++ });
+    }
   }
 
-  // Compute node metadata
-  let regularCount = 0;
-  const nodes = orderedLessons.map((lesson, i) => {
-    const isRight = i % 2 === 1;
-    const x = width * (isRight ? RIGHT_PCT : LEFT_PCT);
-    const y = SLOT_HEIGHT * i + SLOT_HEIGHT / 2;
-    const unlocked = isLessonUnlocked(lessons, lesson.id, completedLessonIds, worlds);
-    const completed = isLessonCompleted(lesson.id, completedLessonIds);
-    const learnDone = hasCompletedLearnSession(lesson.id, learnSessionIds);
-    const stars = (lessonStars[lesson.id] ?? 0) as 0 | 1 | 2 | 3;
-    const isBoss = lesson.kind === "boss";
-    const isBonus = lesson.kind === "bonus";
-    const r = isBoss ? 44 : NODE_R;
-    const displayIndex = !isBoss && !isBonus ? ++regularCount : 0;
-    return { lesson, x, y, r, isRight, unlocked, completed, learnDone, stars, isBoss, isBonus, displayIndex };
+  // Cumulative Y
+  let currentY = 0;
+  const itemsWithY: ItemWithY[] = items.map((item) => {
+    const y = currentY;
+    currentY += item.type === "header" ? WORLD_HEADER_HEIGHT : SLOT_HEIGHT;
+    return { item, y };
   });
 
-  const totalHeight = orderedLessons.length * SLOT_HEIGHT + 60;
+  const totalHeight = currentY + 60;
+
+  // ---------------------------------------------------------------------------
+  // Build node metadata (lesson items only)
+  // ---------------------------------------------------------------------------
+
+  let regularCount = 0;
+  const nodes = itemsWithY
+    .filter((iwy): iwy is { item: LessonItem; y: number } => iwy.item.type === "lesson")
+    .map(({ item, y }) => {
+      const { lesson, lessonIndex: li } = item;
+      const isRight = li % 2 === 1;
+      const x = width * (isRight ? RIGHT_PCT : LEFT_PCT);
+      const cy = y + SLOT_HEIGHT / 2;
+      const unlocked = isLessonUnlocked(lessons, lesson.id, completedLessonIds, worlds);
+      const completed = isLessonCompleted(lesson.id, completedLessonIds);
+      const learnDone = hasCompletedLearnSession(lesson.id, learnSessionIds);
+      const stars = (lessonStars[lesson.id] ?? 0) as 0 | 1 | 2 | 3;
+      const isBoss = lesson.kind === "boss";
+      const isBonus = lesson.kind === "bonus";
+      const r = isBoss ? 44 : NODE_R;
+      const displayIndex = !isBoss && !isBonus ? ++regularCount : 0;
+      return { lesson, x, y: cy, r, isRight, unlocked, completed, learnDone, stars, isBoss, isBonus, displayIndex };
+    });
+
   const nextAvailableIndex = nodes.findIndex((n) => n.unlocked && !n.completed);
 
-  // SVG path between two nodes (S-curve)
+  // SVG S-curve path between two nodes
   function curvePath(ax: number, ay: number, bx: number, by: number) {
     const midY = (ay + by) / 2;
     return `M ${ax} ${ay} C ${ax} ${midY}, ${bx} ${midY}, ${bx} ${by}`;
@@ -137,7 +181,28 @@ export function LessonMap({
         })}
       </svg>
 
-      {/* Nodes */}
+      {/* World headers */}
+      {itemsWithY
+        .filter(({ item }) => item.type === "header")
+        .map(({ item, y }) => {
+          const { world } = item as HeaderItem;
+          const nonBossIds = world.lessonIds.filter((id) => id !== world.bossLessonId);
+          const worldComplete = nonBossIds.every((id) => completedLessonIds.includes(id));
+          return (
+            <div
+              key={world.id}
+              className="pointer-events-none absolute left-0 right-0 flex flex-col justify-center px-3"
+              style={{ top: y, height: WORLD_HEADER_HEIGHT, zIndex: 5 }}
+            >
+              <p className={`text-[10px] font-bold uppercase tracking-widest ${worldComplete ? "text-green-600" : "text-blue-500"}`}>
+                Monde {world.order}
+              </p>
+              <p className="text-sm font-bold text-gray-800 leading-tight">{world.title}</p>
+            </div>
+          );
+        })}
+
+      {/* Lesson nodes */}
       {nodes.map((node, i) => {
         const { lesson, x, y, r, isRight, unlocked, completed, learnDone, stars, isBoss, isBonus, displayIndex } = node;
         const isNext = i === nextAvailableIndex;
@@ -171,9 +236,7 @@ export function LessonMap({
           width: LABEL_WIDTH,
           textAlign: labelAlign,
           pointerEvents: "none",
-          ...(isRight
-            ? { right: r * 2 + 10 }
-            : { left: r * 2 + 10 }),
+          ...(isRight ? { right: r * 2 + 10 } : { left: r * 2 + 10 }),
         };
 
         return (
@@ -188,7 +251,6 @@ export function LessonMap({
               zIndex: isSelected ? 20 : 10,
             }}
           >
-            {/* Pulse ring for next available lesson */}
             {isNext && (
               <span
                 className="absolute inset-0 rounded-full bg-blue-400 opacity-25 animate-ping"
@@ -196,7 +258,6 @@ export function LessonMap({
               />
             )}
 
-            {/* Node button */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -217,7 +278,6 @@ export function LessonMap({
               {nodeIcon}
             </button>
 
-            {/* Learn-done badge (learn completed, quiz not yet) */}
             {learnDone && !completed && (
               <div
                 aria-label="Apprendre terminé"
@@ -228,7 +288,6 @@ export function LessonMap({
               </div>
             )}
 
-            {/* Label to the side */}
             <div style={labelStyle}>
               <p
                 className="text-xs font-semibold leading-tight"
