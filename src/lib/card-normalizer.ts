@@ -40,6 +40,15 @@ export function mapLegacyTypeToQuestionType(type: CardType): QuestionType {
   return LEGACY_TYPE_TO_QUESTION_TYPE[type];
 }
 
+/**
+ * Retourne true si la carte utilise uniquement le format legacy (front/back/detail)
+ * sans aucun champ du nouveau format pédagogique.
+ * Utile pour détecter les anciennes cartes qui n'ont pas été migrées.
+ */
+export function isLegacyCard(card: Card): boolean {
+  return !card.question && !card.shortAnswer;
+}
+
 export function normalizeLearningCard(card: Card): NormalizedLearningCard {
   const questionType = card.questionType ?? mapLegacyTypeToQuestionType(card.type);
 
