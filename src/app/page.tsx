@@ -44,8 +44,10 @@ export default function HomePage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-lg text-center">
-        <div className="mb-6 flex justify-center text-blue-600">
-          <TrendingUp size={56} strokeWidth={1.5} />
+        <div className="mb-8 flex justify-center">
+          <div className="flex h-24 w-24 items-center justify-center rounded-full bg-blue-600 text-white shadow-xl shadow-blue-200">
+            <TrendingUp size={42} strokeWidth={1.75} />
+          </div>
         </div>
         <h1 className="text-4xl font-bold tracking-tight text-gray-900">Finance Learning</h1>
         <p className="mt-4 text-lg text-gray-600">
