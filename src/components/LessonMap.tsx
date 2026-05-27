@@ -76,7 +76,7 @@ export function LessonMap({
     const isRight = i % 2 === 1;
     const x = width * (isRight ? RIGHT_PCT : LEFT_PCT);
     const y = SLOT_HEIGHT * i + SLOT_HEIGHT / 2;
-    const unlocked = isLessonUnlocked(lessons, lesson.id, completedLessonIds);
+    const unlocked = isLessonUnlocked(lessons, lesson.id, completedLessonIds, worlds);
     const completed = isLessonCompleted(lesson.id, completedLessonIds);
     const learnDone = hasCompletedLearnSession(lesson.id, learnSessionIds);
     const stars = (lessonStars[lesson.id] ?? 0) as 0 | 1 | 2 | 3;

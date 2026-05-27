@@ -48,7 +48,7 @@ export default function TrackDetailPage() {
   // Next actionable lesson: unlocked, not completed. Prefer quiz-ready (learn done) over learn-first.
   const nextLesson = progress
     ? track.lessons.find((l) => {
-        const unlocked = isLessonUnlocked(track.lessons, l.id, progress.completedLessonIds);
+        const unlocked = isLessonUnlocked(track.lessons, l.id, progress.completedLessonIds, track.worlds);
         const completed = isLessonCompleted(l.id, progress.completedLessonIds);
         return unlocked && !completed;
       })

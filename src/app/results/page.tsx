@@ -44,7 +44,7 @@ function ResultsContent() {
 
   // Find next lesson to continue
   const nextLesson = track?.lessons.find((l) => {
-    const unlocked = isLessonUnlocked(track.lessons, l.id, progress.completedLessonIds);
+    const unlocked = isLessonUnlocked(track.lessons, l.id, progress.completedLessonIds, track.worlds);
     const completed = isLessonCompleted(l.id, progress.completedLessonIds);
     return unlocked && !completed;
   }) ?? null;

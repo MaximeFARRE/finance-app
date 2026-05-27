@@ -38,7 +38,7 @@ export function LessonList({
   const ungroupedLessons = lessons.filter((lesson) => !groupedLessonIds.has(lesson.id));
 
   function renderLesson(lesson: Lesson, index: number) {
-    const unlocked = isLessonUnlocked(lessons, lesson.id, completedLessonIds);
+    const unlocked = isLessonUnlocked(lessons, lesson.id, completedLessonIds, worlds);
     const completed = isLessonCompleted(lesson.id, completedLessonIds);
     const learnDone = hasCompletedLearnSession(lesson.id, learnSessionIds);
     const stars = (lessonStars[lesson.id] ?? 0) as 0 | 1 | 2 | 3;

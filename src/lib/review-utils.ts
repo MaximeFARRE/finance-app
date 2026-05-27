@@ -47,7 +47,7 @@ export function buildReviewDeck(
 
   for (const track of allTracks) {
     for (const lesson of track.lessons) {
-      if (isLessonUnlocked(track.lessons, lesson.id, completedLessonIds)) {
+      if (isLessonUnlocked(track.lessons, lesson.id, completedLessonIds, track.worlds)) {
         allUnlockedCards.push(...lesson.cards);
       }
     }
@@ -102,7 +102,7 @@ export function countDueCards(allTracks: Track[], progress: UserProgress): numbe
 
   for (const track of allTracks) {
     for (const lesson of track.lessons) {
-      if (isLessonUnlocked(track.lessons, lesson.id, completedLessonIds)) {
+      if (isLessonUnlocked(track.lessons, lesson.id, completedLessonIds, track.worlds)) {
         for (const card of lesson.cards) {
           const prog = cardProgress[card.id];
           if (prog && isDueForReview(prog)) count++;
