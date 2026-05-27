@@ -59,8 +59,9 @@ export function ImportDiff({ result }: Props) {
               return (
                 <div key={card.id} className="rounded-xl border border-gray-200 bg-white p-3">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${theme.badgeBg} ${theme.badgeText}`}>
-                      {theme.icon} {theme.label}
+                    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${theme.badgeBg} ${theme.badgeText}`}>
+                      <theme.icon size={11} />
+                      {theme.label}
                     </span>
                     <span className="text-xs text-gray-400">
                       {DIFFICULTY_LABEL[card.difficulty] ?? card.difficulty}

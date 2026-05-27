@@ -69,7 +69,7 @@ export function CardPreview(props: Props) {
         <span
           className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${theme.badgeBg} ${theme.badgeText}`}
         >
-          <span>{theme.icon}</span>
+          <theme.icon size={13} />
           {theme.label}
         </span>
         <span className="text-xs text-gray-400">{DIFFICULTY_LABEL[props.difficulty]}</span>

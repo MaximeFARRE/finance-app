@@ -1,6 +1,22 @@
+import type { LucideIcon } from "lucide-react";
+import {
+  BookOpen,
+  Lightbulb,
+  Layers,
+  Sigma,
+  Scale,
+  GitBranch,
+  Calculator,
+  Globe,
+  AlertTriangle,
+  MessageSquare,
+  CheckCircle2,
+  FileText,
+} from "lucide-react";
+
 export interface CardTheme {
   label: string;
-  icon: string;
+  icon: LucideIcon;
   cardBg: string;
   accent: string;
   badgeBg: string;
@@ -13,7 +29,7 @@ export interface CardTheme {
 export const CARD_THEMES: Record<string, CardTheme> = {
   definition: {
     label: "Définition",
-    icon: "📖",
+    icon: BookOpen,
     cardBg: "bg-blue-50",
     accent: "border-l-blue-500",
     badgeBg: "bg-blue-100",
@@ -24,7 +40,7 @@ export const CARD_THEMES: Record<string, CardTheme> = {
   },
   intuition: {
     label: "Intuition",
-    icon: "💡",
+    icon: Lightbulb,
     cardBg: "bg-purple-50",
     accent: "border-l-purple-500",
     badgeBg: "bg-purple-100",
@@ -35,7 +51,7 @@ export const CARD_THEMES: Record<string, CardTheme> = {
   },
   example: {
     label: "Exemple",
-    icon: "🔍",
+    icon: Layers,
     cardBg: "bg-emerald-50",
     accent: "border-l-emerald-500",
     badgeBg: "bg-emerald-100",
@@ -46,7 +62,7 @@ export const CARD_THEMES: Record<string, CardTheme> = {
   },
   formula: {
     label: "Formule",
-    icon: "🔢",
+    icon: Sigma,
     cardBg: "bg-amber-50",
     accent: "border-l-amber-500",
     badgeBg: "bg-amber-100",
@@ -57,7 +73,7 @@ export const CARD_THEMES: Record<string, CardTheme> = {
   },
   comparison: {
     label: "Comparaison",
-    icon: "↔",
+    icon: Scale,
     cardBg: "bg-indigo-50",
     accent: "border-l-indigo-500",
     badgeBg: "bg-indigo-100",
@@ -68,7 +84,7 @@ export const CARD_THEMES: Record<string, CardTheme> = {
   },
   mechanism: {
     label: "Mécanisme",
-    icon: "⚙",
+    icon: GitBranch,
     cardBg: "bg-cyan-50",
     accent: "border-l-cyan-500",
     badgeBg: "bg-cyan-100",
@@ -79,7 +95,7 @@ export const CARD_THEMES: Record<string, CardTheme> = {
   },
   "quick-calculation": {
     label: "Calcul rapide",
-    icon: "＝",
+    icon: Calculator,
     cardBg: "bg-emerald-50",
     accent: "border-l-emerald-500",
     badgeBg: "bg-emerald-100",
@@ -90,7 +106,7 @@ export const CARD_THEMES: Record<string, CardTheme> = {
   },
   "market-culture": {
     label: "Culture marché",
-    icon: "◆",
+    icon: Globe,
     cardBg: "bg-slate-50",
     accent: "border-l-slate-500",
     badgeBg: "bg-slate-100",
@@ -101,7 +117,7 @@ export const CARD_THEMES: Record<string, CardTheme> = {
   },
   trap: {
     label: "Piège",
-    icon: "⚠️",
+    icon: AlertTriangle,
     cardBg: "bg-red-50",
     accent: "border-l-red-500",
     badgeBg: "bg-red-100",
@@ -112,7 +128,7 @@ export const CARD_THEMES: Record<string, CardTheme> = {
   },
   "interview-question": {
     label: "Question entretien",
-    icon: "🎯",
+    icon: MessageSquare,
     cardBg: "bg-orange-50",
     accent: "border-l-orange-500",
     badgeBg: "bg-orange-100",
@@ -123,7 +139,7 @@ export const CARD_THEMES: Record<string, CardTheme> = {
   },
   "model-answer": {
     label: "Réponse modèle",
-    icon: "✅",
+    icon: CheckCircle2,
     cardBg: "bg-teal-50",
     accent: "border-l-teal-500",
     badgeBg: "bg-teal-100",
@@ -136,7 +152,7 @@ export const CARD_THEMES: Record<string, CardTheme> = {
 
 export const DEFAULT_CARD_THEME: CardTheme = {
   label: "Carte",
-  icon: "📄",
+  icon: FileText,
   cardBg: "bg-gray-50",
   accent: "border-l-gray-400",
   badgeBg: "bg-gray-100",

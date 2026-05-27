@@ -43,7 +43,7 @@ export function LearningCard({ card, onReveal, onAnswer, trackId, lessonId }: Le
         <span
           className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${theme.badgeBg} ${theme.badgeText}`}
         >
-          <span>{theme.icon}</span>
+          <theme.icon size={13} />
           {theme.label}
         </span>
       </div>

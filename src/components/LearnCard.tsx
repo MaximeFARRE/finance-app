@@ -28,7 +28,7 @@ export function LearnCard({ card, isRead, onRead, trackId, lessonId }: LearnCard
         <span
           className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${theme.badgeBg} ${theme.badgeText}`}
         >
-          <span>{theme.icon}</span>
+          <theme.icon size={13} />
           {theme.label}
         </span>
         {isRead && (

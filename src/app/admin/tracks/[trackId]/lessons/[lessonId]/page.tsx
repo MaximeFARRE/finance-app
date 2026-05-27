@@ -119,9 +119,10 @@ export default function AdminLessonDetailPage({
               >
                 {/* Type badge */}
                 <span
-                  className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold ${theme.badgeBg} ${theme.badgeText}`}
+                  className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${theme.badgeBg} ${theme.badgeText}`}
                 >
-                  {theme.icon} {theme.label}
+                  <theme.icon size={11} />
+                  {theme.label}
                 </span>
 
                 {/* Front (truncated) */}
