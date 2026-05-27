@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Settings, Flame, BookOpen, Target } from "lucide-react";
+import { getTrackIcon, getTrackColorClasses } from "@/lib/track-icons";
 import { loadProgress } from "@/lib/storage";
 import { getLevelInfo } from "@/lib/level-engine";
 import { useContent } from "@/lib/use-content";
@@ -76,7 +77,15 @@ export default function TrackDetailPage() {
             </Link>
           </div>
           <div className="mt-3 flex items-center gap-3">
-            <span className="text-3xl">{track.emoji}</span>
+            {(() => {
+              const Icon = getTrackIcon(track.id);
+              const { bg, text } = getTrackColorClasses(track.color);
+              return (
+                <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${bg} ${text}`}>
+                  <Icon size={22} strokeWidth={1.75} />
+                </div>
+              );
+            })()}
             <h1 className="text-2xl font-bold text-gray-900">{track.title}</h1>
           </div>
           <p className="mt-2 text-sm text-gray-600">{track.description}</p>
