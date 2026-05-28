@@ -20,6 +20,13 @@ interface Props {
   commonMistake?: string;
   topics?: string[];
   skills?: string[];
+  choices?: string[];
+  correctIndex?: number;
+  correctBool?: boolean;
+  answerMode?: "numeric";
+  expectedAnswer?: number;
+  answerUnit?: string;
+  tolerance?: number;
 }
 
 const DIFFICULTY_LABEL: Record<Difficulty, string> = {
@@ -46,6 +53,13 @@ export function CardPreview(props: Props) {
     commonMistake: props.commonMistake,
     topics: props.topics,
     skills: props.skills,
+    choices: props.choices,
+    correctIndex: props.correctIndex,
+    correctBool: props.correctBool,
+    answerMode: props.answerMode,
+    expectedAnswer: props.expectedAnswer,
+    answerUnit: props.answerUnit,
+    tolerance: props.tolerance,
   };
   const normalized = normalizeLearningCard(previewCard);
   const theme = getCardTheme(normalized.themeKey);
@@ -123,13 +137,51 @@ export function CardPreview(props: Props) {
         </div>
       )}
 
-      {/* Fake "mark as read" button */}
+      {/* Answer mode preview */}
       <div className="px-6 pb-5">
-        <div
-          className={`w-full rounded-xl py-2.5 text-center text-sm font-semibold text-white ${theme.buttonBg} opacity-40`}
-        >
-          Marquer comme lu
-        </div>
+        {props.answerMode === "numeric" ? (
+          <div className="flex gap-2 items-center">
+            <div className="relative flex-1 rounded-xl border-2 border-gray-200 bg-gray-50">
+              <span className="block px-4 py-3 text-sm text-gray-400 italic">
+                {props.expectedAnswer ?? "…"}
+              </span>
+              {props.answerUnit && (
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">
+                  {props.answerUnit}
+                </span>
+              )}
+            </div>
+            <div className={`shrink-0 rounded-xl px-5 py-3 text-sm font-semibold text-white opacity-40 ${theme.buttonBg}`}>
+              Vérifier
+            </div>
+          </div>
+        ) : props.questionType === "true-false" ? (
+          <div className="flex gap-3">
+            {([true, false] as const).map((value) => {
+              const label = value ? "Vrai" : "Faux";
+              const isCorrect = value === props.correctBool;
+              return (
+                <div
+                  key={label}
+                  className={`flex-1 rounded-xl border-2 px-5 py-3 text-center text-sm font-semibold ${
+                    isCorrect
+                      ? "border-green-400 bg-green-50 text-green-800"
+                      : "border-gray-200 bg-white text-gray-400"
+                  }`}
+                >
+                  {label}
+                  {isCorrect && <span className="ml-1.5 text-green-600">✓</span>}
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div
+            className={`w-full rounded-xl py-2.5 text-center text-sm font-semibold text-white ${theme.buttonBg} opacity-40`}
+          >
+            Voir la réponse
+          </div>
+        )}
       </div>
     </div>
   );
