@@ -97,6 +97,51 @@ Les CDO (Collateralized Debt Obligations) notés AAA s'échangeaient normalement
 **Ce que le recruteur veut voir :** que vous ne regardez pas uniquement les conditions normales de marché, mais que vous pensez aussi aux scénarios extrêmes.`,
     },
     {
+      id: "mf-found-l1-liq-spread-formula",
+      type: "formula",
+      front: "Spread bid-ask = ? Comment l'interpréter ?",
+      back: "Spread bid-ask = Prix ask (offre de vente) − Prix bid (offre d'achat)\n\nEx : action cotée bid 99,90 € / ask 100,10 € → spread = 0,20 €, soit 0,20 % du cours.\nC'est le coût immédiat d'un aller-retour sur le titre.",
+      difficulty: 1,
+      tags: ["liquidité", "bid-ask", "spread"],
+      detail: `**Ordres de grandeur du spread bid-ask (2024) :**
+
+| Actif | Spread typique |
+|-------|---------------|
+| Actions CAC 40 large cap | 0,01–0,05 % |
+| Actions mid cap | 0,1–0,5 % |
+| Small caps illiquides | 1–5 % |
+| Obligations d'État (on-the-run) | 0,01–0,02 % |
+| Obligations d'entreprise HY | 0,5–2 % |
+| Crypto (BTC, ETH) | 0,05–0,1 % |
+
+**Qui paie le spread ?** L'investisseur qui passe un ordre au marché (market order). Celui qui place un ordre à cours limité (limit order) le perçoit potentiellement.
+
+**Règle pratique :** si le spread est supérieur au gain potentiel d'une transaction, l'opération n'est pas rentable avant même de parler de fiscalité.`,
+    },
+    {
+      id: "mf-found-l1-liq-premium",
+      type: "intuition",
+      front: "La prime d'illiquidité : être payé pour accepter de rester bloqué",
+      back: "Les actifs illiquides (PE, infrastructure, immobilier) offrent des rendements supérieurs aux actifs cotés en partie pour compenser l'impossibilité de sortir rapidement. C'est la prime d'illiquidité. Les investisseurs patients la capturent — les autres doivent s'en passer.",
+      difficulty: 2,
+      tags: ["liquidité", "prime d'illiquidité", "private equity"],
+      detail: `**Estimation de la prime d'illiquidité par classe d'actif :**
+
+| Actif liquide | Actif illiquide | Prime approximative |
+|---------------|-----------------|---------------------|
+| Actions cotées | Private Equity | +3–5 %/an |
+| Obligations IG cotées | Dette privée | +1,5–3 % |
+| SCPI cotées | Immobilier direct | +1–2 % |
+| Fonds monétaires | Capital-risque | +5–10 % (avec risque élevé) |
+
+**Condition pour capturer la prime :**
+1. Avoir un horizon d'investissement long (10–15 ans pour le PE)
+2. Ne pas avoir besoin de liquidité à court terme
+3. Accepter l'absence de valorisation quotidienne
+
+**Pourquoi cette prime persiste-t-elle ?** Beaucoup d'investisseurs institutionnels (banques, assureurs) ont des contraintes réglementaires ou de liquidité qui les empêchent d'investir en illiquide. La prime compense ce "tax" de contrainte.`,
+    },
+    {
       id: "mf-found-l1-liq-ma",
       type: "model-answer",
       front: "Réponse : évaluer le risque de liquidité",
