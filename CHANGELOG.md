@@ -1,3 +1,29 @@
+# [1.7.0](https://github.com/MaximeFARRE/finance-app/compare/v1.6.0...v1.7.0) (2026-05-28)
+
+
+### Bug Fixes
+
+* correct card type and add true-false to approved question types ([d586c6a](https://github.com/MaximeFARRE/finance-app/commit/d586c6ac901267ffd2dacba8b9647f6b65d700ad))
+* prevent shared array references in loadProgress initial state ([013e5ce](https://github.com/MaximeFARRE/finance-app/commit/013e5cebfcb24e51d4c1731e21f57a88917768ff))
+* replace dynamic icon component lookup with TrackIconDisplay to fix react-compiler lint error ([b6aab80](https://github.com/MaximeFARRE/finance-app/commit/b6aab805f4d1f2016d17eece01aacf91ab32f726))
+* require all world lessons completed to unlock boss ([450cb35](https://github.com/MaximeFARRE/finance-app/commit/450cb357524171f5ac36d03be0f10cbe05bbba14))
+
+
+### Features
+
+* add content validator for worlds/lessons consistency ([d60a0f8](https://github.com/MaximeFARRE/finance-app/commit/d60a0f835b425a2da333442f3e1ade83207d956a))
+* add MCQ support to quiz cards ([343f771](https://github.com/MaximeFARRE/finance-app/commit/343f7712de383e81970be580acff45905b95ddf3))
+* add numeric input answer mode to LearningCard ([43526ad](https://github.com/MaximeFARRE/finance-app/commit/43526adf1b379bd7067ad374cb12bbbb46e24626))
+* add quit button to learn mode session ([e2d402d](https://github.com/MaximeFARRE/finance-app/commit/e2d402d3c9194116939d898d56878160b90149d2))
+* add shared/financial-culture placeholder for cross-track cards ([7f37fa2](https://github.com/MaximeFARRE/finance-app/commit/7f37fa2305f4127132283065e90251ccfc60c7ba))
+* add trackIds field to Card for multi-track shared cards ([bd049c2](https://github.com/MaximeFARRE/finance-app/commit/bd049c2e910d5498a4c4b02d41af5b665fe0ab51))
+* add true-false and numeric answer mode types to Card interface ([cba39d8](https://github.com/MaximeFARRE/finance-app/commit/cba39d8870d95d9d8c98a5c89174a7923e37e8ec))
+* add true/false answer mode to LearningCard ([a31c5eb](https://github.com/MaximeFARRE/finance-app/commit/a31c5eb698bbc6616abf0dceba0927c42c852758))
+* add world header labels to LessonMap ([e400d2c](https://github.com/MaximeFARRE/finance-app/commit/e400d2c98251ee2f562e5e7eeae12d8e3b957b07))
+* hide manual rating buttons for true-false and numeric modes ([e2ffd8d](https://github.com/MaximeFARRE/finance-app/commit/e2ffd8d15e3612eb17b9518fddd878090790828d))
+* improve hero icon and results page visual design ([572afe3](https://github.com/MaximeFARRE/finance-app/commit/572afe3254f9e5bdd6445a4b25be2970a2159664))
+* show true-false and numeric preview in admin CardPreview ([f4f6fb2](https://github.com/MaximeFARRE/finance-app/commit/f4f6fb25b64fcc3a49b4f9989fd5ea1b528c7766))
+
 # [1.6.0](https://github.com/MaximeFARRE/finance-app/compare/v1.5.0...v1.6.0) (2026-05-24)
 
 
