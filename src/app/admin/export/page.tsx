@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { BookMarked, GraduationCap, BookOpen, Upload } from "lucide-react";
 import { getContentProvider } from "@/lib/content";
 import { exportContent } from "@/lib/import-export";
 import type { ExportFormat, ExportScope, Track } from "@/lib/types";
@@ -118,11 +119,11 @@ export default function AdminExportPage() {
           <div className="flex flex-col gap-2">
             {(
               [
-                { value: "all", label: "Tout le contenu", icon: "📚" },
-                { value: "track", label: "Un track", icon: "🎓" },
-                { value: "lesson", label: "Une leçon", icon: "📖" },
+                { value: "all", label: "Tout le contenu", icon: BookMarked },
+                { value: "track", label: "Un track", icon: GraduationCap },
+                { value: "lesson", label: "Une leçon", icon: BookOpen },
               ] as const
-            ).map(({ value, label, icon }) => (
+            ).map(({ value, label, icon: Icon }) => (
               <label key={value} className="flex items-center gap-3 cursor-pointer">
                 <input
                   type="radio"
@@ -132,8 +133,9 @@ export default function AdminExportPage() {
                   onChange={() => setState((prev) => ({ ...prev, scope: value }))}
                   className="accent-blue-600"
                 />
-                <span className="text-sm text-gray-700">
-                  {icon} {label}
+                <span className="flex items-center gap-1.5 text-sm text-gray-700">
+                  <Icon size={14} />
+                  {label}
                 </span>
               </label>
             ))}
@@ -245,7 +247,7 @@ export default function AdminExportPage() {
           disabled={!canExport || isExporting}
           className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          {isExporting ? "Génération…" : "📤 Télécharger"}
+          {isExporting ? "Génération…" : <><Upload size={15} className="inline mr-1.5" />Télécharger</>}
         </button>
       </div>
     </div>

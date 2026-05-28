@@ -1,16 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import {
+  BookOpen, Lightbulb, Layers, Sigma, AlertTriangle,
+  MessageSquare, CheckCircle2,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import type { CardType, Difficulty } from "@/lib/types";
 
-const CARD_TYPES: { value: CardType; label: string; icon: string }[] = [
-  { value: "definition", label: "Définition", icon: "📖" },
-  { value: "intuition", label: "Intuition", icon: "💡" },
-  { value: "example", label: "Exemple", icon: "🔍" },
-  { value: "formula", label: "Formule", icon: "🔢" },
-  { value: "trap", label: "Piège", icon: "⚠️" },
-  { value: "interview-question", label: "Question entretien", icon: "🎯" },
-  { value: "model-answer", label: "Réponse modèle", icon: "✅" },
+const CARD_TYPES: { value: CardType; label: string; icon: LucideIcon }[] = [
+  { value: "definition", label: "Définition", icon: BookOpen },
+  { value: "intuition", label: "Intuition", icon: Lightbulb },
+  { value: "example", label: "Exemple", icon: Layers },
+  { value: "formula", label: "Formule", icon: Sigma },
+  { value: "trap", label: "Piège", icon: AlertTriangle },
+  { value: "interview-question", label: "Question entretien", icon: MessageSquare },
+  { value: "model-answer", label: "Réponse modèle", icon: CheckCircle2 },
 ];
 
 const DIFFICULTIES: { value: Difficulty; label: string }[] = [
@@ -111,7 +116,7 @@ export function CardForm({ initialData, onSave, onChange, onCancel, isSaving }: 
           Type de carte
         </label>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-          {CARD_TYPES.map(({ value, label, icon }) => (
+          {CARD_TYPES.map(({ value, label, icon: Icon }) => (
             <button
               key={value}
               type="button"
@@ -122,7 +127,7 @@ export function CardForm({ initialData, onSave, onChange, onCancel, isSaving }: 
                   : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
               }`}
             >
-              <span>{icon}</span>
+              <Icon size={13} />
               {label}
             </button>
           ))}

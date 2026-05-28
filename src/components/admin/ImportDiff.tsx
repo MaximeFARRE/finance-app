@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { XCircle, CheckCircle2, Pencil, Minus } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { getCardTheme } from "@/lib/card-themes";
 import type { ImportResult } from "@/lib/types";
 
@@ -36,7 +38,7 @@ export function ImportDiff({ result }: Props) {
 
       {/* Errors */}
       {result.errors.length > 0 && (
-        <Section title="Erreurs" icon="🚫" colorClass="border-red-300 bg-red-50">
+        <Section title="Erreurs" icon={XCircle} colorClass="border-red-300 bg-red-50">
           <ul className="flex flex-col gap-1">
             {result.errors.map((err, i) => (
               <li key={i} className="text-xs text-red-700">
@@ -52,15 +54,16 @@ export function ImportDiff({ result }: Props) {
 
       {/* Added cards */}
       {result.added.length > 0 && (
-        <Section title={`${result.added.length} nouvelle${result.added.length > 1 ? "s" : ""} carte${result.added.length > 1 ? "s" : ""}`} icon="✅" colorClass="border-emerald-300 bg-emerald-50">
+        <Section title={`${result.added.length} nouvelle${result.added.length > 1 ? "s" : ""} carte${result.added.length > 1 ? "s" : ""}`} icon={CheckCircle2} colorClass="border-emerald-300 bg-emerald-50">
           <div className="flex flex-col gap-2">
             {result.added.map(({ card }) => {
               const theme = getCardTheme(card.type);
               return (
                 <div key={card.id} className="rounded-xl border border-gray-200 bg-white p-3">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${theme.badgeBg} ${theme.badgeText}`}>
-                      {theme.icon} {theme.label}
+                    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${theme.badgeBg} ${theme.badgeText}`}>
+                      <theme.icon size={11} />
+                      {theme.label}
                     </span>
                     <span className="text-xs text-gray-400">
                       {DIFFICULTY_LABEL[card.difficulty] ?? card.difficulty}
@@ -79,7 +82,7 @@ export function ImportDiff({ result }: Props) {
 
       {/* Modified cards */}
       {result.modified.length > 0 && (
-        <Section title={`${result.modified.length} carte${result.modified.length > 1 ? "s" : ""} modifiée${result.modified.length > 1 ? "s" : ""}`} icon="✏️" colorClass="border-amber-300 bg-amber-50">
+        <Section title={`${result.modified.length} carte${result.modified.length > 1 ? "s" : ""} modifiée${result.modified.length > 1 ? "s" : ""}`} icon={Pencil} colorClass="border-amber-300 bg-amber-50">
           <div className="flex flex-col gap-3">
             {result.modified.map(({ before, after }) => (
               <div key={after.id} className="rounded-xl border border-gray-200 bg-white p-3">
@@ -107,7 +110,7 @@ export function ImportDiff({ result }: Props) {
             onClick={() => setUnchangedOpen((v) => !v)}
             className="w-full flex items-center gap-2 px-4 py-3 text-left hover:bg-gray-50 transition-colors"
           >
-            <span className="text-gray-400">⚪</span>
+            <Minus size={14} className="text-gray-400" />
             <span className="text-sm font-medium text-gray-600">
               {result.unchanged.length} carte{result.unchanged.length > 1 ? "s" : ""} identique{result.unchanged.length > 1 ? "s" : ""} (inchangées)
             </span>
@@ -157,19 +160,20 @@ function Pill({
 
 function Section({
   title,
-  icon,
+  icon: Icon,
   colorClass,
   children,
 }: {
   title: string;
-  icon: string;
+  icon: LucideIcon;
   colorClass: string;
   children: React.ReactNode;
 }) {
   return (
     <div className={`rounded-xl border p-4 ${colorClass}`}>
-      <p className="text-sm font-semibold text-gray-700 mb-3">
-        {icon} {title}
+      <p className="mb-3 flex items-center gap-1.5 text-sm font-semibold text-gray-700">
+        <Icon size={14} />
+        {title}
       </p>
       {children}
     </div>

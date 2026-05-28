@@ -31,7 +31,6 @@ describe("buildLessonDeck", () => {
 
     const deck = buildLessonDeck({
       trackId: "market-finance",
-      lessonId: "lesson-1",
       cards,
     });
 
@@ -52,7 +51,6 @@ describe("buildLessonDeck", () => {
 
     const deck = buildLessonDeck({
       trackId: "market-finance",
-      lessonId: "lesson-1",
       cards,
       progress,
       limit: 2,
@@ -70,7 +68,6 @@ describe("buildLessonDeck", () => {
 
     const deck = buildLessonDeck({
       trackId: "market-finance",
-      lessonId: "lesson-1",
       cards,
     });
 
@@ -80,7 +77,6 @@ describe("buildLessonDeck", () => {
   it("returns an empty deck when the requested limit is zero", () => {
     const deck = buildLessonDeck({
       trackId: "market-finance",
-      lessonId: "lesson-1",
       cards: [makeCard("card-1")],
       limit: 0,
     });

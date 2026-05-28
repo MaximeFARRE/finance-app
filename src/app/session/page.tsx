@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { CheckCircle2, RefreshCw } from "lucide-react";
 import { useLesson } from "@/lib/use-content";
 import { LearningCard } from "@/components/LearningCard";
 import { LearnCard } from "@/components/LearnCard";
@@ -130,10 +131,12 @@ function ConceptOverlay({ cards, onClose }: { cards: Card[]; onClose: () => void
 // ---------------------------------------------------------------------------
 
 function LearnFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) {
+  const router = useRouter();
   const { lesson, isLoading } = useLesson(trackId, lessonId);
   const [readCardIds, setReadCardIds] = useState<Set<string>>(new Set());
   const [currentIndex, setCurrentIndex] = useState(0);
   const [done, setDone] = useState(false);
+  const [paused, setPaused] = useState(false);
 
   if (isLoading) {
     return (
@@ -197,22 +200,39 @@ function LearnFlow({ trackId, lessonId }: { trackId: string; lessonId: string })
 
   return (
     <main className="min-h-screen bg-gray-50">
+      {paused && (
+        <PauseModal
+          progress={progressPct}
+          onResume={() => setPaused(false)}
+          onQuit={() => router.push(`/tracks/${trackId}`)}
+        />
+      )}
+
       <div className="mx-auto max-w-xl px-4 py-8">
         {/* Progress bar (primary cards only) */}
-        <div className="mb-6">
-          <div className="mb-1 flex items-center justify-between text-xs text-gray-400">
-            <span>
-              {isPrimarySection
-                ? `Fiche ${currentIndex + 1} / ${primary.length}`
-                : "Pour aller plus loin"}
-            </span>
-            <span>{progressPct}%</span>
-          </div>
-          <div className="h-2 rounded-full bg-gray-200">
-            <div
-              className="h-2 rounded-full bg-emerald-500 transition-all duration-300"
-              style={{ width: `${progressPct}%` }}
-            />
+        <div className="mb-6 flex items-center gap-4">
+          <button
+            onClick={() => setPaused(true)}
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-gray-400 transition hover:bg-gray-200 hover:text-gray-600"
+            aria-label="Quitter"
+          >
+            ✕
+          </button>
+          <div className="flex-1">
+            <div className="mb-1 flex items-center justify-between text-xs text-gray-400">
+              <span>
+                {isPrimarySection
+                  ? `Fiche ${currentIndex + 1} / ${primary.length}`
+                  : "Pour aller plus loin"}
+              </span>
+              <span>{progressPct}%</span>
+            </div>
+            <div className="h-2 rounded-full bg-gray-200">
+              <div
+                className="h-2 rounded-full bg-emerald-500 transition-all duration-300"
+                style={{ width: `${progressPct}%` }}
+              />
+            </div>
           </div>
         </div>
 
@@ -316,7 +336,6 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
     const progress = loadProgress();
     const lessonDeck = buildLessonDeck({
       trackId,
-      lessonId,
       cards: lesson.cards,
       progress: progress.cards,
     });
@@ -459,6 +478,11 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
 
   if (!entry) return null;
 
+  const isMcq = Array.isArray(entry.question.choices) && entry.question.choices.length > 0;
+  const isTrueFalse = entry.question.questionType === "true-false";
+  const isNumeric = entry.question.answerMode === "numeric";
+  const isAutoValidated = isMcq || isTrueFalse || isNumeric;
+
   return (
     <main className="min-h-screen bg-gray-50">
       {paused && (
@@ -502,20 +526,21 @@ function QuizFlow({ trackId, lessonId }: { trackId: string; lessonId: string }) 
           key={entry.question.id}
           card={entry.question}
           onReveal={() => setRevealed(true)}
+          onAnswer={(correct) => handleRate(correct ? 4 : 0)}
           trackId={trackId}
           lessonId={lessonId}
         />
 
-        {revealed && entry.answer && (
+        {revealed && !isAutoValidated && entry.answer && (
           <div className="mt-4 rounded-xl bg-teal-50 border border-teal-100 p-5">
-            <p className="mb-1 text-xs font-semibold text-teal-600">✅ Réponse modèle</p>
+            <p className="mb-1 flex items-center gap-1 text-xs font-semibold text-teal-600"><CheckCircle2 size={12} /> Réponse modèle</p>
             <p className="whitespace-pre-line text-sm leading-relaxed text-gray-800">
               {entry.answer.back}
             </p>
           </div>
         )}
 
-        {revealed && (
+        {revealed && !isAutoValidated && (
           <div className="mt-6">
             <p className="mb-3 text-center text-sm font-medium text-gray-700">
               Comment avez-vous trouvé ?
@@ -658,7 +683,7 @@ function ReviewFlow() {
           </button>
           <div className="flex-1">
             <div className="mb-1 flex items-center justify-between text-xs text-gray-400">
-              <span>🔁 Révisions · {doneCards + 1} / {totalCards}</span>
+              <span className="flex items-center gap-1"><RefreshCw size={11} /> Révisions · {doneCards + 1} / {totalCards}</span>
               <span>{progressPct}%</span>
             </div>
             <div className="h-2 rounded-full bg-gray-200">

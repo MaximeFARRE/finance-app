@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { GraduationCap, BookOpen } from "lucide-react";
 
 interface LearnSessionSummaryProps {
   readCount: number;
@@ -21,7 +22,9 @@ export function LearnSessionSummary({
   return (
     <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="w-full max-w-sm text-center">
-        <div className="text-5xl mb-4">{allRead ? "🎓" : "📖"}</div>
+        <div className="mb-4 flex justify-center text-gray-700">
+          {allRead ? <GraduationCap size={52} strokeWidth={1.5} /> : <BookOpen size={52} strokeWidth={1.5} />}
+        </div>
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
           {allRead ? "Leçon terminée !" : "Bonne progression !"}
         </h1>

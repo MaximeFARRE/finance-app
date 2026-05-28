@@ -1,3 +1,4 @@
+import { BookOpen, Target, Flag, Lock } from "lucide-react";
 import type { LearningWorld, Lesson } from "@/lib/types";
 import { isLessonUnlocked, isLessonCompleted, hasCompletedLearnSession } from "@/lib/unlock";
 
@@ -38,7 +39,7 @@ export function LessonList({
   const ungroupedLessons = lessons.filter((lesson) => !groupedLessonIds.has(lesson.id));
 
   function renderLesson(lesson: Lesson, index: number) {
-    const unlocked = isLessonUnlocked(lessons, lesson.id, completedLessonIds);
+    const unlocked = isLessonUnlocked(lessons, lesson.id, completedLessonIds, worlds);
     const completed = isLessonCompleted(lesson.id, completedLessonIds);
     const learnDone = hasCompletedLearnSession(lesson.id, learnSessionIds);
     const stars = (lessonStars[lesson.id] ?? 0) as 0 | 1 | 2 | 3;
@@ -70,7 +71,7 @@ export function LessonList({
                     : "bg-blue-600 text-white"
             }`}
           >
-            {!unlocked ? "🔒" : completed ? "✓" : isBoss ? "★" : index + 1}
+            {!unlocked ? <Lock size={16} /> : completed ? "✓" : isBoss ? "★" : index + 1}
           </div>
 
           <div className="flex-1 min-w-0">
@@ -107,7 +108,8 @@ export function LessonList({
                 : "bg-emerald-100 text-emerald-700 hover:bg-emerald-200 active:scale-95"
             }`}
           >
-            📖 Apprendre
+            <BookOpen size={13} className="inline mr-1" />
+            Apprendre
           </button>
 
           <div className="relative flex-1 group">
@@ -122,7 +124,7 @@ export function LessonList({
                     : "bg-blue-100 text-blue-500 hover:bg-blue-200 active:scale-95"
               }`}
             >
-              {isBoss ? "🏁 Boss" : "🎯 Quiz"}
+              {isBoss ? <><Flag size={13} className="inline mr-1" />Boss</> : <><Target size={13} className="inline mr-1" />Quiz</>}
             </button>
             {/* Tooltip when learn not done */}
             {unlocked && !learnDone && !isBoss && (

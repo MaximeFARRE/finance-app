@@ -5,7 +5,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Download, Upload, Settings } from "lucide-react";
 import { useContent } from "@/lib/use-content";
+import { getTrackIcon, getTrackColorClasses } from "@/lib/track-icons";
 import { loadProgress } from "@/lib/storage";
 import type { UserProgress } from "@/lib/types";
 
@@ -29,22 +31,24 @@ export default function TracksPage() {
             <div className="flex items-center gap-2">
               <Link
                 href="/admin/import"
-                className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-300 hover:text-blue-700"
+                className="flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-300 hover:text-blue-700"
               >
-                📥 Import
+                <Download size={13} />
+                Import
               </Link>
               <Link
                 href="/admin/export"
-                className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-300 hover:text-blue-700"
+                className="flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-300 hover:text-blue-700"
               >
-                📤 Export
+                <Upload size={13} />
+                Export
               </Link>
               <Link
                 href="/admin"
-                className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-300 hover:text-blue-700"
+                className="flex items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-300 hover:text-blue-700"
                 title="Administration"
               >
-                ⚙️
+                <Settings size={13} />
               </Link>
             </div>
           </div>
@@ -70,7 +74,15 @@ export default function TracksPage() {
                 className="block rounded-2xl border-2 border-gray-200 bg-white p-6 transition hover:border-blue-300 hover:shadow-md"
               >
                 <div className="flex items-center gap-4">
-                  <span className="text-4xl">{track.emoji}</span>
+                  {(() => {
+                    const Icon = getTrackIcon(track.id);
+                    const { bg, text } = getTrackColorClasses(track.color);
+                    return (
+                      <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${bg} ${text}`}>
+                        <Icon size={28} strokeWidth={1.75} />
+                      </div>
+                    );
+                  })()}
                   <div>
                     <h2 className="text-lg font-bold text-gray-900">
                       {track.title}

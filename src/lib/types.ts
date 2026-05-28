@@ -17,16 +17,37 @@ export type QuestionType =
   | "mechanism"
   | "formula"
   | "quick-calculation"
-  | "market-culture";
+  | "market-culture"
+  | "true-false";
 
+/**
+ * Une carte d'apprentissage. Deux formats coexistent :
+ *
+ * **Format nouveau (pédagogique — à utiliser pour tout nouveau contenu) :**
+ * - `question`      — texte affiché en haut de la carte (remplace `front`)
+ * - `shortAnswer`   — réponse courte visible après révélation (remplace `back`)
+ * - `explanation`   — explication complète (remplace `detail`)
+ * - `formula`       — formule mathématique/financière (optionnel)
+ * - `example`       — exemple chiffré ou contextuel (optionnel)
+ * - `commonMistake` — erreur fréquente à éviter (optionnel)
+ * - `questionType`  — type de question parmi QuestionType
+ * - `topics`        — sujets couverts (remplace `tags`)
+ * - `skills`        — compétences mobilisées
+ * - `learningStage` — étape d'apprentissage (1–5)
+ * - `choices` + `correctIndex`   — pour le mode QCM
+ * - `correctBool`                — pour le mode Vrai/Faux (`questionType: "true-false"`)
+ * - `answerMode: "numeric"` + `expectedAnswer` + `answerUnit` + `tolerance` — saisie numérique
+ *
+ * **Format legacy (existant, supporté via card-normalizer) :**
+ * - `front` / `back` / `detail` / `tags`
+ * - Le normalizer fait le pont : `question ?? front`, `shortAnswer ?? back`, etc.
+ *
+ * Ne pas mélanger les deux formats dans une même leçon.
+ */
 export interface Card {
   id: string;
   type: CardType;
-  front: string;
-  back: string;
-  detail?: string;
-  difficulty: Difficulty;
-  tags: string[];
+  // --- Format nouveau (privilégié) ---
   questionType?: QuestionType;
   question?: string;
   shortAnswer?: string;
@@ -34,14 +55,31 @@ export interface Card {
   formula?: string;
   example?: string;
   commonMistake?: string;
-  trackId?: string;
-  moduleId?: string;
-  conceptId?: string;
   topics?: string[];
   skills?: string[];
   learningStage?: LearningStage;
+  // --- Format legacy (front/back/detail/tags) ---
+  front: string;
+  back: string;
+  detail?: string;
+  tags: string[];
+  // --- Commun aux deux formats ---
+  difficulty: Difficulty;
+  trackId?: string;
+  trackIds?: string[];
+  moduleId?: string;
+  conceptId?: string;
   version?: number;
   status?: "draft" | "ready" | "archived";
+  choices?: string[];
+  correctIndex?: number;
+  // --- Mode Vrai / Faux ---
+  correctBool?: boolean;
+  // --- Mode Saisie numérique ---
+  answerMode?: "numeric";
+  expectedAnswer?: number;
+  answerUnit?: string;
+  tolerance?: number;
 }
 
 export type LessonKind = "lesson" | "boss" | "bonus";

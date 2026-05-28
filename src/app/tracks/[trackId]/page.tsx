@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { Settings, Flame, BookOpen, Target } from "lucide-react";
+import { TrackIconDisplay, getTrackColorClasses } from "@/lib/track-icons";
 import { loadProgress } from "@/lib/storage";
 import { getLevelInfo } from "@/lib/level-engine";
 import { useContent } from "@/lib/use-content";
@@ -39,6 +41,7 @@ export default function TrackDetailPage() {
     );
   }
 
+  const { bg: iconBg, text: iconText } = getTrackColorClasses(track.color);
   const levelInfo = progress ? getLevelInfo(progress.xp) : null;
   const completedCount = progress
     ? track.lessons.filter((l) => progress.completedLessonIds.includes(l.id)).length
@@ -48,7 +51,7 @@ export default function TrackDetailPage() {
   // Next actionable lesson: unlocked, not completed. Prefer quiz-ready (learn done) over learn-first.
   const nextLesson = progress
     ? track.lessons.find((l) => {
-        const unlocked = isLessonUnlocked(track.lessons, l.id, progress.completedLessonIds);
+        const unlocked = isLessonUnlocked(track.lessons, l.id, progress.completedLessonIds, track.worlds);
         const completed = isLessonCompleted(l.id, progress.completedLessonIds);
         return unlocked && !completed;
       })
@@ -70,11 +73,14 @@ export default function TrackDetailPage() {
               className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-300 hover:text-blue-700"
               title="Gérer les cartes de ce parcours"
             >
-              ⚙️ Gérer les cartes
+              <Settings size={13} className="inline mr-1" />
+              Gérer les cartes
             </Link>
           </div>
           <div className="mt-3 flex items-center gap-3">
-            <span className="text-3xl">{track.emoji}</span>
+            <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${iconBg} ${iconText}`}>
+              <TrackIconDisplay trackId={track.id} size={22} strokeWidth={1.75} />
+            </div>
             <h1 className="text-2xl font-bold text-gray-900">{track.title}</h1>
           </div>
           <p className="mt-2 text-sm text-gray-600">{track.description}</p>
@@ -102,7 +108,8 @@ export default function TrackDetailPage() {
               <XPBar levelInfo={levelInfo} xp={progress.xp} className="flex-1" />
               {progress.streak > 0 && (
                 <div className="flex shrink-0 items-center gap-1 rounded-full bg-orange-100 px-3 py-1 text-sm font-bold text-orange-600">
-                  🔥 {progress.streak}
+                  <Flame size={14} />
+                  {progress.streak}
                 </div>
               )}
             </div>
@@ -114,7 +121,8 @@ export default function TrackDetailPage() {
             onClick={() => router.push(`/session?trackId=${trackId}&lessonId=${nextLesson.id}&mode=${nextMode}`)}
             className="mb-6 w-full rounded-2xl bg-blue-600 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 active:scale-95"
           >
-            {nextMode === "quiz" ? "🎯" : "📖"} Reprendre — {nextLesson.title}
+            {nextMode === "quiz" ? <Target size={16} className="inline mr-1.5" /> : <BookOpen size={16} className="inline mr-1.5" />}
+          Reprendre — {nextLesson.title}
           </button>
         )}
 

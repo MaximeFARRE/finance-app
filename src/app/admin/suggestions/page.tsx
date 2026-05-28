@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Bug, FileText, Pencil, Plus, MessageCircle, CheckCircle2 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { getContentProvider } from "@/lib/content";
 import type { Suggestion, SuggestionStatus } from "@/lib/types";
 
@@ -11,13 +13,13 @@ import type { Suggestion, SuggestionStatus } from "@/lib/types";
 
 const CATEGORY_META: Record<
   string,
-  { label: string; icon: string; colorClass: string }
+  { label: string; icon: LucideIcon; colorClass: string }
 > = {
-  error: { label: "Erreur", icon: "🐛", colorClass: "bg-red-100 text-red-700" },
-  "missing-detail": { label: "Détail manquant", icon: "📝", colorClass: "bg-amber-100 text-amber-700" },
-  wording: { label: "Formulation", icon: "✏️", colorClass: "bg-blue-100 text-blue-700" },
-  "new-card": { label: "Nouvelle carte", icon: "➕", colorClass: "bg-emerald-100 text-emerald-700" },
-  other: { label: "Autre", icon: "💬", colorClass: "bg-gray-100 text-gray-600" },
+  error: { label: "Erreur", icon: Bug, colorClass: "bg-red-100 text-red-700" },
+  "missing-detail": { label: "Détail manquant", icon: FileText, colorClass: "bg-amber-100 text-amber-700" },
+  wording: { label: "Formulation", icon: Pencil, colorClass: "bg-blue-100 text-blue-700" },
+  "new-card": { label: "Nouvelle carte", icon: Plus, colorClass: "bg-emerald-100 text-emerald-700" },
+  other: { label: "Autre", icon: MessageCircle, colorClass: "bg-gray-100 text-gray-600" },
 };
 
 function formatDate(iso: string): string {
@@ -207,9 +209,10 @@ export default function AdminSuggestionsPage() {
                 {/* Header row */}
                 <div className="flex items-start gap-3 mb-3">
                   <span
-                    className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold ${meta.colorClass}`}
+                    className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold ${meta.colorClass}`}
                   >
-                    {meta.icon} {meta.label}
+                    <meta.icon size={11} />
+                    {meta.label}
                   </span>
                   <span className="text-xs text-gray-400 mt-0.5">
                     {formatDate(suggestion.createdAt)}
@@ -292,7 +295,7 @@ export default function AdminSuggestionsPage() {
                         onClick={() => void accept(suggestion)}
                         className="rounded-xl bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-emerald-700"
                       >
-                        ✅ Créer la carte
+                        <CheckCircle2 size={13} className="inline mr-1" />Créer la carte
                       </Link>
                     ) : suggestion.cardId ? (
                       <Link
@@ -300,7 +303,7 @@ export default function AdminSuggestionsPage() {
                         onClick={() => void accept(suggestion)}
                         className="rounded-xl bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-emerald-700"
                       >
-                        ✅ Modifier la carte
+                        <CheckCircle2 size={13} className="inline mr-1" />Modifier la carte
                       </Link>
                     ) : (
                       <button
@@ -308,7 +311,7 @@ export default function AdminSuggestionsPage() {
                         disabled={isProcessing}
                         className="rounded-xl bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-50"
                       >
-                        ✅ Accepter
+                        <CheckCircle2 size={13} className="inline mr-1" />Accepter
                       </button>
                     )}
 

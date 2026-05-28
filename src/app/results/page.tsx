@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { Trophy, Target, BookOpen } from "lucide-react";
 import { loadProgress } from "@/lib/storage";
 import { getLevelInfo } from "@/lib/level-engine";
 import { useContent, useLesson } from "@/lib/use-content";
@@ -23,6 +24,13 @@ function StarDisplay({ stars }: { stars: 0 | 1 | 2 | 3 }) {
   );
 }
 
+const HEADER_STYLES: Record<0 | 1 | 2 | 3, { bg: string; label: string }> = {
+  3: { bg: "from-yellow-400 to-amber-500", label: "Parfait !" },
+  2: { bg: "from-blue-500 to-indigo-600",  label: "Très bien !" },
+  1: { bg: "from-slate-400 to-slate-500",  label: "Bien joué !" },
+  0: { bg: "from-gray-400 to-gray-500",    label: "" },
+};
+
 function ResultsContent() {
   const params = useSearchParams();
   const router = useRouter();
@@ -38,13 +46,11 @@ function ResultsContent() {
   const { tracks } = useContent();
   const track = tracks.find((t) => t.id === trackId);
 
-  // Resolve failed card IDs to card objects for the "Concepts à revoir" section
   const failedIds = failedParam ? failedParam.split(",").filter(Boolean) : [];
   const { lesson } = useLesson(trackId, lessonId);
 
-  // Find next lesson to continue
   const nextLesson = track?.lessons.find((l) => {
-    const unlocked = isLessonUnlocked(track.lessons, l.id, progress.completedLessonIds);
+    const unlocked = isLessonUnlocked(track.lessons, l.id, progress.completedLessonIds, track.worlds);
     const completed = isLessonCompleted(l.id, progress.completedLessonIds);
     return unlocked && !completed;
   }) ?? null;
@@ -56,52 +62,66 @@ function ResultsContent() {
       ? lesson.cards.filter((c) => failedIds.includes(c.id))
       : [];
 
-  const starLabel =
-    stars === 3 ? "Parfait ! 🎉" : stars === 2 ? "Très bien ! 👍" : stars === 1 ? "Bien joué ! 💪" : "";
+  const { bg: headerBg, label: starLabel } = HEADER_STYLES[stars];
 
   return (
     <div className="w-full max-w-md space-y-4">
       {/* Main results card */}
-      <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-        <div className="mb-4 text-center">
-          <div className="mb-3 text-5xl">{stars === 3 ? "🏆" : "🎯"}</div>
-          <h1 className="text-2xl font-bold text-gray-900">Session terminée !</h1>
-          {starLabel && <p className="mt-1 text-base font-medium text-gray-600">{starLabel}</p>}
+      <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+        {/* Colored header */}
+        <div className={`bg-gradient-to-br ${headerBg} px-8 pb-8 pt-10 text-center`}>
+          <div className="mb-4 flex justify-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
+              {stars === 3
+                ? <Trophy size={34} strokeWidth={1.75} className="text-white" />
+                : <Target size={34} strokeWidth={1.75} className="text-white" />}
+            </div>
+          </div>
+          <h1 className="text-2xl font-bold text-white">Session terminée !</h1>
+          {starLabel && (
+            <p className="mt-1 text-sm font-medium text-white/80">{starLabel}</p>
+          )}
         </div>
 
-        <StarDisplay stars={stars} />
+        {/* Content */}
+        <div className="px-8 pb-8 pt-2">
+          <StarDisplay stars={stars} />
 
-        <p className="mb-6 text-center text-sm text-gray-500">
-          {count} cartes · +{xp} XP gagnés
-        </p>
+          <p className="mb-6 text-center text-sm text-gray-500">
+            {count} cartes · +{xp} XP gagnés
+          </p>
 
-        <div className="mb-6 rounded-xl bg-yellow-50 p-4">
-          <XPBar levelInfo={levelInfo} xp={progress.xp} />
-        </div>
+          <div className="mb-6 rounded-xl bg-yellow-50 p-4">
+            <XPBar levelInfo={levelInfo} xp={progress.xp} />
+          </div>
 
-        <div className="flex flex-col gap-3">
-          {nextLesson && trackId && (
+          <div className="flex flex-col gap-3">
+            {nextLesson && trackId && (
+              <button
+                onClick={() => router.push(`/session?trackId=${trackId}&lessonId=${nextLesson.id}&mode=${nextMode}`)}
+                className="w-full rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 active:scale-95"
+              >
+                {nextMode === "quiz"
+                  ? <Target size={15} className="inline mr-1.5" />
+                  : <BookOpen size={15} className="inline mr-1.5" />}
+                Leçon suivante — {nextLesson.title}
+              </button>
+            )}
+            {trackId && (
+              <button
+                onClick={() => router.push(`/tracks/${trackId}`)}
+                className="w-full rounded-xl border border-gray-200 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+              >
+                Voir le parcours
+              </button>
+            )}
             <button
-              onClick={() => router.push(`/session?trackId=${trackId}&lessonId=${nextLesson.id}&mode=${nextMode}`)}
-              className="w-full rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 active:scale-95"
+              onClick={() => router.push("/tracks")}
+              className="w-full rounded-xl border border-gray-200 py-3 text-sm font-medium text-gray-500 transition hover:bg-gray-50"
             >
-              {nextMode === "quiz" ? "🎯" : "📖"} Leçon suivante — {nextLesson.title}
+              Tous les parcours
             </button>
-          )}
-          {trackId && (
-            <button
-              onClick={() => router.push(`/tracks/${trackId}`)}
-              className="w-full rounded-xl border border-gray-200 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
-            >
-              Voir le parcours
-            </button>
-          )}
-          <button
-            onClick={() => router.push("/tracks")}
-            className="w-full rounded-xl border border-gray-200 py-3 text-sm font-medium text-gray-500 transition hover:bg-gray-50"
-          >
-            Tous les parcours
-          </button>
+          </div>
         </div>
       </div>
 
@@ -121,9 +141,7 @@ function ResultsContent() {
                 <p className="text-sm text-gray-700 line-clamp-1 flex-1">{card.front}</p>
                 <button
                   onClick={() =>
-                    router.push(
-                      `/session?trackId=${trackId}&lessonId=${lessonId}&mode=learn`,
-                    )
+                    router.push(`/session?trackId=${trackId}&lessonId=${lessonId}&mode=learn`)
                   }
                   className="shrink-0 rounded-lg bg-orange-100 px-3 py-1.5 text-xs font-semibold text-orange-700 hover:bg-orange-200 transition"
                 >

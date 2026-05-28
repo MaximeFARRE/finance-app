@@ -33,7 +33,16 @@ lessons:
 
 ---
 
-## Les 7 types de cartes
+## Formats de cartes
+
+> **Important :** les leçons `l1-action`, `l1-obligation`, `l1-rendement`, `l1-risque`,
+> `l1-marche-primaire`, `l1-marche-secondaire`, `l1-market-cap` ont été migrées vers
+> le **nouveau format** (voir `AGENTS.md` dans la racine du projet). Les types
+> `intuition`, `trap`, `interview-question` et `model-answer` y sont **interdits**.
+> Utilisez ce template YAML uniquement pour les autres leçons (format legacy) ou
+> pour créer de nouvelles leçons en legacy.
+
+## Les 7 types de cartes (format legacy)
 
 ### 1. `definition` — Terme clé avec définition
 

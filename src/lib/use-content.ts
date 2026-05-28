@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { allTracks as builtinTracks, BUILTIN_CONTENT_VERSION } from "@/content";
 import { getContentProvider } from "./content";
+import { warnIfContentInconsistent } from "./content-validator";
 import type { ContentProvider } from "./content-provider";
 import type { Lesson, Track } from "./types";
 
@@ -19,6 +20,7 @@ interface UseContentReturn {
 
 async function ensureBuiltinContent(provider: ContentProvider): Promise<void> {
   await provider.syncBuiltinContent(builtinTracks, BUILTIN_CONTENT_VERSION);
+  warnIfContentInconsistent(builtinTracks);
 }
 
 export function useContent(): UseContentReturn {

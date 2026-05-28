@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Archive files — reference only, not part of the active codebase
+    "src/content/_archive/**",
   ]),
   // Project-level rule overrides.
   {
