@@ -33,6 +33,19 @@ Style rules, ID conventions, and IQ/MA pairing rules are in [CONTENT_STYLE_GUIDE
 | `interview-question` | 🎯 | Open-ended interview question (pair with a `model-answer`) |
 | `model-answer` | ✅ | Sample answer — must share ≥1 tag with its `interview-question` for auto-pairing |
 
+## Answer Modes
+
+Each card can use one of four answer modes. Only one can be active per card.
+
+| Mode | How to activate | Best for |
+|------|----------------|---------|
+| **Classic** (flip) | *(no extra field)* | Definitions, mechanisms, IQ/MA |
+| **QCM** | `choices: [...]` + `correctIndex: N` | Definitions, comparisons, calculations |
+| **Numeric input** | `answerMode: numeric` + `expectedAnswer: N` | Precise calculated results |
+| **True / False** | `questionType: true-false` + `correctBool: true\|false` | Statements to validate, traps |
+
+See [CONTENT_STYLE_GUIDE.md §9](CONTENT_STYLE_GUIDE.md) for full rules and edge cases.
+
 ---
 
 ## Option A — Import via YAML (recommended for large additions)
@@ -54,6 +67,7 @@ lessons:
     estimatedMinutes: 10
 
     cards:
+      # --- Carte classique (retournement) ---
       - id: ""                     # leave empty — generated on import
         type: definition
         difficulty: 1
@@ -64,6 +78,49 @@ lessons:
           Formule : WACC = (E/V) × Re + (D/V) × Rd × (1 − T)
           où Re = coût de l'equity (CAPM), Rd = coût de la dette, T = taux d'imposition.
           Utilisé comme taux d'actualisation dans le DCF.
+
+      # --- QCM (choices + correctIndex) ---
+      - id: ""
+        type: definition
+        questionType: definition
+        question: "Qu'est-ce que le WACC ?"
+        shortAnswer: "Le taux de rendement minimum exigé par tous les apporteurs de fonds."
+        difficulty: 1
+        tags: [wacc, capital]
+        choices:
+          - "Le rendement exigé uniquement par les actionnaires"
+          - "Le taux de rendement minimum exigé par tous les apporteurs de fonds"
+          - "Le coût de la dette après impôt de l'entreprise"
+          - "Le taux d'actualisation utilisé exclusivement pour les obligations"
+        correctIndex: 1
+
+      # --- Saisie numérique (answerMode: numeric) ---
+      - id: ""
+        type: formula
+        questionType: quick-calculation
+        question: "Une entreprise a 200 M d'actions à 50 €. Quelle est sa capitalisation boursière ?"
+        shortAnswer: "10 Mds €"
+        formula: "Market cap = Cours × Nombre d'actions"
+        example: "50 × 200 000 000 = 10 000 000 000 €"
+        answerMode: numeric
+        expectedAnswer: 10
+        answerUnit: "Mds €"
+        tolerance: 0.02        # ±2 % accepté
+        difficulty: 1
+        tags: [capitalisation, calcul]
+
+      # --- Vrai / Faux (questionType: true-false + correctBool) ---
+      - id: ""
+        type: trap
+        questionType: true-false
+        question: "Quand les taux d'intérêt montent, le prix d'une obligation existante monte aussi."
+        shortAnswer: "Faux. Prix et taux évoluent en sens inverse."
+        explanation: |
+          Les flux fixes de l'obligation sont actualisés à un taux plus élevé,
+          ce qui réduit leur valeur actuelle. Le prix baisse donc quand les taux montent.
+        correctBool: false
+        difficulty: 2
+        tags: [obligation, taux, prix]
 ```
 
 Then go to `/admin/import`, drop the file, review the diff, and click **Importer**.
@@ -181,4 +238,15 @@ npm run dev         # open the app and navigate to your new track
 | **Difficulty 1 first** | Order cards d1 → d2 → d3 within a lesson |
 | **3+ cards at d1** | Required for difficulty gating to work (≥70% mastery threshold) |
 
-Full rules: [CONTENT_STYLE_GUIDE.md](CONTENT_STYLE_GUIDE.md)
+### Answer mode rules (quick reference)
+
+| Rule | Detail |
+|------|--------|
+| **One mode per card** | Never combine `choices` and `correctBool` on the same card |
+| **QCM: always 4 options** | Prefer 4 choices; minimum 3. Two distractors must be plausible |
+| **Numeric: numbers only** | `expectedAnswer` must be a number. Do not use for open-ended answers |
+| **Numeric: always set `answerUnit`** | Without it, the user doesn't know what unit to enter |
+| **True/False: use an affirmation** | The question must be a statement, not a question |
+| **True/False: balance Vrai/Faux** | Don't make all T/F cards in a lesson have the same answer |
+
+Full rules and edge cases: [CONTENT_STYLE_GUIDE.md §9](CONTENT_STYLE_GUIDE.md)

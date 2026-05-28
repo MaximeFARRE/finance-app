@@ -260,7 +260,155 @@ Autorisé et recommandé :
 
 ---
 
-## 9. Checklist avant de commiter du contenu
+## 9. Modes de réponse interactifs
+
+Les cartes peuvent déclencher trois modes de réponse différents selon les champs
+renseignés. Un seul mode peut être actif par carte.
+
+### Mode A — Carte classique (retournement)
+
+Aucun champ supplémentaire. L'utilisateur lit la question, réfléchit, retourne la
+carte et auto-évalue sa réponse (boutons 0–5 ou Facile/Moyen/Difficile).
+
+C'est le mode par défaut si aucun des champs ci-dessous n'est présent.
+
+---
+
+### Mode B — QCM (`choices` + `correctIndex`)
+
+Affiche 3 ou 4 propositions à choix unique. L'utilisateur sélectionne une réponse
+et le système valide immédiatement.
+
+**Champs requis :**
+
+| Champ | Type | Règle |
+|---|---|---|
+| `choices` | `string[]` | 3 ou 4 options, toujours 4 en priorité |
+| `correctIndex` | `number` | Index 0-basé de la bonne réponse |
+
+**Quand l'utiliser :**
+- Questions de définition ou de comparaison entre termes distincts
+- Questions de calcul avec 4 résultats proposés (dont 2 distracteurs plausibles)
+- Boss et sessions de révision rapide
+
+**Règles de rédaction des options :**
+- La bonne réponse ne doit pas se démarquer visuellement (même longueur approximative)
+- Toujours proposer **2 distracteurs plausibles** (erreurs fréquentes) et **1 leurre évident**
+- Éviter les options qui se contredisent toutes sauf une (trop facile)
+- Ne pas commencer plusieurs options par le même mot
+- Mélanger la position de la bonne réponse (ne pas toujours mettre en index 0)
+
+**Exemple YAML :**
+```yaml
+- type: definition
+  questionType: definition
+  question: "Qu'est-ce que la duration d'une obligation ?"
+  shortAnswer: "La sensibilité approximative du prix à une variation de taux."
+  difficulty: 2
+  choices:
+    - "La durée de vie restante jusqu'à maturité"
+    - "La sensibilité approximative du prix à une variation de taux"
+    - "Le rendement actuariel à maturité (YTM)"
+    - "Le montant total des coupons restants à verser"
+  correctIndex: 1
+```
+
+---
+
+### Mode C — Saisie numérique (`answerMode: "numeric"`)
+
+Affiche un champ de saisie texte. L'utilisateur tape sa réponse chiffrée et le
+système vérifie si elle est dans la tolérance définie.
+
+**Réserver à :** questions de calcul dont la réponse est un nombre précis
+(`quick-calculation`, certaines `formula`). Ne **pas** utiliser pour les questions
+ouvertes, de définition ou de mécanisme.
+
+**Champs requis :**
+
+| Champ | Type | Règle |
+|---|---|---|
+| `answerMode` | `"numeric"` | Active la saisie numérique |
+| `expectedAnswer` | `number` | Valeur correcte (ex. : `250`, `0.13`) |
+| `answerUnit` | `string` | Unité affichée à côté du champ : `"€"`, `"M€"`, `"%"`, `"Mds €"` |
+| `tolerance` | `number` | Écart accepté en % de la valeur correcte (défaut : `0.05` = ±5 %) |
+
+**Cas limites à gérer (pour les développeurs) :**
+
+| Cas | Comportement attendu |
+|---|---|
+| Réponse en pourcentage | Accepter `13` et `0.13` si `answerUnit: "%"` — normaliser avant comparaison |
+| Millions / milliards | Accepter `375 000 000 000` et `375` si `answerUnit: "Mds €"` |
+| Virgule vs point décimal | Accepter `1,5` et `1.5` — normaliser en float |
+| Espaces dans le nombre | `375 000` → supprimer les espaces avant parsing |
+| Signe négatif | Accepter `-100` pour une perte |
+| Zéro | Cas particulier : tolérance absolue ±0.01 si `expectedAnswer === 0` |
+| Champ vide | Ne pas valider, afficher un message "Entrez une valeur" |
+
+**Exemple YAML :**
+```yaml
+- type: formula
+  questionType: quick-calculation
+  question: "Une entreprise a 500 M d'actions à 750 €. Quelle est sa capitalisation boursière ?"
+  shortAnswer: "375 Mds €"
+  formula: "Market cap = Cours × Nombre d'actions"
+  answerMode: numeric
+  expectedAnswer: 375
+  answerUnit: "Mds €"
+  tolerance: 0.02
+  difficulty: 1
+```
+
+---
+
+### Mode D — Vrai / Faux (`questionType: "true-false"`)
+
+Affiche deux boutons "Vrai" et "Faux". L'utilisateur choisit et le système valide
+immédiatement.
+
+**Champs requis :**
+
+| Champ | Type | Règle |
+|---|---|---|
+| `questionType` | `"true-false"` | Active les boutons Vrai/Faux |
+| `correctBool` | `boolean` | `true` → "Vrai" est correct, `false` → "Faux" est correct |
+
+**Quand l'utiliser :**
+- Affirmations à corriger (pièges fréquents, idées reçues)
+- Propriétés d'un instrument ("Une obligation peut-elle se négocier à la hausse ? → Vrai")
+- Révision rapide de mécanismes bien définis
+
+**Règles de rédaction :**
+- La question doit être une **affirmation**, pas une interrogation
+- Éviter les formulations ambiguës ("parfois", "dans certains cas") → réserver aux cartes classiques
+- Ne pas enchaîner deux cartes vrai/faux consécutives sur le même thème dans une leçon
+- Équilibrer les réponses au sein d'une leçon : ne pas mettre que des "Vrai" ou que des "Faux"
+
+**Exemple YAML :**
+```yaml
+- type: trap
+  questionType: true-false
+  question: "Un dividende élevé est toujours un signal positif pour une entreprise."
+  shortAnswer: "Faux. Un yield élevé peut refléter une chute du cours, pas une générosité de l'entreprise."
+  explanation: "Un cours qui baisse avec un dividende stable produit mécaniquement un yield élevé — c'est le dividend trap."
+  correctBool: false
+  difficulty: 2
+```
+
+---
+
+### Récapitulatif des modes
+
+| Mode | Champ déclencheur | Meilleur usage |
+|---|---|---|
+| Carte classique | *(aucun)* | Définitions, mécanismes, IQ/MA |
+| QCM | `choices` + `correctIndex` | Définitions, comparaisons, calculs à choix |
+| Saisie numérique | `answerMode: "numeric"` | Calculs avec résultat précis |
+| Vrai / Faux | `questionType: "true-false"` | Affirmations à valider, pièges |
+
+---
+
+## 10. Checklist avant de commiter du contenu
 
 - [ ] Tous les IDs sont définis (pas de `""` dans les fichiers `.ts`)
 - [ ] Chaque leçon a ≥ 3 cartes d1, ≥ 1 trap
@@ -271,3 +419,7 @@ Autorisé et recommandé :
 - [ ] `estimatedMinutes` reflète le nombre réel de cartes (≈ 1 min/carte)
 - [ ] TypeScript compile sans erreur : `npx tsc --noEmit`
 - [ ] Aucun contenu factuel incorrect (dates, formules, définitions)
+- [ ] QCM : 4 options, `correctIndex` défini, distracteurs plausibles
+- [ ] Saisie numérique : `expectedAnswer` est un nombre, `answerUnit` renseignée, `tolerance` définie
+- [ ] Vrai/Faux : question formulée comme une **affirmation**, `correctBool` défini
+- [ ] Un seul mode de réponse actif par carte (pas de `choices` + `correctBool` sur la même carte)
