@@ -92,6 +92,52 @@ export const lessonBuysideSellside: Lesson = {
 - Montrer que vous comprenez vraiment les différences de métiers`,
     },
     {
+      id: "mf-found-l1-bss-ecm-dcm",
+      type: "definition",
+      front: "Quelle est la différence entre ECM et DCM au sein d'une banque d'investissement ?",
+      back: "ECM (Equity Capital Markets) : gère les opérations en capital — IPO, augmentations de capital, émissions d'actions.\n\nDCM (Debt Capital Markets) : gère les opérations de dette — émissions obligataires, placements de billets de trésorerie.",
+      difficulty: 2,
+      tags: ["sell-side", "ECM", "DCM", "IBD"],
+      detail: `**ECM — ce que font les équipes en pratique :**
+- Structurer et exécuter les IPO (introduction en bourse)
+- Gérer les augmentations de capital (droits préférentiels de souscription, placements accélérés)
+- Conseiller sur les opérations secondaires (cession de blocs par actionnaires)
+- Maintenir des relations avec les investisseurs institutionnels (roadshows)
+
+**DCM — ce que font les équipes en pratique :**
+- Structurer et placer des obligations corporate ou souveraines
+- Gérer les émissions de Schuldscheins, Euro CP, MTN
+- Conseiller sur la structure de la dette (taux fixe/variable, maturité, covenant)
+- Exécuter les refinancements et les émissions liées aux acquisitions (acquisition financing)
+
+**Revenus typiques :**
+- ECM fees : 3–7 % du montant levé (IPO), 1–3 % (augmentation de capital)
+- DCM fees : 0,3–1,5 % du nominal émis (obligations)`,
+    },
+    {
+      id: "mf-found-l1-bss-research",
+      type: "definition",
+      front: "Quel est le rôle de la recherche sell-side (equity research) ?",
+      back: "Les analystes sell-side publient des rapports de recherche sur les entreprises cotées, avec recommandations (Buy / Hold / Sell) et objectifs de cours. L'objectif est d'attirer les flux d'ordres des clients institutionnels vers la banque.",
+      difficulty: 1,
+      tags: ["sell-side", "research", "analyste"],
+      detail: `**Le modèle économique de la recherche sell-side :**
+
+La recherche est techniquement «gratuite» pour les clients buy-side — elle est financée par les commissions de trading que les institutionnels versent à la banque (soft commissions).
+
+**MiFID II (2018) et l'unbundling :**
+Depuis MiFID II, les banques européennes doivent facturer séparément la recherche et les commissions d'exécution. Conséquence : réduction massive du nombre d'analystes et de la couverture des mid-small caps.
+
+**Format d'un rapport de recherche :**
+1. Résumé de la thèse d'investissement
+2. Valorisation (DCF + multiples)
+3. Catalyseurs attendus
+4. Risques
+5. Tableau de données financières prévisionnelles (P&L, bilan, FCF)
+
+**Fiabilité :** les analystes sell-side sont parfois accusés de conflits d'intérêts (la même banque peut conseiller l'entreprise en M&A). Les recommandations «Vendre» sont rares (~5 % des notes publiées).`,
+    },
+    {
       id: "mf-found-l1-bss-ma",
       type: "model-answer",
       front: "Réponse : buy-side vs sell-side",
