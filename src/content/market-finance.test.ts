@@ -86,7 +86,7 @@ describe("marketFinanceTrack pedagogical structure", () => {
 
     for (const lesson of migratedLessons) {
       expect(lesson.cards.length).toBeGreaterThanOrEqual(6);
-      expect(lesson.cards.length).toBeLessThanOrEqual(10);
+      expect(lesson.cards.length).toBeLessThanOrEqual(15);
 
       for (const card of lesson.cards) {
         expect(FORBIDDEN_LEGACY_TYPES.has(card.type)).toBe(false);

@@ -1,0 +1,213 @@
+import type { Lesson } from "@/lib/types";
+
+export const lessonCourbeDesToux: Lesson = {
+  id: "mf-found-l2-courbe-des-taux",
+  slug: "courbe-des-taux",
+  title: "La courbe des taux",
+  description: "Lire et interpréter la courbe des taux et ses signaux macroéconomiques",
+  estimatedMinutes: 10,
+  cards: [
+    {
+      id: "mf-found-l2-taux-def-1a2b",
+      type: "definition",
+      questionType: "definition",
+      question: "Qu'est-ce que la courbe des taux (yield curve) ?",
+      shortAnswer:
+        "La courbe des taux représente les rendements des obligations d'État en fonction de leur maturité (3 mois, 2 ans, 10 ans, 30 ans). Elle montre comment le marché perçoit l'évolution future des taux.",
+      explanation:
+        "La courbe des taux la plus suivie est celle des bons du Trésor américain (UST). En Europe, on suit la courbe du Bund allemand comme référence sans risque. L'écart entre différentes maturités (spreads) donne de précieuses informations macro.",
+      front: "Qu'est-ce que la courbe des taux (yield curve) ?",
+      back: "Les rendements des obligations d'État selon leur maturité, de court à long terme.",
+      difficulty: 1,
+      learningStage: 1,
+      topics: ["taux", "courbe-des-taux", "obligations"],
+      skills: ["definition"],
+      tags: ["taux", "yield-curve", "macro"],
+    },
+    {
+      id: "mf-found-l2-taux-mec-3c4d",
+      type: "definition",
+      questionType: "mechanism",
+      question: "Pourquoi la courbe des taux est-elle normalement croissante (taux longs > taux courts) ?",
+      shortAnswer:
+        "Les investisseurs exigent une prime de terme pour prêter sur de longues durées : plus l'horizon est lointain, plus le risque d'inflation, de crédit et d'opportunité est élevé.",
+      explanation:
+        "Prêter à 10 ans signifie immobiliser du capital longtemps et être exposé à l'incertitude sur l'inflation future. Cette prime de risque donne une courbe normalement pentue. Quand la courbe s'aplatit ou s'inverse, c'est un signal macroéconomique fort.",
+      front: "Pourquoi la courbe des taux est-elle normalement croissante ?",
+      back: "Prime de terme : les investisseurs exigent plus pour prêter longtemps (risque d'inflation, incertitude).",
+      difficulty: 1,
+      learningStage: 1,
+      topics: ["taux", "prime-de-terme", "inflation"],
+      skills: ["mechanism"],
+      tags: ["taux", "prime-de-terme", "inflation"],
+    },
+    {
+      id: "mf-found-l2-taux-tf-5e6f",
+      type: "definition",
+      questionType: "true-false",
+      question:
+        "Une courbe des taux inversée (taux courts supérieurs aux taux longs) est historiquement un signal de récession.",
+      shortAnswer:
+        "Vrai. Depuis 1950, une inversion de la courbe UST 2-10 ans a précédé chaque récession américaine avec 6 à 18 mois d'avance.",
+      explanation:
+        "Quand les taux courts dépassent les taux longs, le marché anticipe que la banque centrale va devoir baisser ses taux (car une récession arrive). En 2022-2023, la courbe US s'est profondément inversée après les hausses de taux agressives de la Fed.",
+      correctBool: true,
+      front: "Une courbe des taux inversée est historiquement un signal de récession.",
+      back: "Vrai. Signal avancé fiable depuis 1950 aux États-Unis.",
+      difficulty: 1,
+      learningStage: 1,
+      topics: ["taux", "récession", "signal-macro"],
+      skills: ["definition"],
+      tags: ["taux", "inversion", "récession"],
+    },
+    {
+      id: "mf-found-l2-taux-mcq-7a8b",
+      type: "definition",
+      questionType: "definition",
+      question:
+        "Le spread OAT 10 ans – Bund 10 ans mesure quoi ?",
+      shortAnswer:
+        "La prime de risque demandée par les investisseurs pour détenir de la dette française plutôt que de la dette allemande (perçue comme plus sûre).",
+      explanation:
+        "En temps normal, ce spread est de 30-80 points de base. En période de crise (ex : crise des dettes souveraines 2011-2012), il peut dépasser 200 bp. Un spread qui s'élargit signale une dégradation de la perception du risque français.",
+      front: "Le spread OAT 10 ans – Bund 10 ans mesure quoi ?",
+      back: "La prime de risque de la dette française vs allemande, en points de base.",
+      difficulty: 1,
+      learningStage: 1,
+      topics: ["taux", "spread", "OAT", "Bund"],
+      skills: ["definition"],
+      tags: ["taux", "spread", "France"],
+      choices: [
+        "La prime de risque de la dette française vs allemande",
+        "L'écart entre le taux directeur de la BCE et le taux d'inflation",
+        "La différence de rendement entre une obligation 2 ans et 10 ans",
+        "La prime de liquidité exigée sur les obligations d'État",
+      ],
+      correctIndex: 0,
+    },
+    {
+      id: "mf-found-l2-taux-tf-9c0d",
+      type: "definition",
+      questionType: "true-false",
+      question:
+        "La BCE contrôle directement les taux d'intérêt à 10 ans sur les obligations d'État.",
+      shortAnswer:
+        "Faux. La BCE fixe les taux directeurs (court terme). Les taux longs sont déterminés par le marché, en fonction des anticipations d'inflation et de croissance.",
+      explanation:
+        "Via le QE (achats d'actifs), la BCE peut influencer les taux longs de façon indirecte. Mais elle ne les contrôle pas directement. En 2022, quand la BCE a arrêté son QE et relevé ses taux, les taux longs ont fortement monté sous l'effet du marché.",
+      correctBool: false,
+      front: "La BCE contrôle directement les taux d'intérêt à 10 ans.",
+      back: "Faux. La BCE fixe les taux directeurs (court terme). Les taux longs sont fixés par le marché.",
+      difficulty: 2,
+      learningStage: 1,
+      topics: ["taux", "BCE", "politique-monétaire"],
+      skills: ["definition"],
+      tags: ["taux", "BCE", "banque-centrale"],
+    },
+    {
+      id: "mf-found-l2-taux-num-1e2f",
+      type: "formula",
+      questionType: "quick-calculation",
+      question:
+        "Le Bund 2 ans est à 2,8 % et le Bund 10 ans à 3,6 %. Quel est le spread 10 ans – 2 ans en points de base ?",
+      shortAnswer: "80 points de base.",
+      formula: "Spread (bp) = (Taux 10 ans − Taux 2 ans) × 100",
+      example: "(3,6 % − 2,8 %) × 100 = 0,8 % × 100 = 80 bp",
+      answerMode: "numeric",
+      expectedAnswer: 80,
+      answerUnit: "bp",
+      tolerance: 0.5,
+      front: "Bund 2 ans = 2,8 %, Bund 10 ans = 3,6 %. Quel est le spread 10-2 en points de base ?",
+      back: "80 points de base.",
+      difficulty: 1,
+      learningStage: 1,
+      topics: ["taux", "spread", "calcul"],
+      skills: ["quick-calculation"],
+      tags: ["taux", "Bund", "spread", "calcul"],
+    },
+    {
+      id: "mf-found-l2-taux-def-3a4b",
+      type: "definition",
+      questionType: "definition",
+      question: "Qu'est-ce que le taux directeur d'une banque centrale ?",
+      shortAnswer:
+        "Le taux directeur est le taux auquel la banque centrale prête aux banques commerciales au jour le jour. Il sert de référence pour l'ensemble des taux d'intérêt de l'économie.",
+      explanation:
+        "La BCE fixe trois taux directeurs (dépôt, refi, prêt marginal). La Fed fixe le Fed Funds Rate. Ces taux influencent directement les taux courts (EURIBOR, SOFR) et, indirectement, toute la chaîne de financement de l'économie.",
+      front: "Qu'est-ce que le taux directeur d'une banque centrale ?",
+      back: "Taux auquel la banque centrale prête aux banques, référence pour tous les taux de l'économie.",
+      difficulty: 1,
+      learningStage: 1,
+      topics: ["taux", "banque-centrale", "politique-monétaire"],
+      skills: ["definition"],
+      tags: ["taux", "BCE", "Fed"],
+    },
+    {
+      id: "mf-found-l2-taux-mcq-5c6d",
+      type: "definition",
+      questionType: "mechanism",
+      question: "Qu'est-ce que le Quantitative Easing (QE) et quel est son objectif principal ?",
+      shortAnswer:
+        "Le QE consiste en des achats massifs d'actifs (obligations) par la banque centrale pour injecter des liquidités et faire baisser les taux longs.",
+      explanation:
+        "Quand les taux directeurs sont déjà à zéro ou négatifs, la banque centrale ne peut plus les baisser davantage. Le QE est son outil non-conventionnel : en achetant des obligations en grande quantité, elle fait monter leurs prix et baisser leurs rendements.",
+      front: "Qu'est-ce que le QE (Quantitative Easing) et son objectif principal ?",
+      back: "Achats massifs d'obligations par la banque centrale pour faire baisser les taux longs et injecter des liquidités.",
+      difficulty: 1,
+      learningStage: 1,
+      topics: ["QE", "banque-centrale", "politique-monétaire"],
+      skills: ["mechanism"],
+      tags: ["QE", "BCE", "taux"],
+      choices: [
+        "Achats massifs d'obligations pour faire baisser les taux longs",
+        "Hausse des taux directeurs pour contrôler l'inflation",
+        "Vente d'obligations pour retirer des liquidités du système",
+        "Émission de monnaie pour financer les déficits publics",
+      ],
+      correctIndex: 0,
+    },
+    {
+      id: "mf-found-l2-taux-tf-7e8f",
+      type: "definition",
+      questionType: "true-false",
+      question:
+        "Une hausse du taux directeur de la BCE entraîne généralement une baisse des prix des obligations.",
+      shortAnswer:
+        "Vrai. Quand les taux montent, les nouvelles obligations offrent de meilleurs rendements, ce qui rend les anciennes (à taux plus bas) moins attractives — leurs prix baissent.",
+      explanation:
+        "C'est la relation inverse prix/taux. En 2022-2023, les hausses de taux historiques de la BCE et de la Fed ont causé des pertes massives sur les portefeuilles obligataires. L'indice Bloomberg Euro Aggregate a perdu ~18 % en 2022.",
+      correctBool: true,
+      front: "Une hausse du taux directeur de la BCE entraîne généralement une baisse des prix des obligations.",
+      back: "Vrai. Taux montent → prix obligations baissent (relation inverse fondamentale).",
+      difficulty: 1,
+      learningStage: 1,
+      topics: ["taux", "obligations", "prix"],
+      skills: ["mechanism"],
+      tags: ["taux", "obligations", "BCE"],
+    },
+    {
+      id: "mf-found-l2-taux-mcq-9a0b",
+      type: "definition",
+      questionType: "market-culture",
+      question:
+        "Quelle courbe des taux est la plus surveillée mondialement comme signal macroéconomique ?",
+      shortAnswer: "Le spread 10 ans – 2 ans des bons du Trésor américain (UST).",
+      explanation:
+        "Cette courbe est le baromètre macro le plus regardé. Son inversion a précédé les récessions de 1990, 2001, 2008 et a été fortement négative en 2022-2023. Les stratégistes, économistes et banques centrales la scrutent au quotidien.",
+      front: "Quelle courbe des taux est la plus suivie mondialement comme signal macro ?",
+      back: "Le spread UST 10 ans – 2 ans (bons du Trésor américain).",
+      difficulty: 1,
+      learningStage: 1,
+      topics: ["taux", "UST", "signal-macro"],
+      skills: ["market-culture"],
+      tags: ["taux", "UST", "récession"],
+      choices: [
+        "Le spread UST 10 ans – 2 ans (bons du Trésor américain)",
+        "Le spread Bund 10 ans – 2 ans (allemand)",
+        "Le taux Euribor 3 mois",
+        "Le taux de dépôt de la BCE",
+      ],
+      correctIndex: 0,
+    },
+  ],
+};

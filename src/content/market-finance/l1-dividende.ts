@@ -111,6 +111,46 @@ export const lessonDividende: Lesson = {
 - Valorisation de l'action (buyback peu créateur de valeur si l'action est chère)`,
     },
     {
+      id: "mf-found-l1-div-payout-ratio",
+      type: "formula",
+      front: "Payout Ratio = ?",
+      back: "Payout Ratio = Dividendes totaux versés / Bénéfice net × 100 %\n\nEx : bénéfice net 500 M€, dividendes 200 M€ → Payout Ratio = 40 %.\nUn ratio > 100 % signifie que l'entreprise distribue plus qu'elle ne gagne : insoutenable.",
+      difficulty: 1,
+      tags: ["dividende", "payout ratio", "calcul"],
+      detail: `**Interpréter le Payout Ratio :**
+
+| Ratio | Signal |
+|-------|--------|
+| < 30 % | Entreprise en croissance, réinvestissement prioritaire |
+| 30–60 % | Équilibre raisonnable croissance / redistribution |
+| 60–80 % | Secteur mature, dividende élevé mais soutenable |
+| > 100 % | Insoutenable à terme — surveiller le FCF et l'endettement |
+
+**Payout Ratio vs Dividend Yield :**
+- Le Yield mesure le rendement pour l'investisseur : Dividende / Cours
+- Le Payout Ratio mesure la capacité de l'entreprise à tenir son dividende
+
+**Astuce :** un payout ratio en hausse avec un bénéfice net en baisse est un signal d'alerte fort.`,
+    },
+    {
+      id: "mf-found-l1-div-exdate-trap",
+      type: "trap",
+      front: "Piège : acheter une action juste avant le dividende pour le toucher «gratuitement»",
+      back: "Impossible. Le jour de la date de détachement (ex-div date), le cours baisse mécaniquement du montant du dividende. Tu ne gagnes rien nette : tu reçois le dividende mais la valeur de l'action diminue d'autant.",
+      difficulty: 2,
+      tags: ["dividende", "ex-div date", "cours"],
+      detail: `**Pourquoi le cours baisse-t-il le jour du détachement ?**
+
+La veille du détachement : action vaut 100 €, dividende annoncé = 3 €.
+Le jour du détachement : le cours d'ouverture est ajusté à ~97 € (prix ex-dividende).
+
+L'actionnaire inscrit à la record date reçoit 3 € de dividende — mais son action vaut 3 € de moins.
+
+**En pratique :** la baisse peut être plus ou moins prononcée selon la fiscalité locale et le contexte de marché, mais l'ajustement technique est toujours effectué.
+
+**Pour les traders :** certaines stratégies ("dividend capture") tentent d'exploiter des inefficiences autour des détachements, mais les frais de transaction et la fiscalité des dividendes les rendent souvent non-profitables.`,
+    },
+    {
       id: "mf-found-l1-div-ma",
       type: "model-answer",
       front: "Réponse : dividende vs rachat d'actions",
