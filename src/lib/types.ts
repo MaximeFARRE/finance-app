@@ -17,7 +17,8 @@ export type QuestionType =
   | "mechanism"
   | "formula"
   | "quick-calculation"
-  | "market-culture";
+  | "market-culture"
+  | "true-false";
 
 /**
  * Une carte d'apprentissage. Deux formats coexistent :
@@ -33,7 +34,9 @@ export type QuestionType =
  * - `topics`        — sujets couverts (remplace `tags`)
  * - `skills`        — compétences mobilisées
  * - `learningStage` — étape d'apprentissage (1–5)
- * - `choices` + `correctIndex` — pour le mode QCM
+ * - `choices` + `correctIndex`   — pour le mode QCM
+ * - `correctBool`                — pour le mode Vrai/Faux (`questionType: "true-false"`)
+ * - `answerMode: "numeric"` + `expectedAnswer` + `answerUnit` + `tolerance` — saisie numérique
  *
  * **Format legacy (existant, supporté via card-normalizer) :**
  * - `front` / `back` / `detail` / `tags`
@@ -69,6 +72,13 @@ export interface Card {
   status?: "draft" | "ready" | "archived";
   choices?: string[];
   correctIndex?: number;
+  // --- Mode Vrai / Faux ---
+  correctBool?: boolean;
+  // --- Mode Saisie numérique ---
+  answerMode?: "numeric";
+  expectedAnswer?: number;
+  answerUnit?: string;
+  tolerance?: number;
 }
 
 export type LessonKind = "lesson" | "boss" | "bonus";
