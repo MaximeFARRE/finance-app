@@ -82,6 +82,53 @@ export const lessonActeurs: Lesson = {
 **Ce que le recruteur cherche :** que vous compreniez l'écosystème global des marchés, pas juste les banques. Mentionner les banques centrales et leur impact sur les prix montre une vision macro.`,
     },
     {
+      id: "mf-found-l1-act-market-maker",
+      type: "definition",
+      front: "Quel est le rôle d'un market maker et comment est-il rémunéré ?",
+      back: "Un market maker affiche en permanence un prix acheteur (bid) et un prix vendeur (ask) sur un titre. Il est la contrepartie des ordres de ses clients et se rémunère grâce au spread bid-ask. En échange, il s'engage à fournir de la liquidité.",
+      difficulty: 2,
+      tags: ["market maker", "liquidité", "spread"],
+      detail: `**Les obligations du market maker :**
+- Afficher en continu des cours fermes (bid et ask) dans une fourchette maximale fixée par la bourse
+- Intervenir même lors de conditions de marché difficiles
+- Respecter des tailles minimales d'ordre
+
+**Comment le market maker gère-t-il son risque ?**
+Il accumule un stock de titres (inventory) qu'il doit gérer. Pour éviter d'être exposé trop longtemps, il ajuste ses prix bid/ask pour attirer plus d'acheteurs ou de vendeurs selon sa position.
+
+**Acteurs majeurs du market making :**
+- Actions : Citadel Securities, Virtu Financial, Jump Trading
+- Obligations : grandes banques (Goldman Sachs, JPMorgan, BNP Paribas)
+- Options : Susquehanna, Optiver, IMC
+
+**HFT vs market making traditionnel :** les HFT modernes font du market making algorithmique à très haute fréquence, capturant des micro-spreads sur des millions d'ordres par jour.`,
+    },
+    {
+      id: "mf-found-l1-act-etf-passive",
+      type: "intuition",
+      front: "La montée des ETF passifs : une révolution silencieuse des marchés",
+      back: "Les ETF indiciels passifs (BlackRock iShares, Vanguard) détiennent maintenant >50 % des AUM aux US. Ils ne font pas d'analyse fondamentale : ils répliquent un indice. Cela pose des questions sur l'efficience des prix et le rôle des gérants actifs.",
+      difficulty: 2,
+      tags: ["ETF", "gestion passive", "BlackRock"],
+      detail: `**Les implications de la gestion passive massive :**
+
+**Pour les prix des actifs :**
+- Les ETF achètent mécaniquement selon la pondération des indices
+- Les grandes capitalisations captent plus de flux, indépendamment des fondamentaux
+- Risque de "dé-corrélation" entre prix et valeur réelle
+
+**Pour les gérants actifs :**
+- La concurrence s'intensifie : difficile de battre un indice à frais bas
+- Les gérants actifs restants sont plus importants pour la "price discovery"
+
+**Pour la stabilité financière :**
+- Les ETF obligataires promettent une liquidité quotidienne sur des actifs peu liquides
+- En cas de stress, des rachats massifs peuvent forcer des ventes d'actifs illiquides
+- Les régulateurs surveillent ce "mismatch de liquidité"
+
+**Les chiffres :** en 2024, les ETF gèrent >10 000 Mds $ dans le monde. BlackRock iShares et Vanguard représentent ~60 % du marché des ETF.`,
+    },
+    {
       id: "mf-found-l1-act-ma",
       type: "model-answer",
       front: "Réponse : acteurs des marchés financiers",
