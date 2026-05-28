@@ -18,14 +18,47 @@ export function LearningCard({ card, onReveal, onAnswer, trackId, lessonId }: Le
   const [revealed, setRevealed] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [selectedBool, setSelectedBool] = useState<boolean | null>(null);
+  const [numericInput, setNumericInput] = useState("");
+  const [numericState, setNumericState] = useState<"idle" | "correct" | "incorrect" | "invalid">("idle");
   const normalized = normalizeLearningCard(card);
   const theme = getCardTheme(normalized.themeKey);
   const isMcq = Array.isArray(card.choices) && card.choices.length > 0;
   const isTrueFalse = card.questionType === "true-false" && card.correctBool !== undefined;
+  const isNumeric = card.answerMode === "numeric" && card.expectedAnswer !== undefined;
 
   function handleReveal() {
     setRevealed(true);
     onReveal?.();
+  }
+
+  function parseNumericInput(raw: string): number | null {
+    const normalized = raw
+      .trim()
+      .replace(/\s/g, "")       // "375 000" → "375000"
+      .replace(",", ".")         // "1,5" → "1.5"
+      .replace("−", "-");        // typographic minus
+    const value = parseFloat(normalized);
+    return isNaN(value) ? null : value;
+  }
+
+  function isWithinTolerance(input: number, expected: number, tol: number): boolean {
+    if (expected === 0) return Math.abs(input) <= 0.01;
+    return Math.abs(input - expected) / Math.abs(expected) <= tol;
+  }
+
+  function handleNumericSubmit() {
+    if (numericState !== "idle") return;
+    const parsed = parseNumericInput(numericInput);
+    if (parsed === null) {
+      setNumericState("invalid");
+      return;
+    }
+    const tol = card.tolerance ?? 0.05;
+    const correct = isWithinTolerance(parsed, card.expectedAnswer!, tol);
+    setNumericState(correct ? "correct" : "incorrect");
+    setRevealed(true);
+    onReveal?.();
+    setTimeout(() => onAnswer?.(correct), 1000);
   }
 
   function handleTrueFalseClick(value: boolean) {
@@ -63,7 +96,65 @@ export function LearningCard({ card, onReveal, onAnswer, trackId, lessonId }: Le
         <p className="text-xl font-semibold leading-snug text-gray-900">{normalized.question}</p>
       </div>
 
-      {isTrueFalse ? (
+      {isNumeric ? (
+        <div className="mt-auto px-9 pb-7 flex flex-col gap-3">
+          <div className="flex gap-2 items-center">
+            <div className={`relative flex-1 rounded-xl border-2 transition-colors duration-150 ${
+              numericState === "correct" ? "border-green-400 bg-green-50"
+              : numericState === "incorrect" ? "border-red-300 bg-red-50"
+              : numericState === "invalid" ? "border-amber-300 bg-amber-50"
+              : "border-gray-200 bg-white focus-within:border-blue-400"
+            }`}>
+              <input
+                type="text"
+                inputMode="decimal"
+                value={numericInput}
+                onChange={(e) => {
+                  setNumericInput(e.target.value);
+                  if (numericState === "invalid") setNumericState("idle");
+                }}
+                onKeyDown={(e) => e.key === "Enter" && handleNumericSubmit()}
+                disabled={numericState === "correct" || numericState === "incorrect"}
+                placeholder="Votre réponse…"
+                className="w-full bg-transparent px-4 py-3 text-sm font-medium text-gray-800 outline-none placeholder:text-gray-400"
+              />
+              {card.answerUnit && (
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400 pointer-events-none">
+                  {card.answerUnit}
+                </span>
+              )}
+            </div>
+            <button
+              onClick={handleNumericSubmit}
+              disabled={numericState === "correct" || numericState === "incorrect" || numericInput.trim() === ""}
+              className={`shrink-0 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-all duration-150 active:scale-95 disabled:opacity-40 disabled:cursor-default ${theme.buttonBg} ${theme.buttonHover}`}
+            >
+              Vérifier
+            </button>
+          </div>
+          {numericState === "invalid" && (
+            <p className="text-xs text-amber-600 font-medium">Entrez un nombre valide (ex : 375 ou 1,5)</p>
+          )}
+          {revealed && (
+            <>
+              <div className={`rounded-xl p-5 ${numericState === "correct" ? "bg-green-50" : "bg-red-50"}`}>
+                <p className="text-xs font-semibold uppercase tracking-wide mb-1 text-gray-400">
+                  {numericState === "correct" ? "Correct ✓" : "Réponse attendue"}
+                </p>
+                <p className="whitespace-pre-line text-base leading-relaxed text-gray-800">
+                  {normalized.shortAnswer}
+                </p>
+              </div>
+              {normalized.formula && (
+                <AnswerSection label="Formule" text={normalized.formula} />
+              )}
+              {normalized.explanation && (
+                <AnswerSection label="Explication" text={normalized.explanation} />
+              )}
+            </>
+          )}
+        </div>
+      ) : isTrueFalse ? (
         <div className="mt-auto px-9 pb-7 flex flex-col gap-3">
           <div className="flex gap-3">
             {([true, false] as const).map((value) => {
