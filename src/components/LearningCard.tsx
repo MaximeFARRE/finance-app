@@ -5,6 +5,7 @@ import type { Card } from "@/lib/types";
 import { normalizeLearningCard } from "@/lib/card-normalizer";
 import { getCardTheme } from "@/lib/card-themes";
 import { SuggestionButton } from "./SuggestionButton";
+import { parseNumericInput, isWithinTolerance } from "@/lib/answer-utils";
 
 interface LearningCardProps {
   card: Card;
@@ -29,21 +30,6 @@ export function LearningCard({ card, onReveal, onAnswer, trackId, lessonId }: Le
   function handleReveal() {
     setRevealed(true);
     onReveal?.();
-  }
-
-  function parseNumericInput(raw: string): number | null {
-    const normalized = raw
-      .trim()
-      .replace(/\s/g, "")       // "375 000" → "375000"
-      .replace(",", ".")         // "1,5" → "1.5"
-      .replace("−", "-");        // typographic minus
-    const value = parseFloat(normalized);
-    return isNaN(value) ? null : value;
-  }
-
-  function isWithinTolerance(input: number, expected: number, tol: number): boolean {
-    if (expected === 0) return Math.abs(input) <= 0.01;
-    return Math.abs(input - expected) / Math.abs(expected) <= tol;
   }
 
   function handleNumericSubmit() {
