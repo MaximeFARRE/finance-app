@@ -16,7 +16,9 @@ export function buildLessonDeck({
   progress = {},
   limit = DEFAULT_LESSON_DECK_LIMIT,
 }: BuildLessonDeckParams): QuizEntry[] {
-  const trackCards = cards.filter((card) => !card.trackId || card.trackId === trackId);
+  const trackCards = cards.filter(
+    (card) => !card.trackId || card.trackId === trackId || card.trackIds?.includes(trackId),
+  );
   const deck = buildQuizDeck(trackCards, progress);
 
   if (limit <= 0) return [];

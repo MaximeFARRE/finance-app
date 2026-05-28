@@ -134,7 +134,7 @@ describe("saveProgress", () => {
       lastSessionAt: null,
       cards: {},
       completedLessonIds: ["a", "b"],
-      lessonStars: { a: 3, b: 1 },
+      lessonStars: { a: 3 as const, b: 1 as const },
       learnedCardIds: ["card-1"],
       learnSessionIds: ["a"],
     };

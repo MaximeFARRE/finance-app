@@ -66,6 +66,7 @@ export interface Card {
   // --- Commun aux deux formats ---
   difficulty: Difficulty;
   trackId?: string;
+  trackIds?: string[];
   moduleId?: string;
   conceptId?: string;
   version?: number;

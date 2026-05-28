@@ -34,7 +34,9 @@ export function buildBossDeck({
     return lesson?.cards ?? [];
   });
 
-  const trackCards = cards.filter((card) => !card.trackId || card.trackId === track.id);
+  const trackCards = cards.filter(
+    (card) => !card.trackId || card.trackId === track.id || card.trackIds?.includes(track.id),
+  );
   const unlockedCards = filterByUnlockedDifficulty(trackCards, progress);
   const entries = unlockedCards.map((card) => ({ question: card, answer: null }));
 
