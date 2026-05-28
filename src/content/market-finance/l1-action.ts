@@ -114,7 +114,7 @@ export const lessonAction: Lesson = {
     },
     {
       id: "mf-found-l1-action-tf-1",
-      type: "trap",
+      type: "definition",
       questionType: "true-false",
       question: "Une action sans dividende est forcément un mauvais investissement.",
       shortAnswer: "Faux. Une entreprise peut créer de la valeur en réinvestissant ses bénéfices plutôt qu'en les distribuant.",

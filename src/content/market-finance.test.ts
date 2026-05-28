@@ -9,6 +9,7 @@ const APPROVED_QUESTION_TYPES = new Set<QuestionType>([
   "formula",
   "quick-calculation",
   "market-culture",
+  "true-false",
 ]);
 const FORBIDDEN_LEGACY_TYPES = new Set([
   "intuition",
