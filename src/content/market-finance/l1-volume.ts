@@ -98,6 +98,46 @@ Les plus forts volumes de l'histoire se produisent souvent lors des krachs :
 **Erreur à éviter :** confondre volume élevé avec signal positif. Insister sur la direction du mouvement.`,
     },
     {
+      id: "mf-found-l1-vol-adtv",
+      type: "definition",
+      front: "Qu'est-ce que l'ADTV et pourquoi est-il crucial pour les institutionnels ?",
+      back: "ADTV (Average Daily Trading Volume) : volume moyen échangé par jour sur un titre. Un institutionnel évite d'investir plus de 10-20 % de l'ADTV en un seul ordre pour ne pas déplacer le marché.",
+      difficulty: 2,
+      tags: ["volume", "ADTV", "institutionnel"],
+      detail: `**L'ADTV comme contrainte d'exécution :**
+
+Si un fonds veut acheter 50 M€ d'une action dont l'ADTV est 20 M€ :
+→ L'ordre représente 2,5 jours de volume moyen
+→ Passer cet ordre d'un coup ferait monter le cours → coût d'impact de marché élevé
+→ Solution : fractionner sur plusieurs jours via des algorithmes (VWAP, TWAP)
+
+**Règle pratique :**
+- Pour un ordre < 5 % de l'ADTV : peu d'impact, passage possible en une fois
+- Pour un ordre de 20–50 % de l'ADTV : fractionnement obligatoire
+- Pour un ordre > 100 % : opération hors marché (block trade, dark pool) à envisager
+
+**Conséquence :** les très gros fonds (>100 Mds €) ne peuvent physiquement pas investir dans les small caps — trop peu de volume.`,
+    },
+    {
+      id: "mf-found-l1-vol-thin-markets",
+      type: "trap",
+      front: "Piège : interpréter les prix en période de faibles volumes (été, fin d'année)",
+      back: "En août et entre Noël et le Nouvel An, les volumes chutent de 30-50 %. Les prix sont moins représentatifs : un petit ordre peut provoquer de grands mouvements. Ne pas confondre un signal technique et un effet 'thin market'.",
+      difficulty: 2,
+      tags: ["volume", "thin market", "saison"],
+      detail: `**Pourquoi les marchés sont-ils 'thin' en été et fin d'année ?**
+
+Les traders institutionnels sont en vacances ou clôturent leurs positions pour le bilan annuel.
+→ Moins de participants → carnets d'ordres plus minces → mouvements amplifiés
+
+**Risques pratiques :**
+- Un breakout haussier ou baissier sur faible volume est souvent un faux signal
+- Les stop-loss peuvent être déclenchés par des gaps sur peu de liquidité
+- Les résultats de backtests d'algorithmes sur ces périodes sont peu fiables
+
+**Bon réflexe :** toujours afficher l'ADTV sur le graphique avant d'interpréter un mouvement de cours. Si le volume du jour est < 30 % de la moyenne, la prudence s'impose.`,
+    },
+    {
       id: "mf-found-l1-vol-ma",
       type: "model-answer",
       front: "Réponse : utilisation du volume en analyse",
