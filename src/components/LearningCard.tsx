@@ -17,13 +17,24 @@ interface LearningCardProps {
 export function LearningCard({ card, onReveal, onAnswer, trackId, lessonId }: LearningCardProps) {
   const [revealed, setRevealed] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedBool, setSelectedBool] = useState<boolean | null>(null);
   const normalized = normalizeLearningCard(card);
   const theme = getCardTheme(normalized.themeKey);
   const isMcq = Array.isArray(card.choices) && card.choices.length > 0;
+  const isTrueFalse = card.questionType === "true-false" && card.correctBool !== undefined;
 
   function handleReveal() {
     setRevealed(true);
     onReveal?.();
+  }
+
+  function handleTrueFalseClick(value: boolean) {
+    if (selectedBool !== null) return;
+    const correct = value === card.correctBool;
+    setSelectedBool(value);
+    setRevealed(true);
+    onReveal?.();
+    setTimeout(() => onAnswer?.(correct), 1000);
   }
 
   function handleChoiceClick(index: number) {
@@ -52,7 +63,50 @@ export function LearningCard({ card, onReveal, onAnswer, trackId, lessonId }: Le
         <p className="text-xl font-semibold leading-snug text-gray-900">{normalized.question}</p>
       </div>
 
-      {isMcq ? (
+      {isTrueFalse ? (
+        <div className="mt-auto px-9 pb-7 flex flex-col gap-3">
+          <div className="flex gap-3">
+            {([true, false] as const).map((value) => {
+              const label = value ? "Vrai" : "Faux";
+              const isCorrect = value === card.correctBool;
+              const isSelected = value === selectedBool;
+              const answered = selectedBool !== null;
+
+              let btnStyle = "border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50";
+              if (answered) {
+                if (isCorrect) btnStyle = "border-green-400 bg-green-50 text-green-800";
+                else if (isSelected) btnStyle = "border-red-300 bg-red-50 text-red-700";
+                else btnStyle = "border-gray-100 bg-gray-50 text-gray-400";
+              }
+
+              return (
+                <button
+                  key={label}
+                  onClick={() => handleTrueFalseClick(value)}
+                  disabled={answered}
+                  className={`flex-1 rounded-xl border-2 px-5 py-4 text-sm font-semibold transition-all duration-150 ${btnStyle} ${!answered ? "active:scale-[0.98] cursor-pointer" : "cursor-default"}`}
+                >
+                  {label}
+                  {answered && isCorrect && <span className="ml-2 text-green-600">✓</span>}
+                  {answered && isSelected && !isCorrect && <span className="ml-2 text-red-500">✗</span>}
+                </button>
+              );
+            })}
+          </div>
+          {revealed && (
+            <>
+              <div className={`rounded-xl p-5 ${theme.answerBg}`}>
+                <p className="whitespace-pre-line text-base leading-relaxed text-gray-800">
+                  {normalized.shortAnswer}
+                </p>
+              </div>
+              {normalized.explanation && (
+                <AnswerSection label="Explication" text={normalized.explanation} />
+              )}
+            </>
+          )}
+        </div>
+      ) : isMcq ? (
         <div className="mt-auto px-9 pb-7 flex flex-col gap-2">
           {card.choices!.map((choice, i) => {
             const isCorrect = i === card.correctIndex;
