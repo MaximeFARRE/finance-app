@@ -1,3 +1,26 @@
+# [1.8.0](https://github.com/MaximeFARRE/finance-app/compare/v1.7.0...v1.8.0) (2026-05-28)
+
+
+### Features
+
+* add 2 cards to l1-acteurs (market maker, ETF passive investing) ([7b6f7a1](https://github.com/MaximeFARRE/finance-app/commit/7b6f7a1f43a380395d666303d4751c6ff040ef4a))
+* add 2 cards to l1-buyside-sellside (ECM/DCM, sell-side research) ([6d6d6af](https://github.com/MaximeFARRE/finance-app/commit/6d6d6af21fa3c34b85e67dcd8e0fef66682e522f))
+* add 2 cards to l1-dividende (payout ratio formula, ex-div trap) ([523fd97](https://github.com/MaximeFARRE/finance-app/commit/523fd9716f1af83833b99a205d2462b325bc68b9))
+* add 2 cards to l1-liquidite (bid-ask formula, illiquidity premium) ([0d4a5a3](https://github.com/MaximeFARRE/finance-app/commit/0d4a5a328c988afe09831bb8addb189e3373be37))
+* add 2 cards to l1-volume (ADTV definition, thin markets trap) ([2f47cc8](https://github.com/MaximeFARRE/finance-app/commit/2f47cc8b518751a7bc1002f8643628a1950c6425))
+* add 3 interactive cards to l1-action (tf, mcq, numeric) ([68fb2d0](https://github.com/MaximeFARRE/finance-app/commit/68fb2d0e59731591045c34034e6d7fe10452df66))
+* add 6 interactive cards to l1-marche-primaire (tf, mcq) ([7b54f2a](https://github.com/MaximeFARRE/finance-app/commit/7b54f2a7bd5e6996bc1c04126364ff2d67cfe13d))
+* add 6 interactive cards to l1-marche-secondaire (tf, mcq) ([02e9cba](https://github.com/MaximeFARRE/finance-app/commit/02e9cbafc2e056132b5836fdb15a515691d7b1ea))
+* add 6 interactive cards to l1-market-cap (tf, mcq, numeric) ([7d41aa4](https://github.com/MaximeFARRE/finance-app/commit/7d41aa480d8c52cad7c80b2f8bb986155f62e0a4))
+* add 6 interactive cards to l1-rendement (tf, mcq, numeric) ([64b5ac5](https://github.com/MaximeFARRE/finance-app/commit/64b5ac5f9637659616413409f8e7c35f618d9f53))
+* add 6 interactive cards to l1-risque (tf, mcq, numeric) ([42b032d](https://github.com/MaximeFARRE/finance-app/commit/42b032d86d38c7ce81bbd2e8cecd91b82bf35c67))
+* add 7 interactive cards to l1-obligation (tf, mcq, numeric) ([4c7f9f0](https://github.com/MaximeFARRE/finance-app/commit/4c7f9f04cc526b70c647c641f9336448ec66f6d7))
+* add boss-world-2 lesson (12 cards, all interactive) ([be2562e](https://github.com/MaximeFARRE/finance-app/commit/be2562e7c75c5af17b0c3ec35c49656598fbaee7))
+* add l2-courbe-des-taux and l2-analyse-fondamentale lessons (10-11 cards, 60% interactive) ([daba53b](https://github.com/MaximeFARRE/finance-app/commit/daba53ba3ffd45fa830c0b73e74e3555700af7b7))
+* add l2-indices and l2-etf lessons (10 cards each, 60% interactive) ([f2077df](https://github.com/MaximeFARRE/finance-app/commit/f2077dfb9067b9e45093282c3594bce4c79c187b))
+* add l2-options, l2-futures and l2-change lessons (10 cards each, 60% interactive) ([a43da10](https://github.com/MaximeFARRE/finance-app/commit/a43da101d782bcd1caf13e9332be70542b086793))
+* register world 2 (mf-world-2-instruments) in market-finance track and bump content version ([9c7a55d](https://github.com/MaximeFARRE/finance-app/commit/9c7a55d14375d8acbb40f3ac4a4eeb4f1854aeb6))
+
 # [1.7.0](https://github.com/MaximeFARRE/finance-app/compare/v1.6.0...v1.7.0) (2026-05-28)
 
 
