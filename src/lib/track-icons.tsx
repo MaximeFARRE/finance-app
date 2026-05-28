@@ -1,5 +1,5 @@
 import { TrendingUp, Building2, BookOpen } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import type { LucideIcon, LucideProps } from "lucide-react";
 
 const TRACK_ICONS: Record<string, LucideIcon> = {
   "market-finance": TrendingUp,
@@ -16,6 +16,12 @@ const TRACK_COLOR_CLASSES: Record<string, { bg: string; text: string }> = {
 
 export function getTrackIcon(trackId: string): LucideIcon {
   return TRACK_ICONS[trackId] ?? BookOpen;
+}
+
+export function TrackIconDisplay({ trackId, ...props }: { trackId: string } & LucideProps) {
+  if (trackId === "market-finance") return <TrendingUp {...props} />;
+  if (trackId === "corporate-finance") return <Building2 {...props} />;
+  return <BookOpen {...props} />;
 }
 
 export function getTrackColorClasses(color: string): { bg: string; text: string } {
