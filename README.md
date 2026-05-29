@@ -1,6 +1,4 @@
 <div align="center">
-  <img src="docs/screenshots/banner.png" alt="Finance App Banner" width="800" style="border-radius: 8px; margin-bottom: 20px;" />
-
   # 🎓 Finance App
 
   ### Master market & corporate finance concepts through gamified spaced-repetition.
