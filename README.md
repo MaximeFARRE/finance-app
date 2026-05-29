@@ -7,29 +7,67 @@
 
 A gamified, offline-first spaced-repetition app to master finance interview concepts. Study flashcards, earn XP, and track your progress through a 9-level career system — from *Stagiaire* to *Partner*.
 
+---
+
+## Screenshots
+
+### Home & Navigation
+
+| Home | Track list | Track map |
+|------|-----------|-----------|
+| ![Home](docs/screenshots/01-home.png) | ![Tracks](docs/screenshots/02-tracks.png) | ![Track detail](docs/screenshots/03-track-detail.png) |
+
+### Learning & Quiz
+
+| Learn — flashcard | Quiz — reveal answer | Quiz — Multiple Choice |
+|-------------------|---------------------|------------------------|
+| ![Learn card](docs/screenshots/04-learn-card.png) | ![Quiz flip](docs/screenshots/05-quiz-flip.png) | ![MCQ card](docs/screenshots/06-mcq-card.png) |
+
+| Quiz — True / False | Quiz — Numeric input |
+|---------------------|----------------------|
+| ![True/False card](docs/screenshots/07-truefalse-card.png) | ![Numeric card](docs/screenshots/08-numeric-card.png) |
+
+### Admin & Mobile
+
+| Admin dashboard | Admin — lesson view | Mobile — home |
+|-----------------|---------------------|---------------|
+| ![Admin](docs/screenshots/09-admin.png) | ![Admin lesson](docs/screenshots/11-admin-lesson.png) | ![Mobile](docs/screenshots/12-mobile-home.png) |
+
+---
+
 ## Features
 
 - **Spaced Repetition (SM-2)** — cards adapt to your performance; weak cards come back sooner
-- **7 Card Types** — Definition, Intuition, Example, Formula, Trap, Interview Question, Model Answer
+- **5 Interactive Card Types** — Flip (reveal answer), Multiple Choice (4 options), True/False, Numeric Input, and classic Flashcard
 - **XP & Level System** — 9 finance career levels (Stagiaire → Partner) with XP rewards and streak bonuses
 - **Lesson Stars** — earn 1–3 stars per lesson based on accuracy
-- **Progressive Unlock** — lessons unlock as you complete previous ones
-- **Difficulty Gating** — difficulty 2 and 3 cards unlock only once ≥ 70% of lower-difficulty cards are mastered
-- **Cross-lesson Review Mode** — daily review queue built from all due cards across every track, accessible from the home page
-- **Suggestion System** — users can flag errors or propose new cards directly from the flashcard UI
+- **World-based Progression** — lessons grouped into thematic worlds with a Boss challenge at the end of each
+- **Difficulty Gating** — difficulty-2 cards unlock only once ≥ 70% of difficulty-1 cards are mastered
+- **Cross-lesson Review Mode** — daily review queue built from all due cards across every track
+- **Suggestion System** — flag errors or propose new cards directly from the flashcard UI
 - **Admin UI** — full content management at `/admin`: browse tracks/lessons/cards, CRUD editor with live preview and version history, import/export, and suggestions management
 - **Import / Export** — bulk content management via YAML (primary), JSON, or CSV; diff preview before applying changes
 - **Offline-First** — all progress stored locally in the browser; no account required
-- **Windows Launcher** — `lancer.bat` opens the app directly on Windows
+
+---
 
 ## Content
 
-| Track | Lessons | Cards |
-|-------|---------|-------|
-| Finance de marché | 11 | ~90 |
-| Corporate Finance | 5 | ~42 |
+| Track | Worlds | Lessons | Cards |
+|-------|--------|---------|-------|
+| Finance de marché | 2 | 21 | ~216 |
+| Corporate Finance | — | 5 | ~40 |
+| **Total** | | **26** | **~256** |
 
-All cards include a `detail` field with analogies, worked examples, and interview tips.
+### Finance de marché — World 1 : Fondamentaux
+
+Covers the essential building blocks of markets: equity (actions), bonds (obligations), returns, risk, market cap, primary & secondary markets, liquidity, volume, market participants (acteurs, buy-side / sell-side), and dividends. Ends with a Boss quiz covering all World-1 topics.
+
+### Finance de marché — World 2 : Instruments & Analyse
+
+Extends into index construction (CAC 40, MSCI World, free-float weighting), ETFs & passive management, yield curves & rate spreads, fundamental valuation (P/E, EV/EBITDA, DCF), options (calls, puts, Greeks primer), futures & hedging, and forex (EUR/USD, carry trade, PPP). Ends with a Boss quiz covering all World-2 topics.
+
+---
 
 ## Tech Stack
 
@@ -38,9 +76,11 @@ All cards include a `detail` field with analogies, worked examples, and intervie
 | Framework | Next.js 16 (App Router) |
 | UI | React 19 + Tailwind CSS v4 |
 | Language | TypeScript 5 (strict) |
-| Storage | LocalStorage (IndexedDB-ready via ContentProvider) |
-| Testing | Vitest + jsdom + fake-indexeddb |
+| Storage | localStorage (offline-first) |
+| Testing | Vitest + jsdom |
 | Linting | ESLint 9 + Prettier |
+
+---
 
 ## Getting Started
 
@@ -69,6 +109,8 @@ On Windows you can also run `lancer.bat` — it starts the dev server on port 32
 | `npm test` | Run unit tests (single run) |
 | `npm run test:watch` | Run tests in watch mode |
 
+---
+
 ## Project Structure
 
 ```
@@ -76,7 +118,7 @@ src/
 ├── app/                    # Next.js App Router pages
 │   ├── page.tsx            # Home / landing (with daily review badge)
 │   ├── tracks/             # Track listing & detail pages
-│   ├── session/            # Active learning & review session
+│   ├── session/            # Active learning & quiz session
 │   ├── results/            # Session results screen
 │   └── admin/              # Content management UI
 │       ├── page.tsx        # Admin dashboard
@@ -85,21 +127,40 @@ src/
 │       ├── export/         # Bulk export (YAML / JSON / CSV)
 │       └── suggestions/    # User suggestion review queue
 ├── components/             # Reusable UI components
-│   ├── LearningCard.tsx    # Flashcard with flip interaction
-│   ├── LearnCard.tsx       # Learn-mode card (detail reveal)
-│   ├── LessonList.tsx      # Lesson grid with lock/star states
+│   ├── LearningCard.tsx    # Flip card (reveal answer + SM-2 self-rating)
+│   ├── MCQCard.tsx         # Multiple-choice card (A / B / C / D)
+│   ├── TrueFalseCard.tsx   # True / False card
+│   ├── NumericCard.tsx     # Numeric input card
+│   ├── LearnCard.tsx       # Learn-mode card (full detail reveal)
+│   ├── LessonList.tsx      # Lesson grid with lock / star states
 │   ├── XPBar.tsx           # XP progress bar and level display
-│   ├── SuggestionButton.tsx  # Suggestion trigger button
-│   ├── SuggestionModal.tsx   # Suggestion submission form
 │   └── admin/              # Admin-only components
 │       ├── CardForm.tsx    # Card editor with live validation
 │       ├── CardPreview.tsx # Real-time card preview
 │       ├── CardHistory.tsx # Version history with restore
 │       └── ImportDiff.tsx  # Import diff visualizer
-├── content/                # Course data (tracks & lessons)
-│   ├── index.ts            # Track registry & lookup helpers
-│   ├── market-finance.ts   # Market Finance track (11 lessons)
-│   └── corporate-finance.ts  # Corporate Finance track (5 lessons)
+├── content/                # Course data — one file per lesson
+│   ├── index.ts            # Track registry, lookup helpers, content version
+│   ├── market-finance/
+│   │   ├── index.ts        # Track definition with world structure
+│   │   ├── l1-action.ts    # World 1 — L'action
+│   │   ├── l1-obligation.ts
+│   │   ├── ...             # (13 World-1 lessons + boss-world-1)
+│   │   ├── l2-indices.ts   # World 2 — Indices boursiers
+│   │   ├── l2-etf.ts
+│   │   ├── l2-courbe-des-taux.ts
+│   │   ├── l2-analyse-fondamentale.ts
+│   │   ├── l2-options.ts
+│   │   ├── l2-futures.ts
+│   │   ├── l2-change.ts
+│   │   └── boss-world-2.ts # World 2 Boss quiz (12 mixed questions)
+│   └── corporate-finance/
+│       ├── index.ts
+│       ├── l1-structure-du-capital.ts
+│       ├── l2-valorisation-dcf.ts
+│       ├── l3-comparables.ts
+│       ├── l4-fusions-acquisitions.ts
+│       └── l5-lbo.ts
 └── lib/                    # Core business logic
     ├── types.ts            # Shared TypeScript types
     ├── spaced-repetition.ts  # SM-2 algorithm
@@ -108,39 +169,46 @@ src/
     ├── unlock.ts           # Lesson unlock rules
     ├── difficulty-gate.ts  # Difficulty unlock (70% mastery threshold)
     ├── quiz-utils.ts       # Quiz deck builder (due-first + difficulty gating)
+    ├── lesson-deck.ts      # Per-lesson deck builder (limit = 10)
     ├── review-utils.ts     # Cross-lesson review deck builder
-    ├── storage.ts          # LocalStorage persistence
-    ├── use-content.ts      # React hook for ContentProvider
-    ├── auth.ts             # Admin auth guard (Supabase-ready)
-    ├── local-content-provider.ts  # IndexedDB-backed content provider
+    ├── storage.ts          # localStorage persistence
     └── import-export/      # YAML / JSON / CSV import-export engine
-        ├── index.ts        # analyzeImport, applyImport, exportContent
-        ├── yaml-io.ts      # YAML parser & exporter
-        ├── json-io.ts      # JSON parser & exporter
-        ├── csv-io.ts       # CSV parser & exporter (BOM, auto-separator)
-        ├── diff.ts         # Diff engine (added / modified / unchanged)
-        ├── normalizer.ts   # Normalize parsed data → domain objects
-        └── id-generator.ts # Deterministic card ID generation
 ```
+
+---
 
 ## Adding Content
 
-The recommended workflow depends on the volume of changes:
+See [`AGENTS.md`](AGENTS.md) for the complete card format reference.
 
-- **1–5 cards:** use the admin card editor at `/admin`
-- **A full lesson or track:** author in YAML and import via `/admin/import`
-- **AI-assisted generation:** see [docs/AI_CONTENT_TEMPLATE.md](docs/AI_CONTENT_TEMPLATE.md) for ready-to-use prompts
+**Quick rules:**
+- One TypeScript file per lesson (`src/content/<track>/<lessonId>.ts`)
+- Card IDs are permanent — changing one loses SM-2 progress for all users
+- Bump `BUILTIN_CONTENT_VERSION` in `src/content/index.ts` whenever cards are added or removed
+- Run `npx tsc --noEmit && npx vitest run` after every change
 
-Style rules and ID conventions are documented in [docs/CONTENT_STYLE_GUIDE.md](docs/CONTENT_STYLE_GUIDE.md).
-For a code-first approach, see [docs/ADDING_CONTENT.md](docs/ADDING_CONTENT.md).
+**Card types available:**
+
+| Type | UI | Fields |
+|------|----|--------|
+| Flip (definition) | Reveal-answer with self-rating | `front`, `back`, `explanation` |
+| Multiple Choice | A / B / C / D radio buttons | `choices[]`, `correctIndex` |
+| True / False | Vrai / Faux buttons | `correctBool` |
+| Numeric input | Number entry + tolerance check | `expectedAnswer`, `answerUnit`, `tolerance` |
+
+---
 
 ## Architecture
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for a detailed overview of the system design, data flow, and algorithms.
+See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for a detailed overview of the system design, data flow, and algorithms.
+
+---
 
 ## Contributing
 
-Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+Contributions are welcome! Please read [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening a pull request.
+
+---
 
 ## License
 
